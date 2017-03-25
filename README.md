@@ -14,6 +14,7 @@ This material is shared through a [CC BY-SA 4.0](https://creativecommons.org/lic
 
  - what is story #8 "already checked in and it breaks the build"???
 
+ - how could I show the customer name in the layout of the page (main.dec) ?  How to pass data to the decorator in freemarker?  Should I use the session object?
 
 
 
