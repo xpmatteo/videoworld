@@ -18,11 +18,11 @@ public class ViewAdminActionTest {
 	public void shouldShowAllUsers() {
 		Set<Customer> users = new LinkedHashSet<Customer>();
 		users.add(new Customer("John Doe"));
-		
+
 		SetBasedCustomerRepository customerRepository = new SetBasedCustomerRepository(users);
-		
+
 		ViewAdminAction action = new ViewAdminAction(customerRepository);
 		assertThat(action.getUsers(), is(users));
 	}
-	
+
 }
