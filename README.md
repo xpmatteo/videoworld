@@ -20,7 +20,12 @@ This material is shared through a [CC BY-SA 4.0](https://creativecommons.org/lic
 
 ### Todo
 
- - Fix first user story
+ - Fix text of first user story
+
+ - run jetty from main method not from war
+   - makes it difficult to see css changes
+   - requires reboot to see ftl changes
+
 
 
 

@@ -1,7 +1,7 @@
 body {
 	margin: 0 10px 0 10px;
 	font : normal 12px Verdana, Arial, Helvetica, sans-serif;
-    color: #0464BB; 
+    color: #0464BB;
     padding: 0;
 }
 #header {
@@ -23,4 +23,8 @@ body {
 	padding: 0 10px 0 10px;
 	height: 100%;
 	color: #ffffff;
+}
+
+#welcome {
+  float: right;
 }

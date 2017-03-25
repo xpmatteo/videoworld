@@ -7,7 +7,7 @@ import com.thoughtworks.videorental.domain.*;
 import com.thoughtworks.videorental.domain.repository.MovieRepository;
 import com.thoughtworks.videorental.interceptor.*;
 
-public class ViewHomeAction extends ActionSupport implements CustomerAware {
+public class ViewHomeAction extends ActionSupport {
 
 	private final MovieRepository movieRepository;
 	private Customer customer;
@@ -23,14 +23,5 @@ public class ViewHomeAction extends ActionSupport implements CustomerAware {
 	@Override
 	public String execute() throws Exception {
 		return SUCCESS;
-	}
-
-	@Override
-	public void setCustomer(final Customer customer) {
-		this.customer = customer;
-	}
-
-	public Customer getCustomer() {
-		return customer;
 	}
 }

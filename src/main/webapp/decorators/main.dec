@@ -17,6 +17,9 @@
 		<a href="history" class="tab">History</a>
 		<a href="/" class="tab">Rent Movies</a>
 	</div>
+  <p id='welcome'>
+    Welcome, dear ${Session.user.name}. You have ${Session.user.frequentRenterPoints} frequent renter points
+  </p>
 	${body}
 	<div id="footer">
 	</div>
