@@ -36,4 +36,8 @@ public class Customer {
 		return result;
 	}
 
+	public int getFrequentRenterPoints() {
+		return frequentRenterPoints;
+	}
+
 }

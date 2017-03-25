@@ -25,11 +25,14 @@
 	    		}
 	    	}
 	    });
-	}); 
+	});
   </script>
 </head>
 <body>
     <h1>Rent a Movie</h1>
+
+    <p>Welcome, dear ${customer.name}.  You have ${customer.frequentRenterPoints} frequent renter points</p>
+
 	<form id="wizard" class="wiz-container" action="rentMovies">
 		<ul class="wiz-list">
 			<li><a href="#wizard-1">
@@ -42,7 +45,7 @@
 		</ul>
 		<div class="wiz-body">
 			<div id="wizard-1">
-				<div class="wiz-content movielist">					
+				<div class="wiz-content movielist">
 			    	<#list movies as movie>
 			    		<div class="movie">
 			    			<p><input type="checkbox" name="movieNames" value="${movie.title}"/> ${movie.title}</p>
@@ -55,7 +58,7 @@
 				</div>
 			</div>
 			<div id="wizard-2">
-				<div class="wiz-content">					
+				<div class="wiz-content">
 					<p>Number of days:
 						<select name="rentalDuration">
 							<option value="1">1</option>
