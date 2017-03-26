@@ -30,6 +30,10 @@ This material is shared through a [CC BY-SA 4.0](https://creativecommons.org/lic
  - remove imports of junit 3
  - remove single reference to javax.persistence.Entity and lib/runtime/ejb3-persistence.jar
 
+ - Transaction -> Order
+
+ - maybe, eliminate RentalRepository and only use TransactionRepository
+
 
 
 

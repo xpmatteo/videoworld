@@ -5,50 +5,33 @@ import static org.hamcrest.Matchers.*;
 import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
-import org.hamcrest.Matcher;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.hamcrest.*;
+import org.junit.*;
 
-import com.thoughtworks.datetime.Duration;
-import com.thoughtworks.datetime.LocalDate;
-import com.thoughtworks.datetime.LocalDateTime;
-import com.thoughtworks.datetime.Period;
-import com.thoughtworks.videorental.domain.Customer;
-import com.thoughtworks.videorental.domain.Movie;
-import com.thoughtworks.videorental.domain.Rental;
-import com.thoughtworks.videorental.domain.Transaction;
-import com.thoughtworks.videorental.domain.repository.MovieRepository;
-import com.thoughtworks.videorental.domain.repository.RentalRepository;
-import com.thoughtworks.videorental.domain.repository.TransactionRepository;
-import com.thoughtworks.videorental.repository.SetBasedMovieRepository;
+import com.thoughtworks.datetime.*;
+import com.thoughtworks.videorental.domain.*;
+import com.thoughtworks.videorental.domain.repository.*;
+import com.thoughtworks.videorental.repository.*;
 
 public class RentMoviesActionTest {
 	private static final Movie THE_GODFATHER = new Movie("The Godfather", Movie.REGULAR);
 	private static final Movie PULP_FICTION = new Movie("Pulp Fiction", Movie.REGULAR);;
 	private static final Movie FINDING_NEMO = new Movie("Finding Nemo", Movie.CHILDRENS);;
 
-	private MovieRepository movieRepository;
-	private RentalRepository rentalRepository;
-	private TransactionRepository transactionRepository;
-	private RentMoviesAction rentMoviesAction;
-	private Customer customer;
+	private MovieRepository movieRepository = new SetBasedMovieRepository();
+	private RentalRepository rentalRepository = mock(RentalRepository.class);
+	private TransactionRepository transactionRepository = mock(TransactionRepository.class);
+	private RentMoviesAction rentMoviesAction = new RentMoviesAction(movieRepository, rentalRepository, transactionRepository);
+	private Customer customer = mock(Customer.class);
 
 	@Before
 	public void setUp() throws Exception {
-		movieRepository = new SetBasedMovieRepository();
 		movieRepository.add(THE_GODFATHER);
 		movieRepository.add(PULP_FICTION);
 		movieRepository.add(FINDING_NEMO);
 
-		rentalRepository = mock(RentalRepository.class);
-		transactionRepository = mock(TransactionRepository.class);
-		rentMoviesAction = new RentMoviesAction(movieRepository, rentalRepository, transactionRepository);
-		customer = mock(Customer.class);
 		rentMoviesAction.setCustomer(customer);
 	}
 
@@ -99,14 +82,11 @@ public class RentMoviesActionTest {
 	}
 
 	@SuppressWarnings("unchecked")
-	private Matcher<Set<Rental>> isRentalsForDurationAndOf(final int days, final Movie firstMovie,
-			final Movie... movies) {
+	private Matcher<Set<Rental>> isRentalsForDurationAndOf(final int days, final Movie... movies) {
 		final Period period = Period.of(LocalDate.today(), Duration.ofDays(days));
 
 		final List rentalMatchers = new ArrayList();
-		rentalMatchers.add(hasSize(movies.length + 1));
-		rentalMatchers.add(hasItem(allOf(hasProperty("period", equalTo(period)), hasProperty("movie",
-				sameInstance(firstMovie)))));
+		rentalMatchers.add(hasSize(movies.length));
 		for (final Movie movie : movies) {
 			rentalMatchers.add(hasItem(allOf(hasProperty("period", equalTo(period)), hasProperty("movie",
 					sameInstance(movie)))));
@@ -115,9 +95,8 @@ public class RentMoviesActionTest {
 		return allOf((Iterable) rentalMatchers);
 	}
 
-	private Matcher<Transaction> isTransactionWithRentalsForDurationAndOf(final int days, final Movie firstMovie,
-			final Movie... movies) {
-		return hasProperty("rentals", isRentalsForDurationAndOf(days, firstMovie, movies));
+	private Matcher<Transaction> isTransactionWithRentalsForDurationAndOf(final int days, final Movie... movies) {
+		return hasProperty("rentals", isRentalsForDurationAndOf(days, movies));
 	}
 
 }
