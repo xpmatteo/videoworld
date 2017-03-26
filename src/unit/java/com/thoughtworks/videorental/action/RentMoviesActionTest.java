@@ -1,16 +1,24 @@
 package com.thoughtworks.videorental.action;
 
-import static junit.framework.Assert.*;
-import static org.hamcrest.Matchers.*;
-import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.*;
+import static junit.framework.Assert.assertEquals;
+import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.hasProperty;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.sameInstance;
+import static org.mockito.Matchers.anyObject;
+import static org.mockito.Matchers.argThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 
 import org.hamcrest.Matcher;
-import org.hibernate.Criteria;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,7 +27,6 @@ import com.thoughtworks.datetime.Duration;
 import com.thoughtworks.datetime.LocalDate;
 import com.thoughtworks.datetime.LocalDateTime;
 import com.thoughtworks.datetime.Period;
-import com.thoughtworks.ddd.specification.OrderComparator;
 import com.thoughtworks.videorental.domain.Customer;
 import com.thoughtworks.videorental.domain.Movie;
 import com.thoughtworks.videorental.domain.Rental;
@@ -29,7 +36,6 @@ import com.thoughtworks.videorental.domain.repository.RentalRepository;
 import com.thoughtworks.videorental.domain.repository.TransactionRepository;
 import com.thoughtworks.videorental.repository.InMemoryMovieRepository;
 import com.thoughtworks.videorental.repository.InMemoryRentalRepository;
-import com.thoughtworks.videorental.repository.InMemoryTransactionRepository;
 
 public class RentMoviesActionTest {
 	private static final Movie REGULAR_MOVIE = new Movie("The Godfather", Movie.REGULAR);
@@ -92,14 +98,10 @@ public class RentMoviesActionTest {
 
 		rentMoviesAction.execute();
 
-		OrderComparator<Rental> comp = new OrderComparator<Rental>() {
+		Comparator<Rental> comp = new Comparator<Rental>() {
 			@Override
 			public int compare(Rental o1, Rental o2) {
 				return o1.getMovie().getTitle().compareTo(o2.getMovie().getTitle());
-			}
-
-			@Override
-			public void populateCriteria(Criteria criteria) {
 			}
 		};
 		List<Rental >rentals = rentalRepository.selectAll(comp);

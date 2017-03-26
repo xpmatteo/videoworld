@@ -1,6 +1,7 @@
 package com.thoughtworks.videorental.action;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 import org.apache.struts2.dispatcher.SessionMap;
 import org.junit.Before;

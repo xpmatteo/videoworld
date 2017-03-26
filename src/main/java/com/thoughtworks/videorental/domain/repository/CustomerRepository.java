@@ -1,14 +1,14 @@
 package com.thoughtworks.videorental.domain.repository;
 
+import java.util.Comparator;
 import java.util.List;
 
-import com.thoughtworks.ddd.specification.OrderComparator;
 import com.thoughtworks.videorental.domain.Customer;
 
 public interface CustomerRepository {
 	List<Customer> selectAll();
 
-	List<Customer> selectAll(OrderComparator<Customer> comparator);
+	List<Customer> selectAll(Comparator<Customer> comparator);
 
 	Customer selectUniqueByName(String customerName) throws CustomerNotFound;
 

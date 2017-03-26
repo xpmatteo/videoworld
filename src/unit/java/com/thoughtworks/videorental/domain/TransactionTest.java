@@ -1,6 +1,7 @@
 package com.thoughtworks.videorental.domain;
 
-import static junit.framework.Assert.*;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
 
 import java.util.Collections;
 import java.util.HashSet;

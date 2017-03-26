@@ -5,7 +5,6 @@ import java.util.List;
 import com.opensymphony.xwork2.ActionSupport;
 import com.thoughtworks.videorental.domain.Customer;
 import com.thoughtworks.videorental.domain.repository.CustomerRepository;
-import com.thoughtworks.videorental.domain.specification.CustomerWithNameSpecification;
 import com.thoughtworks.videorental.domain.specification.CustomersOrderedByNameComparator;
 
 public class LoginAction extends ActionSupport {

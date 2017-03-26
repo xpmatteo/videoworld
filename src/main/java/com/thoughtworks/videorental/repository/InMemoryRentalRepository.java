@@ -5,9 +5,9 @@ import static java.util.stream.Collectors.toList;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
-import com.thoughtworks.ddd.specification.OrderComparator;
 import com.thoughtworks.videorental.domain.Customer;
 import com.thoughtworks.videorental.domain.Rental;
 import com.thoughtworks.videorental.domain.repository.RentalRepository;
@@ -17,7 +17,7 @@ public class InMemoryRentalRepository implements RentalRepository {
 	private List<Rental> rentals = Collections.synchronizedList(new ArrayList<>());
 
 	@Override
-	public List<Rental> selectAll(OrderComparator<Rental> comparator) {
+	public List<Rental> selectAll(Comparator<Rental> comparator) {
 		List<Rental> result = new ArrayList<>(rentals);
 		result.sort(comparator);
 		return Collections.unmodifiableList(result);
