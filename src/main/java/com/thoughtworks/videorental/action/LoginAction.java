@@ -5,7 +5,6 @@ import java.util.List;
 import com.opensymphony.xwork2.ActionSupport;
 import com.thoughtworks.videorental.domain.Customer;
 import com.thoughtworks.videorental.domain.repository.CustomerRepository;
-import com.thoughtworks.videorental.domain.specification.CustomersOrderedByNameComparator;
 
 public class LoginAction extends ActionSupport {
 
@@ -22,7 +21,7 @@ public class LoginAction extends ActionSupport {
 	}
 
 	public List<Customer> getCustomers() {
-		return customerRepository.selectAll(new CustomersOrderedByNameComparator());
+		return customerRepository.selectAll(Customer.BY_NAME_COMPARATOR);
 	}
 
 	public Customer getLoggedInCustomer() {

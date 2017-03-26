@@ -1,5 +1,6 @@
 package com.thoughtworks.videorental.domain;
 
+import java.util.Comparator;
 import java.util.Set;
 
 public class Customer {
@@ -44,4 +45,12 @@ public class Customer {
 	public String toString() {
 		return String.format("Customer: %s", name);
 	}
+
+	public static final Comparator<Customer> BY_NAME_COMPARATOR = new Comparator<Customer>() {
+		@Override
+		public int compare(final Customer customer1, final Customer customer2) {
+			return (customer1 == customer2) ? 0 : customer1.getName().compareTo(customer2.getName());
+		}
+	};
+
 }
