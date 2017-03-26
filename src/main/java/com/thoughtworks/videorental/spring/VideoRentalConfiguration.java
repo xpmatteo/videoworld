@@ -20,7 +20,7 @@ import com.thoughtworks.videorental.domain.repository.RentalRepository;
 import com.thoughtworks.videorental.domain.repository.TransactionRepository;
 import com.thoughtworks.videorental.interceptor.CustomerLoginInterceptor;
 import com.thoughtworks.videorental.repository.SetBasedCustomerRepository;
-import com.thoughtworks.videorental.repository.SetBasedMovieRepository;
+import com.thoughtworks.videorental.repository.InMemoryMovieRepository;
 import com.thoughtworks.videorental.repository.InMemoryRentalRepository;
 import com.thoughtworks.videorental.repository.InMemoryTransactionRepository;
 
@@ -66,7 +66,7 @@ public class VideoRentalConfiguration {
 		final Movie avatar = new Movie("Avatar", Movie.NEW_RELEASE);
 		final Movie upInTheAir = new Movie("Up In The Air", Movie.REGULAR);
 		final Movie findingNemo = new Movie("Finding Nemo", Movie.CHILDRENS);
-		return new SetBasedMovieRepository(Arrays.asList(avatar, upInTheAir, findingNemo));
+		return new InMemoryMovieRepository(Arrays.asList(avatar, upInTheAir, findingNemo));
 	}
 
 	@Bean(scope = "singleton")

@@ -27,7 +27,7 @@ import com.thoughtworks.videorental.domain.Transaction;
 import com.thoughtworks.videorental.domain.repository.MovieRepository;
 import com.thoughtworks.videorental.domain.repository.RentalRepository;
 import com.thoughtworks.videorental.domain.repository.TransactionRepository;
-import com.thoughtworks.videorental.repository.SetBasedMovieRepository;
+import com.thoughtworks.videorental.repository.InMemoryMovieRepository;
 import com.thoughtworks.videorental.repository.InMemoryRentalRepository;
 import com.thoughtworks.videorental.repository.InMemoryTransactionRepository;
 
@@ -36,7 +36,7 @@ public class RentMoviesActionTest {
 	private static final Movie NEW_RELEASE_MOVIE = new Movie("Pulp Fiction", Movie.NEW_RELEASE);;
 	private static final Movie CHILDRENS_MOVIE = new Movie("Finding Nemo", Movie.CHILDRENS);;
 
-	private MovieRepository movieRepository = new SetBasedMovieRepository();
+	private MovieRepository movieRepository = new InMemoryMovieRepository();
 	private RentalRepository rentalRepository = mock(RentalRepository.class);
 	private TransactionRepository transactionRepository = mock(TransactionRepository.class);
 	private RentMoviesAction rentMoviesAction = new RentMoviesAction(movieRepository, rentalRepository, transactionRepository);

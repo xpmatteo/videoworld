@@ -1,6 +1,7 @@
 package com.thoughtworks.videorental.action;
 
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -54,7 +55,7 @@ public class RentMoviesAction extends ActionSupport implements CustomerAware {
 
 	@Override
 	public String execute() throws Exception {
-		final Set<Movie> movies = movieRepository.withTitles(movieNames);
+		final List<Movie> movies = movieRepository.withTitles(movieNames);
 		final Period rentalPeriod = Period.of(LocalDate.today(), Duration.ofDays(rentalDuration));
 
 		final Set<Rental> rentals = new LinkedHashSet<Rental>();
