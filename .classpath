@@ -3,12 +3,12 @@
 	<classpathentry kind="src" path="src/main/java"/>
 	<classpathentry kind="src" path="src/unit/java"/>
 	<classpathentry kind="src" path="src/util/java"/>
+	<classpathentry kind="src" path="src/main/resources"/>
 	<classpathentry kind="lib" path="lib/build/servlet-api-2.5-20081211.jar"/>
 	<classpathentry kind="lib" path="lib/runtime/cglib-nodep-2.1_3.jar"/>
 	<classpathentry kind="lib" path="lib/runtime/commons-collections-3.2.jar"/>
 	<classpathentry kind="lib" path="lib/runtime/commons-fileupload-1.2.1.jar"/>
 	<classpathentry kind="lib" path="lib/runtime/commons-lang-2.5.jar"/>
-	<classpathentry kind="lib" path="lib/runtime/ejb3-persistence.jar"/>
 	<classpathentry kind="lib" path="lib/runtime/freemarker-2.3.15.jar"/>
 	<classpathentry kind="lib" path="lib/runtime/hibernate-annotations.jar"/>
 	<classpathentry kind="lib" path="lib/runtime/hibernate-commons-annotations.jar"/>
