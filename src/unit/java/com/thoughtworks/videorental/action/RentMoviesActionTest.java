@@ -29,7 +29,7 @@ import com.thoughtworks.videorental.domain.repository.RentalRepository;
 import com.thoughtworks.videorental.domain.repository.TransactionRepository;
 import com.thoughtworks.videorental.repository.SetBasedMovieRepository;
 import com.thoughtworks.videorental.repository.InMemoryRentalRepository;
-import com.thoughtworks.videorental.repository.SetBasedTransactionRepository;
+import com.thoughtworks.videorental.repository.InMemoryTransactionRepository;
 
 public class RentMoviesActionTest {
 	private static final Movie REGULAR_MOVIE = new Movie("The Godfather", Movie.REGULAR);
