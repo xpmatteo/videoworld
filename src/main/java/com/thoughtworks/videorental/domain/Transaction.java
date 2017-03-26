@@ -33,4 +33,13 @@ public class Transaction {
 	public Set<Rental> getRentals() {
 		return rentals;
 	}
+
+    public double getTotalAmountCharged() {
+        double totalAmount = 0.0;
+        for(Rental rental: getRentals()) {
+            totalAmount += rental.getCharge();
+        }
+
+        return totalAmount;
+    }
 }

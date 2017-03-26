@@ -1,87 +1,74 @@
 package com.thoughtworks.jetty;
 
-import org.mortbay.jetty.Server;
-import org.mortbay.jetty.webapp.WebAppContext;
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import org.mortbay.jetty.Server;
+import org.mortbay.jetty.webapp.WebAppContext;
+
 public final class JettyServer {
-    private static final String USAGE = "Usage: jettyserver start/stop webapp-path wesite-port stop-port [context]\n";
+    private static final String USAGE = "Usage: jettyserver webapp-path port [context]\n";
+    
+	private final Server server;
+	private final String webbapp;
+	private final String context;
 
-    private final Server server;
-    private final String webbApp;
-    private final String context;
-
-    public static void main(final String[] args) throws Exception {
-        if (args.length < 4) {
-            System.err.print(USAGE);
-            System.exit(1);
+	public static void main(final String[] args) throws Exception {
+        if (args.length < 2) {
+        	System.err.print(USAGE);
+        	System.exit(1);
         }
 
-        final String operation = args[0];
-        final String webApp = args[1];
-        final int webAppPort = Integer.parseInt(args[2]);
-        final int jettyStopMessagePort = Integer.parseInt(args[3]);
-        final String context = (args.length < 5) ? "/" : args[4];
+        final String webapp = args[0];
+        final int port = Integer.parseInt(args[1]);
+        final String context = (args.length < 3) ? "/" : args[2];
 
+		final JettyServer jettyServer = new JettyServer(webapp, port, context);
+		
+		maybeStartMonitor(jettyServer);
+		
+		jettyServer.start();
+		jettyServer.join();
+	}
 
-        if (operation.equals("start")) {
-            final JettyServer jettyServer = new JettyServer(webApp, webAppPort, context);
-            maybeStartMonitor(jettyServer, jettyStopMessagePort);
+	private static void maybeStartMonitor(final JettyServer jettyServer) {
+		final Integer stopPort = Integer.getInteger("STOP.PORT");
+		if (stopPort != null) {
+			new JettyMonitor(new Integer(System.getProperty("STOP.PORT")), jettyServer).start();
+		}
+	}
 
-            jettyServer.start();
-            jettyServer.join();
-        }
-        else if (jettyStopMessagePort > 0)  {
-            Socket s = new Socket(InetAddress.getByName("127.0.0.1"), jettyStopMessagePort);
-            OutputStream out = s.getOutputStream();
-            System.out.println("*** sending jetty stop request");
-            out.write(("\r\n").getBytes());
-            out.flush();
-            s.close();
-        }
+	public JettyServer(final String webbapp, final int port, final String context) {
+		this.webbapp = webbapp;
+		this.context = context;
+		server = new Server(port);
+	}
 
-    }
+	public void start() throws Exception {
+		final WebAppContext webapp = new WebAppContext(webbapp, context);
+		server.addHandler(webapp);
+		server.start();
+	}
 
-    private static void maybeStartMonitor(final JettyServer jettyServer, int jettyStopMessagePort) {
-        if (jettyStopMessagePort > 0) {
-            new JettyMonitor(jettyStopMessagePort, jettyServer).start();
-        }
-    }
+	public void stop() throws Exception {
+		server.stop();
+	}
 
-    public JettyServer(final String webbApp, final int port, final String context) {
-        this.webbApp = webbApp;
-        this.context = context;
-        server = new Server(port);
-    }
-
-    public void start() throws Exception {
-        final WebAppContext webAppContext = new WebAppContext(webbApp, context);
-        server.addHandler(webAppContext);
-        server.start();
-    }
-
-    public void stop() throws Exception {
-        server.stop();
-    }
-
-    public void join() throws Exception {
-        server.join();
-    }
-
+	public void join() throws Exception {
+		server.join();
+	}
+	
     private static class JettyMonitor extends Thread {
 
-        private final JettyServer jettyServer;
+    	private final JettyServer jettyServer;
         private final ServerSocket socket;
 
         public JettyMonitor(final int stopPort, final JettyServer jettyServer) {
             this.jettyServer = jettyServer;
-            setDaemon(true);
+			setDaemon(true);
             setName("StopMonitor");
             try {
                 this.socket = new ServerSocket(stopPort, 1, InetAddress.getByName("127.0.0.1"));
@@ -89,7 +76,7 @@ public final class JettyServer {
                 throw new RuntimeException(e);
             }
         }
-
+        
         @Override
         public void run() {
             System.out.println("*** running jetty 'stop' thread");
@@ -106,6 +93,6 @@ public final class JettyServer {
                 throw new RuntimeException(e);
             }
         }
-
+        
     }
 }

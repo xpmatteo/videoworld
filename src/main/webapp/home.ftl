@@ -45,7 +45,13 @@
 				<div class="wiz-content movielist">					
 			    	<#list movies as movie>
 			    		<div class="movie">
-			    			<p><input type="checkbox" name="movieNames" value="${movie.title}"/> ${movie.title}</p>
+			    			<p>
+                                <input type="checkbox" name="movieNames" value="${movie.title}"/> ${movie.title}
+                                <#if !isGlobalAdvertisementActive && !movie.price.promotion.advertisementMessage.isEmpty()>
+                                     - Promotion: ${movie.price.promotion.advertisementMessage}
+                                </#if>
+                            </p>
+
 			    		</div>
 			    	</#list>
 				</div>
@@ -55,7 +61,10 @@
 				</div>
 			</div>
 			<div id="wizard-2">
-				<div class="wiz-content">					
+				<div class="wiz-content">
+                    <#if isGlobalAdvertisementActive >
+                        <p><bold>Promotion: ${advertisementMessage}</bold></p>
+                    </#if>
 					<p>Number of days:
 						<select name="rentalDuration">
 							<option value="1">1</option>

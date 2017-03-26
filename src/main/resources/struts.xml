@@ -46,7 +46,11 @@
 			<result type="freemarker">statement.ftl</result>
 		</action>
 
-		<action name="admin" class="viewAdminAction">
+        <action name="account" class="viewAccountAction">
+            <result type="freemarker">account.ftl</result>
+        </action>
+
+        <action name="admin" class="viewAdminAction">
 			<result type="freemarker">admin.ftl</result>
 		</action>
 	</package>

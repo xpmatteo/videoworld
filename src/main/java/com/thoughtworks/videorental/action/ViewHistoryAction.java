@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.thoughtworks.videorental.domain.Customer;
+import com.thoughtworks.videorental.domain.Rental;
 import com.thoughtworks.videorental.domain.Transaction;
 import com.thoughtworks.videorental.domain.repository.TransactionRepository;
 import com.thoughtworks.videorental.interceptor.CustomerAware;
@@ -27,7 +28,20 @@ public class ViewHistoryAction extends ActionSupport implements CustomerAware {
 		return transactions;
 	}
 
-	@Override
+    public String getFrequentRenterPointsStatement() {
+        return customer.getFrequentRenterPointsStatement();
+    }
+
+    public double getTotalAmountCharged() {
+        double totalAmount = 0.0;
+        for(Transaction transaction: transactions) {
+            totalAmount += transaction.getTotalAmountCharged();
+        }
+
+        return totalAmount;
+    }
+
+    @Override
 	public String execute() throws Exception {
 		transactions = transactionRepository.transactionsBy(customer);
 		return SUCCESS;

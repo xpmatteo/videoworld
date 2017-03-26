@@ -2,27 +2,15 @@ package com.thoughtworks.videorental.spring;
 
 import java.util.Arrays;
 
+import com.thoughtworks.videorental.action.*;
+import com.thoughtworks.videorental.domain.repository.*;
+import com.thoughtworks.videorental.repository.*;
 import org.springframework.config.java.annotation.Bean;
 import org.springframework.config.java.annotation.Configuration;
 
-import com.thoughtworks.videorental.action.LoginAction;
-import com.thoughtworks.videorental.action.LogoutAction;
-import com.thoughtworks.videorental.action.RentMoviesAction;
-import com.thoughtworks.videorental.action.ViewHistoryAction;
-import com.thoughtworks.videorental.action.ViewAdminAction;
-import com.thoughtworks.videorental.action.ViewHomeAction;
-import com.thoughtworks.videorental.action.ViewCurrentRentalsAction;
 import com.thoughtworks.videorental.domain.Customer;
 import com.thoughtworks.videorental.domain.Movie;
-import com.thoughtworks.videorental.domain.repository.CustomerRepository;
-import com.thoughtworks.videorental.domain.repository.MovieRepository;
-import com.thoughtworks.videorental.domain.repository.RentalRepository;
-import com.thoughtworks.videorental.domain.repository.TransactionRepository;
 import com.thoughtworks.videorental.interceptor.CustomerLoginInterceptor;
-import com.thoughtworks.videorental.repository.SetBasedCustomerRepository;
-import com.thoughtworks.videorental.repository.SetBasedMovieRepository;
-import com.thoughtworks.videorental.repository.SetBasedRentalRepository;
-import com.thoughtworks.videorental.repository.SetBasedTransactionRepository;
 
 @Configuration
 public class VideoRentalConfiguration {
@@ -38,12 +26,17 @@ public class VideoRentalConfiguration {
 
 	@Bean(scope = "prototype")
 	public ViewHomeAction viewHomeAction() {
-		return new ViewHomeAction(movieRepository());
+		return new ViewHomeAction(movieRepository(), promotionRepository());
 	}
+
+    @Bean(scope = "prototype")
+    public ViewAccountAction viewAccountAction() {
+        return new ViewAccountAction();
+    }
 
 	@Bean(scope = "prototype")
 	public RentMoviesAction rentMoviesAction() {
-		return new RentMoviesAction(movieRepository(), rentalRepository(), transactionRepository());
+		return new RentMoviesAction(movieRepository(), rentalRepository(), transactionRepository(), promotionRepository());
 	}
 
 	@Bean(scope = "prototype")
@@ -53,7 +46,7 @@ public class VideoRentalConfiguration {
 
 	@Bean(scope = "prototype")
 	public ViewAdminAction viewAdminAction() {
-		return new ViewAdminAction(customerRepository());
+		return new ViewAdminAction(customerRepository(), promotionRepository());
 	}
 	
 	@Bean(scope = "prototype")
@@ -82,10 +75,15 @@ public class VideoRentalConfiguration {
 		return new SetBasedRentalRepository();
 	}
 
-	@Bean(scope = "singleton")
-	public TransactionRepository transactionRepository() {
-		return new SetBasedTransactionRepository();
-	}
+    @Bean(scope = "singleton")
+    public TransactionRepository transactionRepository() {
+        return new SetBasedTransactionRepository();
+    }
+
+    @Bean(scope = "singleton")
+    public PromotionRepository promotionRepository() {
+        return new InMemoryPromotionRepository();
+    }
 
 	@Bean(scope = "singleton")
 	public CustomerLoginInterceptor customerLoginInterceptor() {

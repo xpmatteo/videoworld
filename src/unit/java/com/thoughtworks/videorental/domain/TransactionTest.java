@@ -6,12 +6,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.thoughtworks.datetime.*;
 import org.junit.Test;
-
-import com.thoughtworks.datetime.Duration;
-import com.thoughtworks.datetime.LocalDate;
-import com.thoughtworks.datetime.LocalDateTime;
-import com.thoughtworks.datetime.Period;
 
 public class TransactionTest {
 	private static final Movie FINDING_NEMO = new Movie("Finding Nemo", Movie.CHILDRENS);
@@ -37,6 +33,21 @@ public class TransactionTest {
 		assertEquals(Collections.singleton(RENTAL_ONE), transaction.getRentals());
 	}
 
+    @Test
+    public void ShouldCalculateTheTotalCharges() {
+        final Set<Rental> rentals = new HashSet<Rental>();
+        Customer anyCustomer = CUSTOMER_ONE;
+        FiniteLocalDate anyDate = FiniteLocalDate.on(2013, 06, 28);
+        Period anyPeriod = Period.of(anyDate, Duration.ofDays(3));
+        rentals.add(new Rental(anyCustomer, new Movie("any title", new StubPrice(13.0)), anyPeriod));
+        rentals.add(new Rental(anyCustomer, new Movie("any title", new StubPrice(17.0)), anyPeriod));
+
+        LocalDateTime anyDateTime = LocalDateTime.at(2013, 06, 28, 12, 0, 1);
+        final Transaction transaction = new Transaction(anyDateTime, anyCustomer, rentals);
+
+        assertEquals(30.00, transaction.getTotalAmountCharged());
+    }
+
 	@Test(expected = UnsupportedOperationException.class)
 	public void shouldReturnUnmodifiableRentalSet() {
 		final Transaction transaction = new Transaction(LocalDateTime.now(), CUSTOMER_ONE, Collections.singleton(RENTAL_ONE));
@@ -47,4 +58,29 @@ public class TransactionTest {
 	public void shouldThrowExceptionIfRentalForDifferentCustomer() {
 		new Transaction(LocalDateTime.now(), CUSTOMER_TWO, Collections.singleton(RENTAL_ONE));
 	}
+
+    public class StubPrice implements Price {
+
+        private final double stubPrice;
+
+        public StubPrice(double stubPrice) {
+            this.stubPrice = stubPrice;
+        }
+
+        @Override
+        public double getCharge(int daysRented) {
+            return stubPrice;
+        }
+
+        @Override
+        public int getFrequentRenterPoints(int daysRented) {
+            return 0;
+        }
+
+        @Override
+        public Promotion getPromotion() {
+            return new NullPromotion();
+        }
+
+    }
 }

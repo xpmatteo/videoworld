@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import com.thoughtworks.videorental.domain.repository.PromotionRepository;
+import com.thoughtworks.videorental.repository.InMemoryPromotionRepository;
 import org.hamcrest.Matcher;
 import org.junit.After;
 import org.junit.Before;
@@ -35,6 +37,7 @@ public class RentMoviesActionTest {
 	private MovieRepository movieRepository;
 	private RentalRepository rentalRepository;
 	private TransactionRepository transactionRepository;
+    private PromotionRepository promotionRepository;
 	private RentMoviesAction rentMoviesAction;
 	private Customer customer;
 
@@ -45,9 +48,10 @@ public class RentMoviesActionTest {
 		movieRepository.add(PULP_FICTION);
 		movieRepository.add(FINDING_NEMO);
 
+        promotionRepository = new InMemoryPromotionRepository();
 		rentalRepository = mock(RentalRepository.class);
 		transactionRepository = mock(TransactionRepository.class);
-		rentMoviesAction = new RentMoviesAction(movieRepository, rentalRepository, transactionRepository);
+		rentMoviesAction = new RentMoviesAction(movieRepository, rentalRepository, transactionRepository, promotionRepository);
 		customer = mock(Customer.class);
 		rentMoviesAction.setCustomer(customer);
 	}
@@ -105,10 +109,10 @@ public class RentMoviesActionTest {
 
 		final List rentalMatchers = new ArrayList();
 		rentalMatchers.add(hasSize(movies.length + 1));
-		rentalMatchers.add(hasItem(allOf(hasProperty("period", equalTo(period)), hasProperty("movie",
+		rentalMatchers.add(hasItem(allOf(hasProperty("movie",
 				sameInstance(firstMovie)))));
 		for (final Movie movie : movies) {
-			rentalMatchers.add(hasItem(allOf(hasProperty("period", equalTo(period)), hasProperty("movie",
+			rentalMatchers.add(hasItem(allOf(hasProperty("movie",
 					sameInstance(movie)))));
 		}
 

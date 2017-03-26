@@ -6,7 +6,7 @@
     <h1>Current Rentals</h1>
     <ul>
 	<#list rentals as rental>
-	<li>${rental.movie.title} (ends ${rental.period.endDate})</li>
+	<li>${rental.movie.title} (ends ${rental.endDate})</li>
 	</#list>
 	</ul>
 </body>

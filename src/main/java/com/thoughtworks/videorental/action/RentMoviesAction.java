@@ -13,27 +13,31 @@ import com.thoughtworks.videorental.domain.Movie;
 import com.thoughtworks.videorental.domain.Rental;
 import com.thoughtworks.videorental.domain.Transaction;
 import com.thoughtworks.videorental.domain.repository.MovieRepository;
+import com.thoughtworks.videorental.domain.repository.PromotionRepository;
 import com.thoughtworks.videorental.domain.repository.RentalRepository;
 import com.thoughtworks.videorental.domain.repository.TransactionRepository;
 import com.thoughtworks.videorental.interceptor.CustomerAware;
+import com.thoughtworks.videorental.repository.InMemoryPromotionRepository;
 
 public class RentMoviesAction extends ActionSupport implements CustomerAware {
 
 	private final MovieRepository movieRepository;
 	private final RentalRepository rentalRepository;
 	private final TransactionRepository transactionRepository;
+    private final PromotionRepository promotionRepository;
 
-	private Customer customer;
+    private Customer customer;
 	private String statement;
 	private String[] movieNames;
 	private int rentalDuration;
 
 	public RentMoviesAction(final MovieRepository movieRepository, final RentalRepository rentalRepository,
-			final TransactionRepository transactionRepository) {
+			final TransactionRepository transactionRepository, final PromotionRepository promotionRepository) {
 		this.movieRepository = movieRepository;
 		this.rentalRepository = rentalRepository;
 		this.transactionRepository = transactionRepository;
-	}
+        this.promotionRepository = promotionRepository;
+    }
 
 	@Override
 	public void setCustomer(final Customer customer) {
@@ -59,7 +63,7 @@ public class RentMoviesAction extends ActionSupport implements CustomerAware {
 
 		final Set<Rental> rentals = new LinkedHashSet<Rental>();
 		for (final Movie movie : movies) {
-			final Rental rental = new Rental(customer, movie, rentalPeriod);
+			final Rental rental = new Rental(customer, movie, rentalPeriod, promotionRepository.retrieveCurrentPromotion());
 			rentals.add(rental);
 		}
 
