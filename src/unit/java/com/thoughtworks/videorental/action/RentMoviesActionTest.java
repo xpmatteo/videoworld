@@ -124,7 +124,7 @@ public class RentMoviesActionTest {
 		assertEquals(statement, rentMoviesAction.getStatement());
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private Matcher<Set<Rental>> isRentalsForDurationAndOf(final int days, final Movie... movies) {
 		final Period period = Period.of(LocalDate.today(), Duration.ofDays(days));
 

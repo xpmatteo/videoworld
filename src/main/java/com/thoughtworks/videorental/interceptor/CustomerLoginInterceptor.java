@@ -12,7 +12,7 @@ public class CustomerLoginInterceptor extends AbstractInterceptor {
 
 	private static final String USER_KEY = "user";
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public String intercept(final ActionInvocation invocation) throws Exception {
 		final Map session = invocation.getInvocationContext().getSession();
 		final Customer customer = (Customer) session.get(USER_KEY);
