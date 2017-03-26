@@ -21,7 +21,7 @@ import com.thoughtworks.videorental.domain.repository.TransactionRepository;
 import com.thoughtworks.videorental.interceptor.CustomerLoginInterceptor;
 import com.thoughtworks.videorental.repository.SetBasedCustomerRepository;
 import com.thoughtworks.videorental.repository.SetBasedMovieRepository;
-import com.thoughtworks.videorental.repository.SetBasedRentalRepository;
+import com.thoughtworks.videorental.repository.InMemoryRentalRepository;
 import com.thoughtworks.videorental.repository.SetBasedTransactionRepository;
 
 @Configuration
@@ -79,7 +79,7 @@ public class VideoRentalConfiguration {
 
 	@Bean(scope = "singleton")
 	public RentalRepository rentalRepository() {
-		return new SetBasedRentalRepository();
+		return new InMemoryRentalRepository();
 	}
 
 	@Bean(scope = "singleton")

@@ -28,7 +28,7 @@ import com.thoughtworks.videorental.domain.repository.MovieRepository;
 import com.thoughtworks.videorental.domain.repository.RentalRepository;
 import com.thoughtworks.videorental.domain.repository.TransactionRepository;
 import com.thoughtworks.videorental.repository.SetBasedMovieRepository;
-import com.thoughtworks.videorental.repository.SetBasedRentalRepository;
+import com.thoughtworks.videorental.repository.InMemoryRentalRepository;
 import com.thoughtworks.videorental.repository.SetBasedTransactionRepository;
 
 public class RentMoviesActionTest {
@@ -84,7 +84,7 @@ public class RentMoviesActionTest {
 
 	@Test
 	public void addsOneFreeDayForWeekRentalsForNewReleases() throws Exception {
-		rentalRepository = new SetBasedRentalRepository();
+		rentalRepository = new InMemoryRentalRepository();
 		rentMoviesAction = new RentMoviesAction(movieRepository, rentalRepository, transactionRepository);
 		rentMoviesAction.setCustomer(customer);
 		rentMoviesAction.setMovieNames(new String[] { CHILDRENS_MOVIE.getTitle(), NEW_RELEASE_MOVIE.getTitle() });
@@ -102,11 +102,11 @@ public class RentMoviesActionTest {
 			public void populateCriteria(Criteria criteria) {
 			}
 		};
-		Rental[] rentals = rentalRepository.selectAll(comp).toArray(new Rental[0]);
-		assertEquals(CHILDRENS_MOVIE, rentals[0].getMovie());
-		assertEquals(7, (int) rentals[0].getPeriod().getDuration().getDays());
-		assertEquals(NEW_RELEASE_MOVIE, rentals[1].getMovie());
-		assertEquals(8, (int) rentals[1].getPeriod().getDuration().getDays());
+		List<Rental >rentals = rentalRepository.selectAll(comp);
+		assertEquals(CHILDRENS_MOVIE, rentals.get(0).getMovie());
+		assertEquals(7, (int) rentals.get(0).getPeriod().getDuration().getDays());
+		assertEquals(NEW_RELEASE_MOVIE, rentals.get(1).getMovie());
+		assertEquals(8, (int) rentals.get(1).getPeriod().getDuration().getDays());
 	}
 
 	@SuppressWarnings("unchecked")
