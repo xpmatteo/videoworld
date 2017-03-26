@@ -1,6 +1,6 @@
 package com.thoughtworks.videorental.action;
 
-import java.util.Set;
+import java.util.List;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.thoughtworks.videorental.domain.Customer;
@@ -22,7 +22,7 @@ public class LoginAction extends ActionSupport {
 		this.customerName = customer;
 	}
 
-	public Set<Customer> getCustomers() {
+	public List<Customer> getCustomers() {
 		return customerRepository.selectAll(new CustomersOrderedByNameComparator());
 	}
 
@@ -36,7 +36,7 @@ public class LoginAction extends ActionSupport {
 			return LOGIN;
 		}
 
-		loggedInCustomer = customerRepository.selectUnique(new CustomerWithNameSpecification(customerName));
+		loggedInCustomer = customerRepository.selectUniqueByName(customerName);
 		if (loggedInCustomer == null) {
 			return LOGIN;
 		}

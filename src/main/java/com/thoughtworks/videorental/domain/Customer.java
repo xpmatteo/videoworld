@@ -40,4 +40,8 @@ public class Customer {
 		return frequentRenterPoints;
 	}
 
+	@Override
+	public String toString() {
+		return String.format("Customer: %s", name);
+	}
 }

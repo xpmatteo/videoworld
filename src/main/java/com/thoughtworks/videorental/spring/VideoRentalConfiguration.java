@@ -19,7 +19,7 @@ import com.thoughtworks.videorental.domain.repository.MovieRepository;
 import com.thoughtworks.videorental.domain.repository.RentalRepository;
 import com.thoughtworks.videorental.domain.repository.TransactionRepository;
 import com.thoughtworks.videorental.interceptor.CustomerLoginInterceptor;
-import com.thoughtworks.videorental.repository.SetBasedCustomerRepository;
+import com.thoughtworks.videorental.repository.InMemoryCustomerRepository;
 import com.thoughtworks.videorental.repository.InMemoryMovieRepository;
 import com.thoughtworks.videorental.repository.InMemoryRentalRepository;
 import com.thoughtworks.videorental.repository.InMemoryTransactionRepository;
@@ -74,7 +74,7 @@ public class VideoRentalConfiguration {
 		final Customer customer1 = new Customer("James Madison");
 		final Customer customer2 = new Customer("Zackery Taylor");
 		final Customer customer3 = new Customer("Benjamin Harrison");
-		return new SetBasedCustomerRepository(Arrays.asList(customer1, customer2, customer3));
+		return new InMemoryCustomerRepository(Arrays.asList(customer1, customer2, customer3));
 	}
 
 	@Bean(scope = "singleton")

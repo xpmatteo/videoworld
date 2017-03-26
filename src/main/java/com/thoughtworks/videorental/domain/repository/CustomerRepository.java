@@ -1,26 +1,20 @@
 package com.thoughtworks.videorental.domain.repository;
 
-import java.util.Collection;
-import java.util.Set;
+import java.util.List;
 
-import com.thoughtworks.ddd.repository.NonUniqueObjectSelectedException;
-import com.thoughtworks.ddd.repository.NullObjectAddedException;
 import com.thoughtworks.ddd.specification.OrderComparator;
-import com.thoughtworks.ddd.specification.Specification;
 import com.thoughtworks.videorental.domain.Customer;
 
 public interface CustomerRepository {
-	void add(Customer entity) throws NullObjectAddedException;
+	List<Customer> selectAll();
 
-	void add(Collection<Customer> entities) throws NullObjectAddedException;
+	List<Customer> selectAll(OrderComparator<Customer> comparator);
 
-	Set<Customer> selectAll();
+	Customer selectUniqueByName(String customerName) throws CustomerNotFound;
 
-	Set<Customer> selectAll(OrderComparator<Customer> comparator);
-
-	Set<Customer> selectSatisfying(Specification<Customer> specification);
-
-	Set<Customer> selectSatisfying(Specification<Customer> specification, OrderComparator<Customer> comparator);
-
-	Customer selectUnique(Specification<Customer> specification) throws NonUniqueObjectSelectedException;
+	public class CustomerNotFound extends Exception {
+		public CustomerNotFound(String name) {
+			super(name);
+		}
+	}
 }
