@@ -14,7 +14,7 @@ import com.thoughtworks.videorental.domain.repository.RentalRepository;
 
 public class InMemoryRentalRepository implements RentalRepository {
 
-	private List<Rental> rentals = new ArrayList<>();
+	private List<Rental> rentals = Collections.synchronizedList(new ArrayList<>());
 
 	@Override
 	public List<Rental> selectAll(OrderComparator<Rental> comparator) {

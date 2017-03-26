@@ -4,6 +4,7 @@ import static java.util.stream.Collectors.toList;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import com.thoughtworks.ddd.repository.NullObjectAddedException;
@@ -12,7 +13,7 @@ import com.thoughtworks.videorental.domain.Transaction;
 import com.thoughtworks.videorental.domain.repository.TransactionRepository;
 
 public class InMemoryTransactionRepository implements TransactionRepository {
-	private List<Transaction> transactions = new ArrayList<>();
+	private List<Transaction> transactions = Collections.synchronizedList(new ArrayList<>());
 
 	@Override
 	public Collection<Transaction> transactionsBy(Customer customer) {
