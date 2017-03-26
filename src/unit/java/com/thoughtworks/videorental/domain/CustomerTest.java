@@ -2,10 +2,6 @@ package com.thoughtworks.videorental.domain;
 
 import static junit.framework.Assert.*;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.StringReader;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -19,7 +15,6 @@ import com.thoughtworks.datetime.Period;
 
 public class CustomerTest {
 
-	private static final String RESOURCES_PATH = "src/unit/resources";
 	private static final Set<Rental> EMPTY_RENTALS = Collections.emptySet();
 
 	private Customer customer;
@@ -45,17 +40,17 @@ public class CustomerTest {
 
 	@Test
 	public void testEmpty() throws Exception {
-		String noRentalsStatement = 
+		String noRentalsStatement =
 			"Rental Record for John Smith\n"
-			+ "Amount charged is $0.0\n" 
+			+ "Amount charged is $0.0\n"
 			+ "You have a new total of 0 frequent renter points";
 		assertEquals(noRentalsStatement, customer.statement(EMPTY_RENTALS));
 	}
 
 	@Test
 	public void testCustomer() throws Exception {
-		String expected = 
-			"Rental Record for John Smith\n" 
+		String expected =
+			"Rental Record for John Smith\n"
 			+ "  Monty Python and the Holy Grail  -  $3.5\n"
 			+ "  Ran  -  $2.0\n"
 			+ "  LA Confidential  -  $6.0\n"

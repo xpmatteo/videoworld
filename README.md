@@ -26,6 +26,10 @@ This material is shared through a [CC BY-SA 4.0](https://creativecommons.org/lic
    - makes it difficult to see css changes
    - requires reboot to see ftl changes
 
+ - use proper currency type, not double
+ - remove imports of junit 3
+ - remove single reference to javax.persistence.Entity and lib/runtime/ejb3-persistence.jar
+
 
 
 
