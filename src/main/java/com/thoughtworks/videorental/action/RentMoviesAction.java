@@ -59,8 +59,10 @@ public class RentMoviesAction extends ActionSupport implements CustomerAware {
 
 		final Set<Rental> rentals = new LinkedHashSet<Rental>();
 		for (final Movie movie : movies) {
-			final Rental rental = new Rental(customer, movie, rentalPeriod);
-			rentals.add(rental);
+			if (movie.getPrice().equals(Movie.NEW_RELEASE) && rentalPeriod.getDuration().getDays() >= 7)
+				rentals.add(new Rental(customer, movie, Period.of(LocalDate.today(), Duration.ofDays(rentalDuration+1))));
+			else
+				rentals.add(new Rental(customer, movie, rentalPeriod));
 		}
 
 		rentalRepository.add(rentals);

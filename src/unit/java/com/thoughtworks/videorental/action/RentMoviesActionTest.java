@@ -5,20 +5,36 @@ import static org.hamcrest.Matchers.*;
 import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
-import org.hamcrest.*;
-import org.junit.*;
+import org.hamcrest.Matcher;
+import org.hibernate.Criteria;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
-import com.thoughtworks.datetime.*;
-import com.thoughtworks.videorental.domain.*;
-import com.thoughtworks.videorental.domain.repository.*;
-import com.thoughtworks.videorental.repository.*;
+import com.thoughtworks.datetime.Duration;
+import com.thoughtworks.datetime.LocalDate;
+import com.thoughtworks.datetime.LocalDateTime;
+import com.thoughtworks.datetime.Period;
+import com.thoughtworks.ddd.specification.OrderComparator;
+import com.thoughtworks.videorental.domain.Customer;
+import com.thoughtworks.videorental.domain.Movie;
+import com.thoughtworks.videorental.domain.Rental;
+import com.thoughtworks.videorental.domain.Transaction;
+import com.thoughtworks.videorental.domain.repository.MovieRepository;
+import com.thoughtworks.videorental.domain.repository.RentalRepository;
+import com.thoughtworks.videorental.domain.repository.TransactionRepository;
+import com.thoughtworks.videorental.repository.SetBasedMovieRepository;
+import com.thoughtworks.videorental.repository.SetBasedRentalRepository;
+import com.thoughtworks.videorental.repository.SetBasedTransactionRepository;
 
 public class RentMoviesActionTest {
-	private static final Movie THE_GODFATHER = new Movie("The Godfather", Movie.REGULAR);
-	private static final Movie PULP_FICTION = new Movie("Pulp Fiction", Movie.REGULAR);;
-	private static final Movie FINDING_NEMO = new Movie("Finding Nemo", Movie.CHILDRENS);;
+	private static final Movie REGULAR_MOVIE = new Movie("The Godfather", Movie.REGULAR);
+	private static final Movie NEW_RELEASE_MOVIE = new Movie("Pulp Fiction", Movie.NEW_RELEASE);;
+	private static final Movie CHILDRENS_MOVIE = new Movie("Finding Nemo", Movie.CHILDRENS);;
 
 	private MovieRepository movieRepository = new SetBasedMovieRepository();
 	private RentalRepository rentalRepository = mock(RentalRepository.class);
@@ -28,9 +44,9 @@ public class RentMoviesActionTest {
 
 	@Before
 	public void setUp() throws Exception {
-		movieRepository.add(THE_GODFATHER);
-		movieRepository.add(PULP_FICTION);
-		movieRepository.add(FINDING_NEMO);
+		movieRepository.add(REGULAR_MOVIE);
+		movieRepository.add(NEW_RELEASE_MOVIE);
+		movieRepository.add(CHILDRENS_MOVIE);
 
 		rentMoviesAction.setCustomer(customer);
 	}
@@ -47,37 +63,62 @@ public class RentMoviesActionTest {
 
 	@Test
 	public void shouldCreateRentalForEachMovie() throws Exception {
-		rentMoviesAction.setMovieNames(new String[] { THE_GODFATHER.getTitle(), PULP_FICTION.getTitle() });
+		rentMoviesAction.setMovieNames(new String[] { REGULAR_MOVIE.getTitle(), NEW_RELEASE_MOVIE.getTitle() });
 		final int days = 1;
 		rentMoviesAction.setRentalDuration(days);
 		rentMoviesAction.execute();
 
-		verify(rentalRepository).add(argThat(isRentalsForDurationAndOf(days, THE_GODFATHER, PULP_FICTION)));
+		verify(rentalRepository).add(argThat(isRentalsForDurationAndOf(days, REGULAR_MOVIE, NEW_RELEASE_MOVIE)));
 	}
 
 	@Test
 	public void shouldCreateTransactionForAllRentals() throws Exception {
-		rentMoviesAction.setMovieNames(new String[] { THE_GODFATHER.getTitle(), FINDING_NEMO.getTitle() });
+		rentMoviesAction.setMovieNames(new String[] { REGULAR_MOVIE.getTitle(), CHILDRENS_MOVIE.getTitle() });
 		final int days = 6;
 		rentMoviesAction.setRentalDuration(days);
 		rentMoviesAction.execute();
 
 		verify(transactionRepository).add(
-				argThat(isTransactionWithRentalsForDurationAndOf(days, THE_GODFATHER, FINDING_NEMO)));
+				argThat(isTransactionWithRentalsForDurationAndOf(days, REGULAR_MOVIE, CHILDRENS_MOVIE)));
+	}
+
+	@Test
+	public void addsOneFreeDayForWeekRentalsForNewReleases() throws Exception {
+		rentalRepository = new SetBasedRentalRepository();
+		rentMoviesAction = new RentMoviesAction(movieRepository, rentalRepository, transactionRepository);
+		rentMoviesAction.setCustomer(customer);
+		rentMoviesAction.setMovieNames(new String[] { CHILDRENS_MOVIE.getTitle(), NEW_RELEASE_MOVIE.getTitle() });
+		rentMoviesAction.setRentalDuration(7);
+
+		rentMoviesAction.execute();
+
+		OrderComparator<Rental> comp = new OrderComparator<Rental>() {
+			@Override
+			public int compare(Rental o1, Rental o2) {
+				return o1.getMovie().getTitle().compareTo(o2.getMovie().getTitle());
+			}
+
+			@Override
+			public void populateCriteria(Criteria criteria) {
+			}
+		};
+		Rental[] rentals = rentalRepository.selectAll(comp).toArray(new Rental[0]);
+		assertEquals(CHILDRENS_MOVIE, rentals[0].getMovie());
+		assertEquals(7, (int) rentals[0].getPeriod().getDuration().getDays());
+		assertEquals(NEW_RELEASE_MOVIE, rentals[1].getMovie());
+		assertEquals(8, (int) rentals[1].getPeriod().getDuration().getDays());
 	}
 
 	@SuppressWarnings("unchecked")
 	@Test
 	public void shouldRetrieveCustomerStatement() throws Exception {
-		rentMoviesAction.setMovieNames(new String[] { THE_GODFATHER.getTitle(), PULP_FICTION.getTitle() });
-		final int days = 3;
-		rentMoviesAction.setRentalDuration(days);
-
+		rentMoviesAction.setMovieNames(new String[] { REGULAR_MOVIE.getTitle(), NEW_RELEASE_MOVIE.getTitle() });
+		rentMoviesAction.setRentalDuration(3);
 		final String statement = "my statement";
 		when(customer.statement((Set<Rental>) anyObject())).thenReturn(statement);
+
 		rentMoviesAction.execute();
 
-		verify(customer).statement(argThat(isRentalsForDurationAndOf(days, THE_GODFATHER, PULP_FICTION)));
 		assertEquals(statement, rentMoviesAction.getStatement());
 	}
 
