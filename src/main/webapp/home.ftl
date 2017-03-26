@@ -29,7 +29,7 @@
   </script>
 </head>
 <body>
-  <h1>Rent a Movie</h1>
+  <h1>Rent a Movie!!!!</h1>
 	<form id="wizard" class="wiz-container" action="rentMovies">
 		<ul class="wiz-list">
 			<li><a href="#wizard-1">

@@ -10,7 +10,7 @@ import com.thoughtworks.videorental.domain.Rental;
 public interface RentalRepository {
 	void add(Rental entity);
 
-	void add(Collection<Rental> entities);
+	void add(Collection<Rental> rentals);
 
 	List<Rental> selectAll(Comparator<Rental> comparator);
 
