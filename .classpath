@@ -47,7 +47,6 @@
 	<classpathentry kind="lib" path="lib/tools/jna.jar"/>
 	<classpathentry kind="lib" path="lib/tools/json-20080701.jar"/>
 	<classpathentry kind="lib" path="lib/tools/jsp-2.1-glassfish-9.1.1.B60.25.p2.jar"/>
-	<classpathentry kind="lib" path="lib/tools/jsp-2.1-jetty-6.1.22.jar"/>
 	<classpathentry kind="lib" path="lib/tools/jsp-api-2.1-glassfish-9.1.1.B60.25.p2.jar"/>
 	<classpathentry kind="lib" path="lib/tools/mockito-core-1.8.4.jar"/>
 	<classpathentry kind="lib" path="lib/tools/nekohtml-1.9.13.jar"/>
