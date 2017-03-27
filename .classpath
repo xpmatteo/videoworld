@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry kind="src" path="src/main/resources"/>
 	<classpathentry kind="src" path="src/unit/java"/>
 	<classpathentry kind="src" path="src/util/java"/>
 	<classpathentry kind="lib" path="lib/build/servlet-api-2.5-20081211.jar"/>
