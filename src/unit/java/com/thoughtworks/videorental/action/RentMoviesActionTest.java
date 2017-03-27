@@ -1,9 +1,17 @@
 package com.thoughtworks.videorental.action;
 
-import static junit.framework.Assert.*;
-import static org.hamcrest.Matchers.*;
-import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.*;
+import static junit.framework.Assert.assertEquals;
+import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.hasProperty;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.sameInstance;
+import static org.mockito.Matchers.anyObject;
+import static org.mockito.Matchers.argThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +31,6 @@ import com.thoughtworks.videorental.domain.Movie;
 import com.thoughtworks.videorental.domain.Rental;
 import com.thoughtworks.videorental.domain.Transaction;
 import com.thoughtworks.videorental.domain.repository.MovieRepository;
-import com.thoughtworks.videorental.domain.repository.RentalRepository;
 import com.thoughtworks.videorental.domain.repository.TransactionRepository;
 import com.thoughtworks.videorental.repository.SetBasedMovieRepository;
 
@@ -33,7 +40,6 @@ public class RentMoviesActionTest {
 	private static final Movie FINDING_NEMO = new Movie("Finding Nemo", Movie.CHILDRENS);;
 
 	private MovieRepository movieRepository;
-	private RentalRepository rentalRepository;
 	private TransactionRepository transactionRepository;
 	private RentMoviesAction rentMoviesAction;
 	private Customer customer;
@@ -45,9 +51,8 @@ public class RentMoviesActionTest {
 		movieRepository.add(PULP_FICTION);
 		movieRepository.add(FINDING_NEMO);
 
-		rentalRepository = mock(RentalRepository.class);
 		transactionRepository = mock(TransactionRepository.class);
-		rentMoviesAction = new RentMoviesAction(movieRepository, rentalRepository, transactionRepository);
+		rentMoviesAction = new RentMoviesAction(movieRepository, transactionRepository);
 		customer = mock(Customer.class);
 		rentMoviesAction.setCustomer(customer);
 	}
@@ -60,16 +65,6 @@ public class RentMoviesActionTest {
 	@After
 	public void resetDate() {
 		LocalDateTime.resetSystemDateTime();
-	}
-
-	@Test
-	public void shouldCreateRentalForEachMovie() throws Exception {
-		rentMoviesAction.setMovieNames(new String[] { THE_GODFATHER.getTitle(), PULP_FICTION.getTitle() });
-		final int days = 1;
-		rentMoviesAction.setRentalDuration(days);
-		rentMoviesAction.execute();
-
-		verify(rentalRepository).add(argThat(isRentalsForDurationAndOf(days, THE_GODFATHER, PULP_FICTION)));
 	}
 
 	@Test

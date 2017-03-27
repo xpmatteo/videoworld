@@ -8,20 +8,18 @@ import org.springframework.config.java.annotation.Configuration;
 import com.thoughtworks.videorental.action.LoginAction;
 import com.thoughtworks.videorental.action.LogoutAction;
 import com.thoughtworks.videorental.action.RentMoviesAction;
-import com.thoughtworks.videorental.action.ViewHistoryAction;
 import com.thoughtworks.videorental.action.ViewAdminAction;
-import com.thoughtworks.videorental.action.ViewHomeAction;
 import com.thoughtworks.videorental.action.ViewCurrentRentalsAction;
+import com.thoughtworks.videorental.action.ViewHistoryAction;
+import com.thoughtworks.videorental.action.ViewHomeAction;
 import com.thoughtworks.videorental.domain.Customer;
 import com.thoughtworks.videorental.domain.Movie;
 import com.thoughtworks.videorental.domain.repository.CustomerRepository;
 import com.thoughtworks.videorental.domain.repository.MovieRepository;
-import com.thoughtworks.videorental.domain.repository.RentalRepository;
 import com.thoughtworks.videorental.domain.repository.TransactionRepository;
 import com.thoughtworks.videorental.interceptor.CustomerLoginInterceptor;
 import com.thoughtworks.videorental.repository.SetBasedCustomerRepository;
 import com.thoughtworks.videorental.repository.SetBasedMovieRepository;
-import com.thoughtworks.videorental.repository.SetBasedRentalRepository;
 import com.thoughtworks.videorental.repository.SetBasedTransactionRepository;
 
 @Configuration
@@ -43,7 +41,7 @@ public class VideoRentalConfiguration {
 
 	@Bean(scope = "prototype")
 	public RentMoviesAction rentMoviesAction() {
-		return new RentMoviesAction(movieRepository(), rentalRepository(), transactionRepository());
+		return new RentMoviesAction(movieRepository(), transactionRepository());
 	}
 
 	@Bean(scope = "prototype")
@@ -55,10 +53,10 @@ public class VideoRentalConfiguration {
 	public ViewAdminAction viewAdminAction() {
 		return new ViewAdminAction(customerRepository());
 	}
-	
+
 	@Bean(scope = "prototype")
 	public ViewCurrentRentalsAction viewCurrentRentalsAction() {
-		return new ViewCurrentRentalsAction(rentalRepository());
+		return new ViewCurrentRentalsAction(transactionRepository());
 	}
 
 	@Bean(scope = "singleton")
@@ -75,11 +73,6 @@ public class VideoRentalConfiguration {
 		final Customer customer2 = new Customer("Zackery Taylor");
 		final Customer customer3 = new Customer("Benjamin Harrison");
 		return new SetBasedCustomerRepository(Arrays.asList(customer1, customer2, customer3));
-	}
-
-	@Bean(scope = "singleton")
-	public RentalRepository rentalRepository() {
-		return new SetBasedRentalRepository();
 	}
 
 	@Bean(scope = "singleton")

@@ -5,18 +5,18 @@ import java.util.Collection;
 import com.opensymphony.xwork2.ActionSupport;
 import com.thoughtworks.videorental.domain.Customer;
 import com.thoughtworks.videorental.domain.Rental;
-import com.thoughtworks.videorental.domain.repository.RentalRepository;
+import com.thoughtworks.videorental.domain.repository.TransactionRepository;
 import com.thoughtworks.videorental.interceptor.CustomerAware;
 
 public class ViewCurrentRentalsAction extends ActionSupport implements CustomerAware {
 
-	private final RentalRepository rentalRepository;
+	private final TransactionRepository transactionRepository;
 
 	private Collection<Rental> rentals;
 	private Customer customer;
 
-	public ViewCurrentRentalsAction(final RentalRepository rentalRepository) {
-		this.rentalRepository = rentalRepository;
+	public ViewCurrentRentalsAction(final TransactionRepository transactionRepository) {
+		this.transactionRepository = transactionRepository;
 	}
 
 	@Override
@@ -30,7 +30,7 @@ public class ViewCurrentRentalsAction extends ActionSupport implements CustomerA
 
 	@Override
 	public String execute() throws Exception {
-		rentals = rentalRepository.currentRentalsFor(customer);
+		rentals = transactionRepository.currentRentalsFor(customer);
 
 		return SUCCESS;
 	}

@@ -13,14 +13,12 @@ import com.thoughtworks.videorental.domain.Movie;
 import com.thoughtworks.videorental.domain.Rental;
 import com.thoughtworks.videorental.domain.Transaction;
 import com.thoughtworks.videorental.domain.repository.MovieRepository;
-import com.thoughtworks.videorental.domain.repository.RentalRepository;
 import com.thoughtworks.videorental.domain.repository.TransactionRepository;
 import com.thoughtworks.videorental.interceptor.CustomerAware;
 
 public class RentMoviesAction extends ActionSupport implements CustomerAware {
 
 	private final MovieRepository movieRepository;
-	private final RentalRepository rentalRepository;
 	private final TransactionRepository transactionRepository;
 
 	private Customer customer;
@@ -28,10 +26,8 @@ public class RentMoviesAction extends ActionSupport implements CustomerAware {
 	private String[] movieNames;
 	private int rentalDuration;
 
-	public RentMoviesAction(final MovieRepository movieRepository, final RentalRepository rentalRepository,
-			final TransactionRepository transactionRepository) {
+	public RentMoviesAction(final MovieRepository movieRepository, final TransactionRepository transactionRepository) {
 		this.movieRepository = movieRepository;
-		this.rentalRepository = rentalRepository;
 		this.transactionRepository = transactionRepository;
 	}
 
@@ -63,7 +59,6 @@ public class RentMoviesAction extends ActionSupport implements CustomerAware {
 			rentals.add(rental);
 		}
 
-		rentalRepository.add(rentals);
 		final Transaction transaction = new Transaction(LocalDateTime.now(), customer, rentals);
 		transactionRepository.add(transaction);
 
