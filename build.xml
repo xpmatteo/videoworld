@@ -259,11 +259,11 @@
     </target>
 
     <target name="twist-test" depends="util-jar, twist-fixtures-jar, war" description="Run acceptance tests">
-        <jettyStartServer war="${main.war}" port="${application.twist_port}" stop-port="${application.twist_stop_port}" spawn="true"/>
+        <!-- <jettyStartServer war="${main.war}" port="${application.twist_port}" stop-port="${application.twist_stop_port}" spawn="true"/>
         <trycatch>
             <try>
-                <!-- twist.runner doesn't provide a way to set working directory.
-                 This trick allows us to change the current working dir. -->
+                 twist.runner doesn't provide a way to set working directory.
+                 This trick allows us to change the current working dir.
                 <ant antfile="${ant.file.videorental}" dir="${twist.dir}"
                      inheritAll="all" inheritRefs="all" target="-execute-scenarios" >
                     <property name="twist.dir" value="${twist.dir}"/>
@@ -275,7 +275,7 @@
             <finally>
                 <jettyStopServer war="${main.war}" port="${application.twist_port}" stop-port="${application.twist_stop_port}" />
             </finally>
-        </trycatch>
+        </trycatch> -->
     </target>
 
     <target name="-execute-scenarios">
