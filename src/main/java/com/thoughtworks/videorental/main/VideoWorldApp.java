@@ -1,28 +1,38 @@
 package com.thoughtworks.videorental.main;
 
+import java.util.SortedMap;
+import java.util.TreeMap;
 import java.util.function.BiConsumer;
 
 public class VideoWorldApp {
 
-	private WebResponse webResponse;
+	private WebRequest request;
+	private WebResponse response;
 	private BiConsumer<WebRequest, WebResponse> action;
-	private WebRequest webRequest;
+	private SortedMap<String, BiConsumer<WebRequest, WebResponse>> unprotectedActions = new TreeMap<>();
 
-	public VideoWorldApp(WebRequest webRequest, WebResponse webResponse) {
-		this.webRequest = webRequest;
-		this.webResponse = webResponse;
+	public VideoWorldApp(WebRequest request, WebResponse response) {
+		this.request = request;
+		this.response = response;
 	}
 
 	public void service() {
-		if (null == webRequest.getCustomer()) {
-			webResponse.redirectTo("/login");
+		if (null == request.getCustomer()) {
+			if (unprotectedActions.containsKey(request.getPath()))
+				unprotectedActions.get(request.getPath()).accept(request, response);
+			else
+				response.redirectTo("/login");
 			return;
 		}
-		action.accept(webRequest, webResponse);
+		action.accept(request, response);
 	}
 
 	public void addProtectedResource(String path, BiConsumer<WebRequest, WebResponse> action) {
 		this.action = action;
+	}
+
+	public void addUnprotectedResource(String path, BiConsumer<WebRequest, WebResponse> unprotectedAction) {
+		this.unprotectedActions.put(path, unprotectedAction);
 	}
 
 }

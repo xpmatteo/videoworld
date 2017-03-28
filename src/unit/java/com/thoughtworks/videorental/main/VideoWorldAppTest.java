@@ -40,11 +40,24 @@ public class VideoWorldAppTest extends VideoWorldServlet {
 	public void allowsToContinueIfAuthenticated() throws Exception {
 		when(webRequest.getPath()).thenReturn("/something");
 		when(webRequest.getCustomer()).thenReturn(OUR_CUSTOMER);
-		app.addProtectedResource("/something", (req, resp) -> { webResponse.render("pippo", "layout"); });
 
 		app.service();
 
 		verify(webResponse, times(1)).render("pippo", "layout");
+		verifyNoMoreInteractions(webResponse);
+	}
+
+	@Test
+	public void allowsUnauthenticatedUserToProceedToLogin() throws Exception {
+		when(webRequest.getPath()).thenReturn("/login");
+		when(webRequest.getCustomer()).thenReturn(null);
+
+		BiConsumer<WebRequest, WebResponse> loginAction = (req, resp) -> {resp.render("login", "login_layout"); };
+		app.addUnprotectedResource("/login", loginAction);
+
+		app.service();
+
+		verify(webResponse, times(1)).render("login", "login_layout");
 		verifyNoMoreInteractions(webResponse);
 	}
 
