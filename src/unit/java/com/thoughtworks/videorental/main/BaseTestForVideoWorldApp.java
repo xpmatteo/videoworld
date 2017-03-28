@@ -16,6 +16,8 @@ import com.thoughtworks.videorental.domain.repository.CustomerRepository;
 import com.thoughtworks.videorental.domain.repository.MovieRepository;
 import com.thoughtworks.videorental.repository.SetBasedCustomerRepository;
 import com.thoughtworks.videorental.repository.SetBasedMovieRepository;
+import com.thoughtworks.videorental.toolkit.WebRequest;
+import com.thoughtworks.videorental.toolkit.WebResponse;
 
 public class BaseTestForVideoWorldApp {
 	CustomerRepository customerRepository = new SetBasedCustomerRepository();

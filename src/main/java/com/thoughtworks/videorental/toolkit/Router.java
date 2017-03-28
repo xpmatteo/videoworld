@@ -1,7 +1,9 @@
-package com.thoughtworks.videorental.main;
+package com.thoughtworks.videorental.toolkit;
 
 import java.util.SortedMap;
 import java.util.TreeMap;
+
+import com.thoughtworks.videorental.main.WebAction;
 
 public class Router {
 	private static final String LOGIN_REDIRECT = "/login";

@@ -1,4 +1,4 @@
-package com.thoughtworks.videorental.main;
+package com.thoughtworks.videorental.toolkit;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.thoughtworks.videorental.domain.Customer;
+import com.thoughtworks.videorental.toolkit.Router;
 
 public class RouterTest {
 	private static final Customer OUR_CUSTOMER = new Customer("Pippo");

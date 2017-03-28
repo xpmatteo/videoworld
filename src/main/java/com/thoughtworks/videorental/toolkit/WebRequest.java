@@ -1,4 +1,4 @@
-package com.thoughtworks.videorental.main;
+package com.thoughtworks.videorental.toolkit;
 
 import com.thoughtworks.videorental.domain.Customer;
 
