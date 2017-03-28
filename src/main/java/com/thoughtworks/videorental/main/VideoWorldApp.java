@@ -5,7 +5,6 @@ import java.util.TreeMap;
 import java.util.function.BiConsumer;
 
 public class VideoWorldApp {
-
 	private WebRequest request;
 	private WebResponse response;
 	private BiConsumer<WebRequest, WebResponse> action;
@@ -17,17 +16,18 @@ public class VideoWorldApp {
 	}
 
 	public void service() {
+		if (null == request.getCustomer() && unprotectedActions.containsKey(request.getPath())) {
+			unprotectedActions.get(request.getPath()).accept(request, response);
+			return;
+		}
 		if (null == request.getCustomer()) {
-			if (unprotectedActions.containsKey(request.getPath()))
-				unprotectedActions.get(request.getPath()).accept(request, response);
-			else
-				response.redirectTo("/login");
+			response.redirectTo("/login");
 			return;
 		}
 		action.accept(request, response);
 	}
 
-	public void addProtectedResource(String path, BiConsumer<WebRequest, WebResponse> action) {
+	public void addResource(String path, BiConsumer<WebRequest, WebResponse> action) {
 		this.action = action;
 	}
 

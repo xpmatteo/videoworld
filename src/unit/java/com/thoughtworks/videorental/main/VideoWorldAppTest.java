@@ -22,7 +22,7 @@ public class VideoWorldAppTest extends VideoWorldServlet {
 
 	@Before
 	public void setUp() throws Exception {
-		app.addProtectedResource("/something", (req, resp) -> { webResponse.render("pippo", "layout"); });
+		app.addResource("/something", (req, resp) -> { webResponse.render("pippo", "layout"); });
 	}
 
 	@Test
