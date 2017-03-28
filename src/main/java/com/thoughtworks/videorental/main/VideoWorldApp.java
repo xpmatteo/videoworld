@@ -2,13 +2,12 @@ package com.thoughtworks.videorental.main;
 
 import java.util.SortedMap;
 import java.util.TreeMap;
-import java.util.function.BiConsumer;
 
 public class VideoWorldApp {
 	private WebRequest request;
 	private WebResponse response;
-	private SortedMap<String, BiConsumer<WebRequest, WebResponse>> unprotectedActions = new TreeMap<>();
-	private SortedMap<String, BiConsumer<WebRequest, WebResponse>> actions = new TreeMap<>();
+	private SortedMap<String, WebAction> unprotectedActions = new TreeMap<>();
+	private SortedMap<String, WebAction> actions = new TreeMap<>();
 
 	public VideoWorldApp(WebRequest request, WebResponse response) {
 		this.request = request;
@@ -32,11 +31,11 @@ public class VideoWorldApp {
 		response.renderText("<h1>Not Found</h1>");
 	}
 
-	public void addResource(String path, BiConsumer<WebRequest, WebResponse> action) {
+	public void addResource(String path, WebAction action) {
 		actions.put(path, action);
 	}
 
-	public void addUnprotectedResource(String path, BiConsumer<WebRequest, WebResponse> unprotectedAction) {
+	public void addUnprotectedResource(String path, WebAction unprotectedAction) {
 		this.unprotectedActions.put(path, unprotectedAction);
 	}
 
