@@ -12,17 +12,16 @@ import org.junit.Test;
 
 import com.thoughtworks.videorental.domain.Customer;
 
-public class VideoWorldAppTest extends VideoWorldServlet {
-
+public class RouterTest {
 	private static final Customer OUR_CUSTOMER = new Customer("Pippo");
 	private WebResponse response = mock(WebResponse.class);
 	private WebRequest request = mock(WebRequest.class);
-	private VideoWorldApp app = new VideoWorldApp(request, response);
+	private Router router = new Router(request, response);
 
 	@Before
 	public void setUp() throws Exception {
-		app.addResource("/something", (req, resp) -> { response.render("pippo", "layout"); });
-		app.addUnprotectedResource("/login", (req, resp) -> {resp.render("login", "login_layout"); });
+		router.addResource("/something", (req, resp) -> { response.render("pippo", "layout"); });
+		router.addUnprotectedResource("/login", (req, resp) -> {resp.render("login", "login_layout"); });
 
 		when(request.getCustomer()).thenReturn(OUR_CUSTOMER);
 	}
@@ -52,8 +51,8 @@ public class VideoWorldAppTest extends VideoWorldServlet {
 
 	@Test
 	public void selectsResourceAccordingToPath() throws Exception {
-		app.addResource("/foo", (r, resp) -> { resp.render("foo", "layout"); });
-		app.addResource("/bar", (r, resp) -> { resp.render("bar", "layout"); });
+		router.addResource("/foo", (r, resp) -> { resp.render("foo", "layout"); });
+		router.addResource("/bar", (r, resp) -> { resp.render("bar", "layout"); });
 
 		get("/foo");
 
@@ -68,9 +67,16 @@ public class VideoWorldAppTest extends VideoWorldServlet {
 		verify(response).renderText("<h1>Not Found</h1>");
 	}
 
+	@Test
+	public void authenticatedUsersCanGoToLoginToo() throws Exception {
+		get("/login");
+
+		verify(response).render("login", "login_layout");
+	}
+
 	private void get(String path) {
 		when(request.getPath()).thenReturn(path);
-		app.service();
+		router.service();
 	}
 
 
