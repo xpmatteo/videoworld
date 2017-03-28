@@ -1,9 +1,6 @@
 package com.thoughtworks.videorental.main;
 
-import java.util.List;
-
 import com.thoughtworks.videorental.domain.Customer;
-import com.thoughtworks.videorental.domain.Movie;
 
 public interface WebResponse {
 

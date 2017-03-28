@@ -4,10 +4,7 @@ import static java.util.Arrays.asList;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.util.stream.Collectors;
-
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import com.thoughtworks.videorental.domain.Movie;

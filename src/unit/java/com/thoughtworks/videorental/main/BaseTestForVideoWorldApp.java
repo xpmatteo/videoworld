@@ -45,7 +45,7 @@ public class BaseTestForVideoWorldApp {
 		return new Customer("pippo");
 	}
 
-	protected Set<Movie> asSet(Movie ...movies) {
-		return new LinkedHashSet<Movie>(asList(movies));
+	protected <T> Set<T> asSet(T ... args) {
+		return new LinkedHashSet<T>(asList(args));
 	}
 }

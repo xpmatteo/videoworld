@@ -19,7 +19,6 @@ public class VideoWorldApp extends Router {
 
 		addUnprotectedResource("/login", loginAction());
 		addResource("/", homeAction());
-		addResource("/history", (req, resp) -> { resp.render("history", "main_layout"); });
 	}
 
 	private WebAction homeAction() {
@@ -30,17 +29,18 @@ public class VideoWorldApp extends Router {
 	}
 
 	private WebAction loginAction() {
-		return (req, resp) -> {
-			if (req.isPost()) {
-				String customerName = req.getParameter("customerName");
+		return (request, response) -> {
+			if (request.isPost()) {
+				String customerName = request.getParameter("customerName");
 				Optional<Customer> customer = customerRepository.findCustomer(customerName);
 				if (customer.isPresent()) {
-					resp.setCustomer(customer.get());
-					resp.redirectTo("/");
+					response.setCustomer(customer.get());
+					response.redirectTo("/");
 					return;
 				}
 			}
-			resp.render("login", "login_layout");
+			response.putData("users", customerRepository.selectAll());
+			response.render("login", "login_layout");
 		};
 	}
 
