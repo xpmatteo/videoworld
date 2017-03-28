@@ -4,14 +4,19 @@ import java.util.Optional;
 
 import com.thoughtworks.videorental.domain.Customer;
 import com.thoughtworks.videorental.domain.repository.CustomerRepository;
+import com.thoughtworks.videorental.domain.repository.MovieRepository;
 
 public class VideoWorldApp extends Router {
 
-	private CustomerRepository repository;
+	private CustomerRepository customerRepository;
+	private MovieRepository movieRepository;
 
-	public VideoWorldApp(WebRequest request, WebResponse response, CustomerRepository repository) {
+	public VideoWorldApp(WebRequest request, WebResponse response, CustomerRepository customerRepository,
+			MovieRepository movieRepository) {
 		super(request, response);
-		this.repository = repository;
+		this.customerRepository = customerRepository;
+		this.movieRepository = movieRepository;
+
 		addUnprotectedResource("/login", loginAction());
 		addResource("/", homeAction());
 		addResource("/history", (req, resp) -> { resp.render("history", "main_layout"); });
@@ -19,6 +24,7 @@ public class VideoWorldApp extends Router {
 
 	private WebAction homeAction() {
 		return (request, response) -> {
+			response.putData("movies", movieRepository.selectAll());
 			response.render("home", "main_layout");
 		};
 	}
@@ -27,7 +33,7 @@ public class VideoWorldApp extends Router {
 		return (req, resp) -> {
 			if (req.isPost()) {
 				String customerName = req.getParameter("customerName");
-				Optional<Customer> customer = repository.findCustomer(customerName);
+				Optional<Customer> customer = customerRepository.findCustomer(customerName);
 				if (customer.isPresent()) {
 					resp.setCustomer(customer.get());
 					resp.redirectTo("/");

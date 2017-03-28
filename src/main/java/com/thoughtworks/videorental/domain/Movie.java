@@ -27,4 +27,9 @@ public class Movie {
 	public Price getPrice() {
 		return price;
 	}
+
+	@Override
+	public String toString() {
+		return String.format("Movie: %s", title);
+	}
 }

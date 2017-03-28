@@ -19,7 +19,7 @@ public class AuthenticationTest extends BaseTestForVideoWorldApp {
 	@Test
 	public void authenticationSucceeded() throws Exception {
 		Customer customer = new Customer("gino");
-		repository.add(customer);
+		customerRepository.add(customer);
 		when(request.getParameter("customerName")).thenReturn("gino");
 
 		post("/login");
