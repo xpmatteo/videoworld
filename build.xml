@@ -123,8 +123,8 @@
                 <sequential>
                     <mkdir dir="${classes.dir}"/>
                     <javac srcdir="@{srcdir}" destdir="${classes.dir}"
-                           classpathref="@{classpathref}" source="1.6"
-                           target="1.6" debug="true"
+                           classpathref="@{classpathref}" source="1.8"
+                           target="1.8" debug="true"
                            includeantruntime="false"/>
                     <jar destfile="@{destfile}" basedir="${classes.dir}">
                         <manifest>
