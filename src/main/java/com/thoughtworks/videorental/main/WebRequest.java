@@ -8,4 +8,10 @@ public interface WebRequest {
 
 	Customer getCustomer();
 
+	void setCustomer(Customer customer);
+
+	boolean isPost();
+
+	String getParameter(String string);
+
 }

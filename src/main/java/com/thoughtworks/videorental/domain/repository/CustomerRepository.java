@@ -1,6 +1,7 @@
 package com.thoughtworks.videorental.domain.repository;
 
 import java.util.Collection;
+import java.util.Optional;
 import java.util.Set;
 
 import com.thoughtworks.ddd.repository.NonUniqueObjectSelectedException;
@@ -23,4 +24,6 @@ public interface CustomerRepository {
 	Set<Customer> selectSatisfying(Specification<Customer> specification, OrderComparator<Customer> comparator);
 
 	Customer selectUnique(Specification<Customer> specification) throws NonUniqueObjectSelectedException;
+
+	Optional<Customer> findCustomer(String name);
 }

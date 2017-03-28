@@ -36,4 +36,8 @@ public class Customer {
 		return result;
 	}
 
+	@Override
+	public String toString() {
+		return String.format("Customer: %s", this.name);
+	}
 }
