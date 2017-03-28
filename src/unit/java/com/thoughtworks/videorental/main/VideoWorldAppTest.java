@@ -2,9 +2,11 @@ package com.thoughtworks.videorental.main;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
-import org.junit.Before;
+import org.junit.After;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.thoughtworks.videorental.domain.Customer;
@@ -17,27 +19,37 @@ public class VideoWorldAppTest {
 	WebResponse response = mock(WebResponse.class);
 	VideoWorldApp app = new VideoWorldApp(request, response, repository);
 
-	@Before
-	public void setUp() throws Exception {
+	@After
+	public void tearDown() throws Exception {
+		verifyNoMoreInteractions(response);
 	}
 
 	@Test
-	public void testViewLogin() throws Exception {
+	public void showsLoginPage() throws Exception {
 		get("/login");
+
 		verify(response).render("login", "login_layout");
 	}
 
 	@Test
-	public void testAuthentication() throws Exception {
+	public void authenticationSucceeded() throws Exception {
 		Customer customer = new Customer("gino");
 		repository.add(customer);
 		when(request.getParameter("customerName")).thenReturn("gino");
 
 		post("/login");
 
-		verify(request).setCustomer(customer);
-		verify(response).render("login", "login_layout");
+		verify(response).setCustomer(customer);
 		verify(response).redirectTo("/");
+	}
+
+	@Test
+	public void authenticationFailed() throws Exception {
+		when(request.getParameter("customerName")).thenReturn("some strange name");
+
+		post("/login");
+
+		verify(response).render("login", "login_layout");
 	}
 
 	private void post(String path) {

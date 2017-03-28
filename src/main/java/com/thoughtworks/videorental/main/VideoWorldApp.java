@@ -18,9 +18,13 @@ public class VideoWorldApp extends Router {
 	private WebAction loginAction() {
 		return (req, resp) -> {
 			if (req.isPost()) {
-				Optional<Customer> customer = repository.findCustomer(req.getParameter("customerName"));
-				req.setCustomer(customer.get());
-				resp.redirectTo("/");
+				String customerName = req.getParameter("customerName");
+				Optional<Customer> customer = repository.findCustomer(customerName);
+				if (customer.isPresent()) {
+					resp.setCustomer(customer.get());
+					resp.redirectTo("/");
+					return;
+				}
 			}
 			resp.render("login", "login_layout");
 		};
