@@ -2,10 +2,8 @@ package com.thoughtworks.videorental.main;
 
 import java.util.Optional;
 
-import com.thoughtworks.ddd.repository.NonUniqueObjectSelectedException;
 import com.thoughtworks.videorental.domain.Customer;
 import com.thoughtworks.videorental.domain.repository.CustomerRepository;
-import com.thoughtworks.videorental.domain.specification.CustomerWithNameSpecification;
 
 public class VideoWorldApp extends Router {
 
@@ -22,6 +20,7 @@ public class VideoWorldApp extends Router {
 			if (req.isPost()) {
 				Optional<Customer> customer = repository.findCustomer(req.getParameter("customerName"));
 				req.setCustomer(customer.get());
+				resp.redirectTo("/");
 			}
 			resp.render("login", "login_layout");
 		};

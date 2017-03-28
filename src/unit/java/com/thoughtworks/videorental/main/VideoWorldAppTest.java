@@ -12,7 +12,6 @@ import com.thoughtworks.videorental.domain.repository.CustomerRepository;
 import com.thoughtworks.videorental.repository.SetBasedCustomerRepository;
 
 public class VideoWorldAppTest {
-	private static final Customer OUR_CUSTOMER = new Customer("gino");
 	CustomerRepository repository = new SetBasedCustomerRepository();
 	WebRequest request = mock(WebRequest.class);
 	WebResponse response = mock(WebResponse.class);
@@ -20,7 +19,6 @@ public class VideoWorldAppTest {
 
 	@Before
 	public void setUp() throws Exception {
-		repository.add(OUR_CUSTOMER);
 	}
 
 	@Test
@@ -31,12 +29,15 @@ public class VideoWorldAppTest {
 
 	@Test
 	public void testAuthentication() throws Exception {
+		Customer customer = new Customer("gino");
+		repository.add(customer);
 		when(request.getParameter("customerName")).thenReturn("gino");
 
 		post("/login");
 
-		verify(request).setCustomer(OUR_CUSTOMER);
+		verify(request).setCustomer(customer);
 		verify(response).render("login", "login_layout");
+		verify(response).redirectTo("/");
 	}
 
 	private void post(String path) {
