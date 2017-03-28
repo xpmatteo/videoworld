@@ -13,6 +13,14 @@ public class VideoWorldApp extends Router {
 		super(request, response);
 		this.repository = repository;
 		addUnprotectedResource("/login", loginAction());
+		addResource("/", homeAction());
+		addResource("/history", (req, resp) -> { resp.render("history", "main_layout"); });
+	}
+
+	private WebAction homeAction() {
+		return (request, response) -> {
+			response.render("home", "main_layout");
+		};
 	}
 
 	private WebAction loginAction() {

@@ -1,6 +1,9 @@
 package com.thoughtworks.videorental.main;
 
+import java.util.List;
+
 import com.thoughtworks.videorental.domain.Customer;
+import com.thoughtworks.videorental.domain.Movie;
 
 public interface WebResponse {
 
@@ -13,5 +16,7 @@ public interface WebResponse {
 	void renderText(String text);
 
 	void setCustomer(Customer customer);
+
+	void putData(String key, Object value);
 
 }
