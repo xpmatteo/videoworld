@@ -45,15 +45,6 @@ public class VideoWorldAppTest extends VideoWorldServlet {
 	}
 
 	@Test
-	public void allowsToContinueIfAuthenticated() throws Exception {
-		when(request.getPath()).thenReturn("/something");
-
-		app.service();
-
-		verify(response, times(1)).render("pippo", "layout");
-	}
-
-	@Test
 	public void allowsUnauthenticatedUserToProceedToLogin() throws Exception {
 		when(request.getCustomer()).thenReturn(null);
 
@@ -76,15 +67,6 @@ public class VideoWorldAppTest extends VideoWorldServlet {
 	public void returns404WhenNotFound() throws Exception {
 		get("/unexpected-path");
 
-		verify(response).setStatus(404);
-		verify(response).renderText("<h1>Not Found</h1>");
-	}
-
-	@Test@Ignore
-	public void returns404WhenNotFound_andNotAuthenticated() throws Exception {
-		when(request.getPath()).thenReturn("/unexpected-path");
-		when(request.getCustomer()).thenReturn(null);
-		app.service();
 		verify(response).setStatus(404);
 		verify(response).renderText("<h1>Not Found</h1>");
 	}
