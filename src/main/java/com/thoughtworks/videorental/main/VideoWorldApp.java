@@ -7,8 +7,8 @@ import java.util.function.BiConsumer;
 public class VideoWorldApp {
 	private WebRequest request;
 	private WebResponse response;
-	private BiConsumer<WebRequest, WebResponse> action;
 	private SortedMap<String, BiConsumer<WebRequest, WebResponse>> unprotectedActions = new TreeMap<>();
+	private SortedMap<String, BiConsumer<WebRequest, WebResponse>> actions = new TreeMap<>();
 
 	public VideoWorldApp(WebRequest request, WebResponse response) {
 		this.request = request;
@@ -24,11 +24,11 @@ public class VideoWorldApp {
 			response.redirectTo("/login");
 			return;
 		}
-		action.accept(request, response);
+		actions.get(request.getPath()).accept(request, response);
 	}
 
 	public void addResource(String path, BiConsumer<WebRequest, WebResponse> action) {
-		this.action = action;
+		actions.put(path, action);
 	}
 
 	public void addUnprotectedResource(String path, BiConsumer<WebRequest, WebResponse> unprotectedAction) {

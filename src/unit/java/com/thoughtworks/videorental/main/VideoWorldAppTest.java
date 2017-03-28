@@ -1,5 +1,6 @@
 package com.thoughtworks.videorental.main;
 
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -60,5 +61,25 @@ public class VideoWorldAppTest extends VideoWorldServlet {
 		verify(webResponse, times(1)).render("login", "login_layout");
 		verifyNoMoreInteractions(webResponse);
 	}
+
+	@Test
+	public void selectsResourceAccordingToPath() throws Exception {
+		app.addResource("/foo", (r, resp) -> { resp.render("foo", "layout"); });
+		app.addResource("/bar", (r, resp) -> { resp.render("bar", "layout"); });
+
+		when(webRequest.getPath()).thenReturn("/foo");
+		when(webRequest.getCustomer()).thenReturn(OUR_CUSTOMER);
+
+		app.service();
+
+		verify(webResponse, times(1)).render("foo", "layout");
+		verifyNoMoreInteractions(webResponse);
+	}
+
+	@Test
+	public void returns404WhenNotFound() throws Exception {
+
+	}
+
 
 }
