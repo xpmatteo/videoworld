@@ -24,7 +24,12 @@ public class VideoWorldApp {
 			response.redirectTo("/login");
 			return;
 		}
-		actions.get(request.getPath()).accept(request, response);
+		if (actions.containsKey(request.getPath())) {
+			actions.get(request.getPath()).accept(request, response);
+			return;
+		}
+		response.setStatus(404);
+		response.renderText("<h1>Not Found</h1>");
 	}
 
 	public void addResource(String path, BiConsumer<WebRequest, WebResponse> action) {

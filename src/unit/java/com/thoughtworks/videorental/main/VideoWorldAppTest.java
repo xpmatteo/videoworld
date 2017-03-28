@@ -1,6 +1,5 @@
 package com.thoughtworks.videorental.main;
 
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -11,6 +10,7 @@ import java.util.function.BiConsumer;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.thoughtworks.videorental.domain.Customer;
@@ -18,51 +18,48 @@ import com.thoughtworks.videorental.domain.Customer;
 public class VideoWorldAppTest extends VideoWorldServlet {
 
 	private static final Customer OUR_CUSTOMER = new Customer("Pippo");
-	private WebResponse webResponse = mock(WebResponse.class);
-	private WebRequest webRequest = mock(WebRequest.class);
-	private VideoWorldApp app = new VideoWorldApp(webRequest, webResponse);
+	private WebResponse response = mock(WebResponse.class);
+	private WebRequest request = mock(WebRequest.class);
+	private VideoWorldApp app = new VideoWorldApp(request, response);
 
 	@Before
 	public void setUp() throws Exception {
-		app.addResource("/something", (req, resp) -> { webResponse.render("pippo", "layout"); });
-		when(webRequest.getCustomer()).thenReturn(OUR_CUSTOMER);
+		app.addResource("/something", (req, resp) -> { response.render("pippo", "layout"); });
+		app.addUnprotectedResource("/login", (req, resp) -> {resp.render("login", "login_layout"); });
+
+		when(request.getCustomer()).thenReturn(OUR_CUSTOMER);
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		verifyNoMoreInteractions(webResponse);
+		verifyNoMoreInteractions(response);
 	}
 
 	@Test
 	public void redirectsUnauthenticatedToLogin() throws Exception {
-		when(webRequest.getPath()).thenReturn("/something");
-		when(webRequest.getCustomer()).thenReturn(null);
+		when(request.getCustomer()).thenReturn(null);
 
-		app.service();
+		get("/something");
 
-		verify(webResponse, times(1)).redirectTo("/login");
+		verify(response, times(1)).redirectTo("/login");
 	}
 
 	@Test
 	public void allowsToContinueIfAuthenticated() throws Exception {
-		when(webRequest.getPath()).thenReturn("/something");
+		when(request.getPath()).thenReturn("/something");
 
 		app.service();
 
-		verify(webResponse, times(1)).render("pippo", "layout");
+		verify(response, times(1)).render("pippo", "layout");
 	}
 
 	@Test
 	public void allowsUnauthenticatedUserToProceedToLogin() throws Exception {
-		when(webRequest.getPath()).thenReturn("/login");
-		when(webRequest.getCustomer()).thenReturn(null);
+		when(request.getCustomer()).thenReturn(null);
 
-		BiConsumer<WebRequest, WebResponse> loginAction = (req, resp) -> {resp.render("login", "login_layout"); };
-		app.addUnprotectedResource("/login", loginAction);
+		get("/login");
 
-		app.service();
-
-		verify(webResponse, times(1)).render("login", "login_layout");
+		verify(response, times(1)).render("login", "login_layout");
 	}
 
 	@Test
@@ -70,16 +67,31 @@ public class VideoWorldAppTest extends VideoWorldServlet {
 		app.addResource("/foo", (r, resp) -> { resp.render("foo", "layout"); });
 		app.addResource("/bar", (r, resp) -> { resp.render("bar", "layout"); });
 
-		when(webRequest.getPath()).thenReturn("/foo");
+		get("/foo");
 
-		app.service();
-
-		verify(webResponse, times(1)).render("foo", "layout");
+		verify(response, times(1)).render("foo", "layout");
 	}
 
 	@Test
 	public void returns404WhenNotFound() throws Exception {
+		get("/unexpected-path");
 
+		verify(response).setStatus(404);
+		verify(response).renderText("<h1>Not Found</h1>");
+	}
+
+	@Test@Ignore
+	public void returns404WhenNotFound_andNotAuthenticated() throws Exception {
+		when(request.getPath()).thenReturn("/unexpected-path");
+		when(request.getCustomer()).thenReturn(null);
+		app.service();
+		verify(response).setStatus(404);
+		verify(response).renderText("<h1>Not Found</h1>");
+	}
+
+	private void get(String path) {
+		when(request.getPath()).thenReturn(path);
+		app.service();
 	}
 
 
