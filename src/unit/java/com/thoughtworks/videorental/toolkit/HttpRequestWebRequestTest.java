@@ -6,8 +6,11 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.junit.Test;
+
+import com.thoughtworks.videorental.domain.Customer;
 
 public class HttpRequestWebRequestTest {
 
@@ -21,4 +24,29 @@ public class HttpRequestWebRequestTest {
 		assertThat(webRequest.getPath(), is("/some/path"));
 	}
 
+	@Test
+	public void getCustomer() throws Exception {
+		HttpSession session = mock(HttpSession.class);
+		when(servletRequest.getSession()).thenReturn(session);
+
+		Customer customer = new Customer("Pippo");
+		when(session.getAttribute("customer")).thenReturn(customer);
+
+		assertThat(webRequest.getCustomer(), is(customer));
+	}
+
+	@Test
+	public void isPost() throws Exception {
+		when(servletRequest.getMethod()).thenReturn("POST");
+		assertThat("isPost", webRequest.isPost(), is(true));
+
+		when(servletRequest.getMethod()).thenReturn("ANYTHING ELSE");
+		assertThat("isPost", webRequest.isPost(), is(false));
+	}
+
+	@Test
+	public void getParameter() throws Exception {
+		when(servletRequest.getParameter("foo")).thenReturn("bar");
+		assertThat(webRequest.getParameter("foo"), is("bar"));
+	}
 }

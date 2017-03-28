@@ -19,17 +19,17 @@ public class ServletWebRequest implements WebRequest {
 
 	@Override
 	public Customer getCustomer() {
-		return null;
+		return (Customer) servletRequest.getSession().getAttribute("customer");
 	}
 
 	@Override
 	public boolean isPost() {
-		return false;
+		return "POST".equals(servletRequest.getMethod());
 	}
 
 	@Override
-	public String getParameter(String string) {
-		return null;
+	public String getParameter(String name) {
+		return servletRequest.getParameter(name);
 	}
 
 }
