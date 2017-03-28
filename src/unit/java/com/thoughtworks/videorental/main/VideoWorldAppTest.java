@@ -9,6 +9,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.function.BiConsumer;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -24,6 +25,12 @@ public class VideoWorldAppTest extends VideoWorldServlet {
 	@Before
 	public void setUp() throws Exception {
 		app.addResource("/something", (req, resp) -> { webResponse.render("pippo", "layout"); });
+		when(webRequest.getCustomer()).thenReturn(OUR_CUSTOMER);
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		verifyNoMoreInteractions(webResponse);
 	}
 
 	@Test
@@ -34,18 +41,15 @@ public class VideoWorldAppTest extends VideoWorldServlet {
 		app.service();
 
 		verify(webResponse, times(1)).redirectTo("/login");
-		verifyNoMoreInteractions(webResponse);
 	}
 
 	@Test
 	public void allowsToContinueIfAuthenticated() throws Exception {
 		when(webRequest.getPath()).thenReturn("/something");
-		when(webRequest.getCustomer()).thenReturn(OUR_CUSTOMER);
 
 		app.service();
 
 		verify(webResponse, times(1)).render("pippo", "layout");
-		verifyNoMoreInteractions(webResponse);
 	}
 
 	@Test
@@ -59,7 +63,6 @@ public class VideoWorldAppTest extends VideoWorldServlet {
 		app.service();
 
 		verify(webResponse, times(1)).render("login", "login_layout");
-		verifyNoMoreInteractions(webResponse);
 	}
 
 	@Test
@@ -68,12 +71,10 @@ public class VideoWorldAppTest extends VideoWorldServlet {
 		app.addResource("/bar", (r, resp) -> { resp.render("bar", "layout"); });
 
 		when(webRequest.getPath()).thenReturn("/foo");
-		when(webRequest.getCustomer()).thenReturn(OUR_CUSTOMER);
 
 		app.service();
 
 		verify(webResponse, times(1)).render("foo", "layout");
-		verifyNoMoreInteractions(webResponse);
 	}
 
 	@Test
