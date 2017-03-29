@@ -4,6 +4,6 @@ Feature: CucumberJava
 
     Given I have open the browser
 
-    When I open Facebook website
+    When I open videorental
 
-    Then Login button should exits
+    Then Login button should exist

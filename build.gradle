@@ -1,15 +1,7 @@
 apply plugin: 'java'
 apply plugin: 'war'
 apply plugin: 'eclipse'
-//apply from: 'https://raw.github.com/akhikhl/gretty/master/pluginScripts/gretty.plugin'
-apply plugin:'application'
-mainClassName = "com.thoughtworks.videorental.main.VideoWorldMain"
-
-run{
-    systemProperties System.getProperties()
-    if (System.getProperty("exec.args"))
-        args System.getProperty("exec.args").split()
-}
+apply plugin: 'org.akhikhl.gretty'
 
 group = 'com.thoughtworks'
 version = '1.0-SNAPSHOT'
@@ -17,6 +9,25 @@ version = '1.0-SNAPSHOT'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'org.akhikhl.gretty:gretty:+'
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+gretty {
+    contextPath = '/'
+    integrationTestTask = 'cucumber'
+}
 
 sourceSets {
     test {
@@ -27,11 +38,16 @@ sourceSets {
             srcDirs = ['src/unit/resources']
         }
     }
+    cucumber {
+        java {
+            srcDir 'src/cucumber/src/test/java/cucumberjava'
+        }
+
+        compileClasspath += sourceSets.main.runtimeClasspath
+        compileClasspath += sourceSets.test.compileClasspath
+    }
 }
-repositories {
-//     jcenter()
-    mavenCentral()
-}
+
 dependencies {
     compile group: 'org.hibernate', name: 'hibernate-core', version: '3.6.7.Final'
     compile group: 'org.apache.struts', name: 'struts2-core', version: '2.1.8.1'
@@ -41,8 +57,8 @@ dependencies {
     compile group: 'joda-time', name: 'joda-time', version: '1.6'
     compile group: 'commons-lang', name: 'commons-lang', version: '2.6'
     compile group: 'org.mortbay.jetty', name: 'jetty', version: '6.1.22'
-    compile group:'org.slf4j', name:'slf4j-simple', version: '1.6.1'
-    compile group:'org.slf4j', name:'slf4j-api', version: '1.7.25'
+    compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.6.1'
+    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
 
     compile group: 'org.springframework', name: 'spring-core', version: '2.5.6'
     compile group: 'org.springframework', name: 'spring-beans', version: '2.5.6'
@@ -56,18 +72,6 @@ dependencies {
     testCompile 'info.cukes:cucumber-java:1.2.5'
     testCompile 'info.cukes:cucumber-junit:1.2.5'
     testCompile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '2.53.0'
-}
-
-
-sourceSets {
-    cucumber {
-        java {
-            srcDir 'src/cucumber/src/test/java/cucumberjava'
-        }
-
-        compileClasspath += sourceSets.main.runtimeClasspath
-        compileClasspath += sourceSets.test.compileClasspath
-    }
 }
 
 task cucumber(type: Test) {
