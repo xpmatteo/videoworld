@@ -2,6 +2,7 @@ package com.thoughtworks.videorental.main;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,12 +46,35 @@ public class ServletWebResponse implements WebResponse {
 
 		try {
 			configuration.setDirectoryForTemplateLoading(new File(templateDirectory));
-
 			Template template = configuration.getTemplate(templateName + ".ftl");
-			template.process(templateData, servletResponse.getWriter());
+
+			if (null == layoutName) {
+				renderTemplate(template);
+				return;
+			}
+
+			renderTemplateWithLayout(layoutName, configuration, template);
 		} catch (IOException | TemplateException e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	private void renderTemplate(Template template) throws TemplateException, IOException {
+		template.process(templateData, servletResponse.getWriter());
+	}
+
+	private void renderTemplateWithLayout(String layoutName, Configuration configuration, Template template)
+	        throws IOException, TemplateException {
+		Template layout = configuration.getTemplate(layoutName + ".ftl");
+		putTemplateData("body", renderTemplateToString(template));
+		renderTemplate(layout);
+	}
+
+	private String renderTemplateToString(Template template) throws TemplateException, IOException {
+		StringWriter stringWriter = new StringWriter();
+		template.process(templateData, stringWriter);
+		String string = stringWriter.toString();
+		return string;
 	}
 
 	@Override

@@ -1,7 +1,7 @@
 package com.thoughtworks.videorental.main;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -11,10 +11,8 @@ import java.io.StringWriter;
 import java.io.Writer;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.swing.plaf.basic.BasicScrollPaneUI.HSBChangeListener;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -31,6 +29,7 @@ public class ServletWebResponeTest {
 	@Before
 	public void setUp() throws Exception {
 		when(servletResponse.getWriter()).thenReturn(new PrintWriter(ourStringWriter));
+		webResponse.setTemplatesDirectory("src/unit/resources/templates/");
 	}
 
 	@Test
@@ -65,8 +64,14 @@ public class ServletWebResponeTest {
 	}
 
 	@Test
+	public void renderWithLayout() throws Exception {
+		webResponse.renderTemplate("test-template", "test-layout");
+
+		assertThat(ourStringWriter.toString(), is("AAA-hello from a template\n-BBB\n"));
+	}
+
+	@Test
 	public void renderWithSomeData() throws Exception {
-		webResponse.setTemplatesDirectory("src/unit/resources/templates/");
 		webResponse.putTemplateData("user", "Luan");
 		webResponse.renderTemplate("test-template-with-parameter", null);
 
