@@ -1,7 +1,6 @@
 package com.thoughtworks.videorental.action;
 
 import static java.util.Arrays.asList;
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 

@@ -1,7 +1,5 @@
 package com.thoughtworks.videorental.domain;
 
-import javax.persistence.Entity;
-
 public class Movie {
 	public static final Price CHILDRENS = new ChildrensPrice();
 	public static final Price REGULAR = new RegularPrice();
