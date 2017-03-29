@@ -12,7 +12,7 @@ import org.junit.Test;
 
 import com.thoughtworks.videorental.domain.Customer;
 
-public class HttpRequestWebRequestTest {
+public class ServletWebRequestTest {
 
 	HttpServletRequest servletRequest = mock(HttpServletRequest.class);
 	ServletWebRequest webRequest = new ServletWebRequest(servletRequest);
