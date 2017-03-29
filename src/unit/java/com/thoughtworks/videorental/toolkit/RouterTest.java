@@ -58,6 +58,10 @@ public class RouterTest {
 		get("/foo");
 
 		verify(response, times(1)).render("foo", "layout");
+
+		get("/bar");
+
+		verify(response, times(1)).render("bar", "layout");
 	}
 
 	@Test

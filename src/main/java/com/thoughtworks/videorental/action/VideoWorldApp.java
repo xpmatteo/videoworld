@@ -23,6 +23,7 @@ public class VideoWorldApp extends Router {
 
 		addUnprotectedRoute("/login", loginAction());
 		addRoute("/", homeAction());
+
 	}
 
 	private WebAction homeAction() {
