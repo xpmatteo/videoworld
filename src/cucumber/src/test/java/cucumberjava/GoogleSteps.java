@@ -1,6 +1,4 @@
-package cucumberjava; /**
- * Created by Kriti on 25/03/17.
- */
+package cucumberjava;
 
 
 import cucumber.api.java.en.Given;

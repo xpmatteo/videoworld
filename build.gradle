@@ -3,12 +3,11 @@ apply plugin: 'war'
 apply plugin: 'eclipse'
 apply plugin: 'org.akhikhl.gretty'
 
-group = 'com.thoughtworks'
+group = 'com.thoughtworks.videorental'
 version = '1.0-SNAPSHOT'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
-
 
 buildscript {
     repositories {
@@ -40,7 +39,7 @@ sourceSets {
     }
     cucumber {
         java {
-            srcDir 'src/cucumber/src/test/java/cucumberjava'
+            srcDir 'src/cucumber/src/test/java'
         }
 
         compileClasspath += sourceSets.main.runtimeClasspath

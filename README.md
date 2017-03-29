@@ -5,6 +5,32 @@ This is a fork of part of the original repository: https://github.com/ThoughtWor
 
 This material is shared through a [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) license.
 
+### Instructions
+
+How to refresh the Eclipse project files:
+
+    ./gradlew cleanEclipse eclipse
+
+How to run in the IDE:
+
+  * Execute in debug mode the main in class com.thoughtworks.videorental.main.VideoWorldMain
+  * Open the browser at http://localhost:8080
+
+How to run from the command line
+
+    ./gradlew run
+
+How to run unit tests
+
+    ./gradlew test
+
+How to run end-to-end tests
+
+    ./gradlew cucumber
+
+
+
+
 
 ### Questions
 
@@ -25,12 +51,4 @@ This material is shared through a [CC BY-SA 4.0](https://creativecommons.org/lic
 
  - Set up a VM with Gitlab with a clone of this repo
  - Set up GO CI on same VM
-
-###  Frameworks
-
-* Struts -- struts.apache.org
-* JUnit -- junit.org
-* Freemarker -- freemarker.sourceforge.net
-* Ant -- ant.apache.org
-* Jetty -- jetty.codehaus.org
 
