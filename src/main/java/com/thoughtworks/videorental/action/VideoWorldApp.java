@@ -1,7 +1,5 @@
 package com.thoughtworks.videorental.action;
 
-import java.util.Optional;
-
 import com.thoughtworks.videorental.domain.Customer;
 import com.thoughtworks.videorental.domain.repository.CustomerRepository;
 import com.thoughtworks.videorental.domain.repository.MovieRepository;
@@ -9,6 +7,8 @@ import com.thoughtworks.videorental.main.WebAction;
 import com.thoughtworks.videorental.toolkit.Router;
 import com.thoughtworks.videorental.toolkit.WebRequest;
 import com.thoughtworks.videorental.toolkit.WebResponse;
+
+import java.util.Optional;
 
 public class VideoWorldApp extends Router {
 
@@ -23,6 +23,7 @@ public class VideoWorldApp extends Router {
 
 		addUnprotectedRoute("/login", loginAction());
 		addRoute("/", homeAction());
+        addRoute("/logout", logoutAction());
 
 	}
 
@@ -48,5 +49,12 @@ public class VideoWorldApp extends Router {
 			response.renderTemplate("login", "login_layout");
 		};
 	}
+
+    private WebAction logoutAction() {
+        return (request, response) -> {
+            response.setCustomer(null);
+            response.redirectTo("/login");
+        };
+    }
 
 }

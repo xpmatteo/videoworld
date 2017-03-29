@@ -1,13 +1,12 @@
 package com.thoughtworks.videorental.action;
 
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
+import com.thoughtworks.videorental.domain.Customer;
+import com.thoughtworks.videorental.main.BaseTestForVideoWorldApp;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.thoughtworks.videorental.domain.Customer;
-import com.thoughtworks.videorental.main.BaseTestForVideoWorldApp;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class AuthenticationTest extends BaseTestForVideoWorldApp {
 	private final static Customer CUSTOMER_GINO = new Customer("gino");
@@ -48,4 +47,23 @@ public class AuthenticationTest extends BaseTestForVideoWorldApp {
 		verify(response).putTemplateData("customers", asSet(CUSTOMER_GINO, CUSTOMER_PINO, CUSTOMER_LINO));
 		verify(response).renderTemplate("login", "login_layout");
 	}
+
+    @Test
+    public void logout() throws Exception {
+        when(request.getCustomer()).thenReturn(anyCustomer());
+
+        get("/logout");
+
+        verify(response).setCustomer(null);
+        verify(response).redirectTo("/login");
+    }
+
+    @Test
+    public void logoutIsProtected() throws Exception {
+        when(request.getCustomer()).thenReturn(null);
+
+        get("/logout");
+
+        verify(response).redirectTo("/login");
+    }
 }
