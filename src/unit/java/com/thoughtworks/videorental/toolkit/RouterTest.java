@@ -21,8 +21,8 @@ public class RouterTest {
 
 	@Before
 	public void setUp() throws Exception {
-		router.addRoute("/something", (req, resp) -> { response.render("pippo", "layout"); });
-		router.addUnprotectedRoute("/login", (req, resp) -> {resp.render("login", "login_layout"); });
+		router.addRoute("/something", (req, resp) -> { response.renderTemplate("pippo", "layout"); });
+		router.addUnprotectedRoute("/login", (req, resp) -> {resp.renderTemplate("login", "login_layout"); });
 
 		when(request.getCustomer()).thenReturn(OUR_CUSTOMER);
 	}
@@ -47,21 +47,21 @@ public class RouterTest {
 
 		get("/login");
 
-		verify(response, times(1)).render("login", "login_layout");
+		verify(response, times(1)).renderTemplate("login", "login_layout");
 	}
 
 	@Test
 	public void selectsResourceAccordingToPath() throws Exception {
-		router.addRoute("/foo", (r, resp) -> { resp.render("foo", "layout"); });
-		router.addRoute("/bar", (r, resp) -> { resp.render("bar", "layout"); });
+		router.addRoute("/foo", (r, resp) -> { resp.renderTemplate("foo", "layout"); });
+		router.addRoute("/bar", (r, resp) -> { resp.renderTemplate("bar", "layout"); });
 
 		get("/foo");
 
-		verify(response, times(1)).render("foo", "layout");
+		verify(response, times(1)).renderTemplate("foo", "layout");
 
 		get("/bar");
 
-		verify(response, times(1)).render("bar", "layout");
+		verify(response, times(1)).renderTemplate("bar", "layout");
 	}
 
 	@Test
@@ -76,7 +76,7 @@ public class RouterTest {
 	public void authenticatedUsersCanGoToLoginToo() throws Exception {
 		get("/login");
 
-		verify(response).render("login", "login_layout");
+		verify(response).renderTemplate("login", "login_layout");
 	}
 
 	private void get(String path) {

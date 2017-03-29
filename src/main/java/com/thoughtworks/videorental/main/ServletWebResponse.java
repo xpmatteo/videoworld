@@ -18,9 +18,12 @@ public class ServletWebResponse implements WebResponse {
 
 	private HttpServletResponse servletResponse;
 	private String templateDirectory;
+	private Map<String, Object> templateData;
 
 	public ServletWebResponse(HttpServletResponse servletResponse) {
 		this.servletResponse = servletResponse;
+		this.templateData = new HashMap<>();
+		this.templateDirectory = "src/main/webapp";
 	}
 
 	@Override
@@ -33,16 +36,14 @@ public class ServletWebResponse implements WebResponse {
 	}
 
 	@Override
-	public void render(String templateName, String layoutName) {
-		Map root = new HashMap<>();
-		root.put("something", "1234");
+	public void renderTemplate(String templateName, String layoutName) {
 		Configuration configuration = new Configuration();
 
 		try {
 			configuration.setDirectoryForTemplateLoading(new File(templateDirectory));
 
 			Template template = configuration.getTemplate(templateName + ".ftl");
-			template.process(root, servletResponse.getWriter());
+			template.process(templateData, servletResponse.getWriter());
 		} catch (IOException | TemplateException e) {
 			throw new RuntimeException(e);
 		}
@@ -67,7 +68,8 @@ public class ServletWebResponse implements WebResponse {
 	}
 
 	@Override
-	public void putData(String key, Object value) {
+	public void putTemplateData(String key, Object value) {
+		this.templateData.put(key, value);
 	}
 
 	public void setTemplatesDirectory(String filePath) {

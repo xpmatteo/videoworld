@@ -25,8 +25,8 @@ public class AuthenticationTest extends BaseTestForVideoWorldApp {
 	public void showsLoginPage() throws Exception {
 		get("/login");
 
-		verify(response).putData("users", asSet(CUSTOMER_GINO, CUSTOMER_PINO, CUSTOMER_LINO));
-		verify(response).render("login", "login_layout");
+		verify(response).putTemplateData("customers", asSet(CUSTOMER_GINO, CUSTOMER_PINO, CUSTOMER_LINO));
+		verify(response).renderTemplate("login", "login_layout");
 	}
 
 	@Test
@@ -45,7 +45,7 @@ public class AuthenticationTest extends BaseTestForVideoWorldApp {
 
 		post("/login");
 
-		verify(response).putData("users", asSet(CUSTOMER_GINO, CUSTOMER_PINO, CUSTOMER_LINO));
-		verify(response).render("login", "login_layout");
+		verify(response).putTemplateData("customers", asSet(CUSTOMER_GINO, CUSTOMER_PINO, CUSTOMER_LINO));
+		verify(response).renderTemplate("login", "login_layout");
 	}
 }

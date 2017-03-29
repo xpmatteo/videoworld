@@ -28,8 +28,8 @@ public class VideoWorldApp extends Router {
 
 	private WebAction homeAction() {
 		return (request, response) -> {
-			response.putData("movies", movieRepository.selectAll());
-			response.render("home", "main_layout");
+			response.putTemplateData("movies", movieRepository.selectAll());
+			response.renderTemplate("home", "main_layout");
 		};
 	}
 
@@ -44,8 +44,8 @@ public class VideoWorldApp extends Router {
 					return;
 				}
 			}
-			response.putData("users", customerRepository.selectAll());
-			response.render("login", "login_layout");
+			response.putTemplateData("customers", customerRepository.selectAll());
+			response.renderTemplate("login", "login_layout");
 		};
 	}
 

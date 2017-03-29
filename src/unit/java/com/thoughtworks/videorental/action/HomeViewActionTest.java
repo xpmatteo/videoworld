@@ -27,8 +27,8 @@ public class HomeViewActionTest extends BaseTestForVideoWorldApp {
 
 		get("/");
 
-		verify(response).putData("movies", asSet(A_MOVIE, ANOTHER_MOVIE));
-		verify(response).render("home", "main_layout");
+		verify(response).putTemplateData("movies", asSet(A_MOVIE, ANOTHER_MOVIE));
+		verify(response).renderTemplate("home", "main_layout");
 	}
 
 	@Test

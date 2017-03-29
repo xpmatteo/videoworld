@@ -6,7 +6,7 @@ public interface WebResponse {
 
 	void redirectTo(String location);
 
-	void render(String templateName, String layoutName);
+	void renderTemplate(String templateName, String layoutName);
 
 	void setStatus(int statusCode);
 
@@ -14,6 +14,6 @@ public interface WebResponse {
 
 	void setCustomer(Customer customer);
 
-	void putData(String key, Object value);
+	void putTemplateData(String key, Object value);
 
 }

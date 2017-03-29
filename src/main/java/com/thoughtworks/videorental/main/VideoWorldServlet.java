@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.thoughtworks.videorental.action.VideoWorldApp;
+import com.thoughtworks.videorental.domain.Customer;
 import com.thoughtworks.videorental.domain.repository.CustomerRepository;
 import com.thoughtworks.videorental.domain.repository.MovieRepository;
 import com.thoughtworks.videorental.repository.SetBasedCustomerRepository;
@@ -19,12 +20,17 @@ public class VideoWorldServlet extends HttpServlet {
 	private MovieRepository movieRepository = new SetBasedMovieRepository();
 
 	@Override
+	public void init() throws ServletException {
+		customerRepository.add(new Customer("Wamika"));
+		customerRepository.add(new Customer("Matteo"));
+		customerRepository.add(new Customer("Luan"));
+	}
+
+	@Override
 	protected void service(HttpServletRequest servletRequest, HttpServletResponse servletResponse) throws ServletException, IOException {
 		System.out.println(servletRequest.getRequestURI());
 		ServletWebResponse webResponse = new ServletWebResponse(servletResponse);
-//		VideoWorldApp app = new VideoWorldApp(new ServletWebRequest(servletRequest), webResponse, customerRepository, movieRepository);
-//		app.service();
-
-		webResponse.renderText("HI");
+		VideoWorldApp app = new VideoWorldApp(new ServletWebRequest(servletRequest), webResponse, customerRepository, movieRepository);
+		app.service();
 	}
 }

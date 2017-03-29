@@ -12,12 +12,19 @@ import java.io.Writer;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.junit.Before;
 import org.junit.Test;
 
 public class ServletWebResponeTest {
 
+	private Writer ourStringWriter = new StringWriter();
 	private HttpServletResponse servletResponse = mock(HttpServletResponse.class);
 	private ServletWebResponse webResponse = new ServletWebResponse(servletResponse);
+
+	@Before
+	public void setUp() throws Exception {
+		when(servletResponse.getWriter()).thenReturn(new PrintWriter(ourStringWriter));
+	}
 
 	@Test
 	public void setStatus() throws Exception {
@@ -35,7 +42,6 @@ public class ServletWebResponeTest {
 
 	@Test
 	public void renderText() throws Exception {
-		Writer ourStringWriter = new StringWriter();
 		when(servletResponse.getWriter()).thenReturn(new PrintWriter(ourStringWriter));
 
 		webResponse.renderText("hello hello");
@@ -45,13 +51,19 @@ public class ServletWebResponeTest {
 
 	@Test
 	public void render() throws Exception {
-		Writer ourStringWriter = new StringWriter();
-		when(servletResponse.getWriter()).thenReturn(new PrintWriter(ourStringWriter));
-
 		webResponse.setDirectory("src/unit/resources/templates/");
-		webResponse.render("test-template", null);
+		webResponse.renderTemplate("test-template", null);
 
 		assertThat(ourStringWriter.toString(), is("hello from a template\n"));
+	}
+
+	@Test
+	public void renderWithSomeData() throws Exception {
+		webResponse.setDirectory("src/unit/resources/templates/");
+		webResponse.putTemplateData("user", "Luan");
+		webResponse.renderTemplate("test-template-with-parameter", null);
+
+		assertThat(ourStringWriter.toString(), is("hello, Luan!\n"));
 	}
 
 }

@@ -4,7 +4,7 @@
 </head>
 <body>
     <h1>Login</h1>
-	<form id="login">
+	<form id="login" method="post">
 	    <p>Select user:</p>
 		<select class="customer" name="customerName">
 	    	<#list customers as customer>
