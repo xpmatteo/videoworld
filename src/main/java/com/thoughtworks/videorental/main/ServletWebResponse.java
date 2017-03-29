@@ -5,9 +5,12 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.thoughtworks.videorental.domain.Customer;
+import com.thoughtworks.videorental.toolkit.ServletWebRequest;
 import com.thoughtworks.videorental.toolkit.WebResponse;
 
 import freemarker.template.Configuration;
@@ -16,11 +19,13 @@ import freemarker.template.TemplateException;
 
 public class ServletWebResponse implements WebResponse {
 
+	private HttpServletRequest servletRequest;
 	private HttpServletResponse servletResponse;
 	private String templateDirectory;
 	private Map<String, Object> templateData;
 
-	public ServletWebResponse(HttpServletResponse servletResponse) {
+	public ServletWebResponse(HttpServletRequest servletRequest, HttpServletResponse servletResponse) {
+		this.servletRequest = servletRequest;
 		this.servletResponse = servletResponse;
 		this.templateData = new HashMap<>();
 		this.templateDirectory = "src/main/webapp";
@@ -65,6 +70,8 @@ public class ServletWebResponse implements WebResponse {
 
 	@Override
 	public void setCustomer(Customer customer) {
+		HttpSession session = servletRequest.getSession();
+		session.setAttribute("customer", customer);
 	}
 
 	@Override
@@ -72,11 +79,7 @@ public class ServletWebResponse implements WebResponse {
 		this.templateData.put(key, value);
 	}
 
-	public void setTemplatesDirectory(String filePath) {
-
-	}
-
-	public void setDirectory(String templateDirectory) {
+	public void setTemplatesDirectory(String templateDirectory) {
 		this.templateDirectory = templateDirectory;
 	}
 

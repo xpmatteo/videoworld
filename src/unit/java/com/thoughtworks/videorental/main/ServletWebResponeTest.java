@@ -10,16 +10,23 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.swing.plaf.basic.BasicScrollPaneUI.HSBChangeListener;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import com.thoughtworks.videorental.domain.Customer;
+
 public class ServletWebResponeTest {
 
 	private Writer ourStringWriter = new StringWriter();
+	private HttpServletRequest servletRequest = mock(HttpServletRequest.class);
 	private HttpServletResponse servletResponse = mock(HttpServletResponse.class);
-	private ServletWebResponse webResponse = new ServletWebResponse(servletResponse);
+	private ServletWebResponse webResponse = new ServletWebResponse(servletRequest, servletResponse);
 
 	@Before
 	public void setUp() throws Exception {
@@ -51,7 +58,7 @@ public class ServletWebResponeTest {
 
 	@Test
 	public void render() throws Exception {
-		webResponse.setDirectory("src/unit/resources/templates/");
+		webResponse.setTemplatesDirectory("src/unit/resources/templates/");
 		webResponse.renderTemplate("test-template", null);
 
 		assertThat(ourStringWriter.toString(), is("hello from a template\n"));
@@ -59,11 +66,22 @@ public class ServletWebResponeTest {
 
 	@Test
 	public void renderWithSomeData() throws Exception {
-		webResponse.setDirectory("src/unit/resources/templates/");
+		webResponse.setTemplatesDirectory("src/unit/resources/templates/");
 		webResponse.putTemplateData("user", "Luan");
 		webResponse.renderTemplate("test-template-with-parameter", null);
 
 		assertThat(ourStringWriter.toString(), is("hello, Luan!\n"));
+	}
+
+	@Test
+	public void setCustomer() throws Exception {
+		Customer customer = new Customer("Foo Bar");
+		HttpSession session = mock(HttpSession.class);
+		when(servletRequest.getSession()).thenReturn(session);
+
+		webResponse.setCustomer(customer);
+
+		verify(session).setAttribute("customer", customer);
 	}
 
 }
