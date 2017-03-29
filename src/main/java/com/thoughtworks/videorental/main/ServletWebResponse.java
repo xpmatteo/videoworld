@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.thoughtworks.videorental.domain.Customer;
-import com.thoughtworks.videorental.toolkit.ServletWebRequest;
 import com.thoughtworks.videorental.toolkit.WebResponse;
 
 import freemarker.template.Configuration;
@@ -28,7 +27,7 @@ public class ServletWebResponse implements WebResponse {
 		this.servletRequest = servletRequest;
 		this.servletResponse = servletResponse;
 		this.templateData = new HashMap<>();
-		this.templateDirectory = "src/main/webapp";
+		this.templateDirectory = "src/main/resources/templates";
 	}
 
 	@Override
