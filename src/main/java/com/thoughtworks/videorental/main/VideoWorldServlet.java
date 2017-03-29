@@ -21,7 +21,10 @@ public class VideoWorldServlet extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest servletRequest, HttpServletResponse servletResponse) throws ServletException, IOException {
 		System.out.println(servletRequest.getRequestURI());
-		VideoWorldApp app = new VideoWorldApp(new ServletWebRequest(servletRequest), new ServletWebResponse(servletResponse), customerRepository, movieRepository);
-		app.service();
+		ServletWebResponse webResponse = new ServletWebResponse(servletResponse);
+//		VideoWorldApp app = new VideoWorldApp(new ServletWebRequest(servletRequest), webResponse, customerRepository, movieRepository);
+//		app.service();
+
+		webResponse.renderText("HI");
 	}
 }
