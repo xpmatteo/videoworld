@@ -1,4 +1,4 @@
-package com.thoughtworks.videorental.main;
+package com.thoughtworks.videorental.action;
 
 import static java.util.Arrays.asList;
 import static org.mockito.Mockito.verify;
@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.thoughtworks.videorental.domain.Movie;
+import com.thoughtworks.videorental.main.BaseTestForVideoWorldApp;
 
 public class HomeViewActionTest extends BaseTestForVideoWorldApp {
 

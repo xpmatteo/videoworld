@@ -1,4 +1,4 @@
-package com.thoughtworks.videorental.main;
+package com.thoughtworks.videorental.action;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.thoughtworks.videorental.domain.Customer;
+import com.thoughtworks.videorental.main.BaseTestForVideoWorldApp;
 
 public class AuthenticationTest extends BaseTestForVideoWorldApp {
 	private final static Customer CUSTOMER_GINO = new Customer("gino");

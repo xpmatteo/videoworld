@@ -10,8 +10,8 @@ import java.util.Set;
 
 import org.junit.After;
 
+import com.thoughtworks.videorental.action.VideoWorldApp;
 import com.thoughtworks.videorental.domain.Customer;
-import com.thoughtworks.videorental.domain.Movie;
 import com.thoughtworks.videorental.domain.repository.CustomerRepository;
 import com.thoughtworks.videorental.domain.repository.MovieRepository;
 import com.thoughtworks.videorental.repository.SetBasedCustomerRepository;
@@ -20,11 +20,11 @@ import com.thoughtworks.videorental.toolkit.WebRequest;
 import com.thoughtworks.videorental.toolkit.WebResponse;
 
 public class BaseTestForVideoWorldApp {
-	CustomerRepository customerRepository = new SetBasedCustomerRepository();
-	MovieRepository movieRepository = new SetBasedMovieRepository();
-	WebRequest request = mock(WebRequest.class);
-	WebResponse response = mock(WebResponse.class);
-	VideoWorldApp app = new VideoWorldApp(request, response, customerRepository, movieRepository);
+	protected CustomerRepository customerRepository = new SetBasedCustomerRepository();
+	protected MovieRepository movieRepository = new SetBasedMovieRepository();
+	protected WebRequest request = mock(WebRequest.class);
+	protected WebResponse response = mock(WebResponse.class);
+	protected VideoWorldApp app = new VideoWorldApp(request, response, customerRepository, movieRepository);
 
 	@After
 	public void tearDown() throws Exception {
@@ -47,6 +47,7 @@ public class BaseTestForVideoWorldApp {
 		return new Customer("pippo");
 	}
 
+	@SuppressWarnings("unchecked")
 	protected <T> Set<T> asSet(T ... args) {
 		return new LinkedHashSet<T>(asList(args));
 	}
