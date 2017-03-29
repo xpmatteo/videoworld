@@ -1,4 +1,4 @@
-package com.thoughtworks.videorental.main;
+package com.thoughtworks.videorental.toolkit;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
