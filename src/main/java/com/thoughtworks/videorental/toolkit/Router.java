@@ -19,11 +19,11 @@ public class Router {
 	public void service() {
 		for (Route route : routes) {
 			if (request.getPath().equals(route.path)) {
-				if (null != request.getCustomer() || !route.isProtected) {
+				if (null == request.getCustomer() && route.isProtected) {
+					response.redirectTo(LOGIN_REDIRECT);
+				} else {
 					route.action.accept(request, response);
-					return;
 				}
-				response.redirectTo(LOGIN_REDIRECT);
 				return;
 			}
 		}
@@ -31,11 +31,11 @@ public class Router {
 		response.renderText("<h1>Not Found</h1>");
 	}
 
-	public void addResource(String path, WebAction action) {
+	public void addRoute(String path, WebAction action) {
 		routes.add(protectedRoute(path, action));
 	}
 
-	public void addUnprotectedResource(String path, WebAction unprotectedAction) {
+	public void addUnprotectedRoute(String path, WebAction unprotectedAction) {
 		routes.add(unProtectedRoute(path, unprotectedAction));
 	}
 

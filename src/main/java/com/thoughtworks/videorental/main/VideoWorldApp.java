@@ -20,8 +20,8 @@ public class VideoWorldApp extends Router {
 		this.customerRepository = customerRepository;
 		this.movieRepository = movieRepository;
 
-		addUnprotectedResource("/login", loginAction());
-		addResource("/", homeAction());
+		addUnprotectedRoute("/login", loginAction());
+		addRoute("/", homeAction());
 	}
 
 	private WebAction homeAction() {

@@ -21,8 +21,8 @@ public class RouterTest {
 
 	@Before
 	public void setUp() throws Exception {
-		router.addResource("/something", (req, resp) -> { response.render("pippo", "layout"); });
-		router.addUnprotectedResource("/login", (req, resp) -> {resp.render("login", "login_layout"); });
+		router.addRoute("/something", (req, resp) -> { response.render("pippo", "layout"); });
+		router.addUnprotectedRoute("/login", (req, resp) -> {resp.render("login", "login_layout"); });
 
 		when(request.getCustomer()).thenReturn(OUR_CUSTOMER);
 	}
@@ -52,8 +52,8 @@ public class RouterTest {
 
 	@Test
 	public void selectsResourceAccordingToPath() throws Exception {
-		router.addResource("/foo", (r, resp) -> { resp.render("foo", "layout"); });
-		router.addResource("/bar", (r, resp) -> { resp.render("bar", "layout"); });
+		router.addRoute("/foo", (r, resp) -> { resp.render("foo", "layout"); });
+		router.addRoute("/bar", (r, resp) -> { resp.render("bar", "layout"); });
 
 		get("/foo");
 
