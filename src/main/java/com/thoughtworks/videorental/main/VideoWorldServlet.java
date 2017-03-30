@@ -15,6 +15,7 @@ import com.thoughtworks.videorental.domain.repository.MovieRepository;
 import com.thoughtworks.videorental.repository.SetBasedCustomerRepository;
 import com.thoughtworks.videorental.repository.SetBasedMovieRepository;
 import com.thoughtworks.videorental.toolkit.ServletWebRequest;
+import com.thoughtworks.videorental.toolkit.ServletWebResponse;
 
 public class VideoWorldServlet extends HttpServlet {
 	private CustomerRepository customerRepository = new SetBasedCustomerRepository();

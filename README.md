@@ -13,7 +13,7 @@ How to refresh the Eclipse project files:
 
 How to run in the IDE:
 
-  * Execute in debug mode the main in class com.thoughtworks.videorental.main.VideoWorldMain
+  * Execute in debug mode class com.thoughtworks.videorental.main.VideoWorldMain
   * Open the browser at http://localhost:8080
 
 How to run from the command line

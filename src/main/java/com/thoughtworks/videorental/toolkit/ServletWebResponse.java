@@ -1,4 +1,4 @@
-package com.thoughtworks.videorental.main;
+package com.thoughtworks.videorental.toolkit;
 
 import java.io.File;
 import java.io.IOException;
