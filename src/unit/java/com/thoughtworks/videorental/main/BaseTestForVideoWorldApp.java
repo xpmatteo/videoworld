@@ -10,7 +10,6 @@ import java.util.Set;
 
 import org.junit.After;
 
-import com.thoughtworks.videorental.action.VideoWorldApp;
 import com.thoughtworks.videorental.domain.Customer;
 import com.thoughtworks.videorental.domain.repository.CustomerRepository;
 import com.thoughtworks.videorental.domain.repository.MovieRepository;
@@ -24,29 +23,16 @@ public class BaseTestForVideoWorldApp {
 	protected MovieRepository movieRepository = new SetBasedMovieRepository();
 	protected WebRequest request = mock(WebRequest.class);
 	protected WebResponse response = mock(WebResponse.class);
-	protected VideoWorldApp app = new VideoWorldApp(request, response, customerRepository, movieRepository);
 
 	@After
 	public void tearDown() throws Exception {
 		verifyNoMoreInteractions(response);
 	}
 
-	protected void get(String path) {
-		when(request.getPath()).thenReturn(path);
-		when(request.isPost()).thenReturn(false);
-		app.service();
-	}
-
 	protected void get(WebAction action, String path) {
 		when(request.getPath()).thenReturn(path);
 		when(request.isPost()).thenReturn(false);
 		action.accept(request, response);
-	}
-
-	protected void post(String path) {
-		when(request.getPath()).thenReturn(path);
-		when(request.isPost()).thenReturn(true);
-		app.service();
 	}
 
 	protected void post(WebAction action, String path) {

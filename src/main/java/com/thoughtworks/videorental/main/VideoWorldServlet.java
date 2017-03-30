@@ -7,13 +7,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.thoughtworks.videorental.action.VideoWorldApp;
+import com.thoughtworks.videorental.action.LoginAction;
+import com.thoughtworks.videorental.action.LogoutAction;
+import com.thoughtworks.videorental.action.ViewHomeAction;
 import com.thoughtworks.videorental.domain.Customer;
 import com.thoughtworks.videorental.domain.Movie;
 import com.thoughtworks.videorental.domain.repository.CustomerRepository;
 import com.thoughtworks.videorental.domain.repository.MovieRepository;
 import com.thoughtworks.videorental.repository.SetBasedCustomerRepository;
 import com.thoughtworks.videorental.repository.SetBasedMovieRepository;
+import com.thoughtworks.videorental.toolkit.Router;
 import com.thoughtworks.videorental.toolkit.ServletWebRequest;
 import com.thoughtworks.videorental.toolkit.ServletWebResponse;
 
@@ -38,7 +41,14 @@ public class VideoWorldServlet extends HttpServlet {
 		System.out.println(servletRequest.getRequestURI());
 		ServletWebResponse webResponse = new ServletWebResponse(servletRequest, servletResponse);
 		ServletWebRequest webRequest = new ServletWebRequest(servletRequest);
-		VideoWorldApp app = new VideoWorldApp(webRequest, webResponse, customerRepository, movieRepository);
-		app.service();
+		makeRouter(webResponse, webRequest).service();
+	}
+
+	private Router makeRouter(ServletWebResponse webResponse, ServletWebRequest webRequest) {
+		Router app = new Router(webRequest, webResponse);
+		app.addUnprotectedRoute("/login", new LoginAction(customerRepository));
+		app.addRoute("/", new ViewHomeAction(movieRepository));
+        app.addRoute("/logout", new LogoutAction());
+		return app;
 	}
 }

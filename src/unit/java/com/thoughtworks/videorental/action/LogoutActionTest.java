@@ -26,7 +26,7 @@ public class LogoutActionTest extends BaseTestForVideoWorldApp {
     public void logoutIsProtected() throws Exception {
         when(request.getCustomer()).thenReturn(null);
 
-        get("/logout");
+        get(logoutAction, "/logout");
 
         verify(response).redirectTo("/login");
     }

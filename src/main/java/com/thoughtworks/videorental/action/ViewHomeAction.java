@@ -1,25 +1,22 @@
 package com.thoughtworks.videorental.action;
 
-import java.util.Set;
-
-import com.opensymphony.xwork2.ActionSupport;
-import com.thoughtworks.videorental.domain.Movie;
 import com.thoughtworks.videorental.domain.repository.MovieRepository;
+import com.thoughtworks.videorental.main.WebAction;
+import com.thoughtworks.videorental.toolkit.WebRequest;
+import com.thoughtworks.videorental.toolkit.WebResponse;
 
-public class ViewHomeAction extends ActionSupport {
+public class ViewHomeAction implements WebAction {
 
-	private final MovieRepository movieRepository;
+	private MovieRepository movieRepository;
 
-	public ViewHomeAction(final MovieRepository movieRepository) {
+	public ViewHomeAction(MovieRepository movieRepository) {
 		this.movieRepository = movieRepository;
 	}
 
-	public Set<Movie> getMovies() {
-		return movieRepository.selectAll();
+	@Override
+	public void accept(WebRequest request, WebResponse response) {
+		response.putTemplateData("movies", movieRepository.selectAll());
+		response.renderTemplate("home", "main_layout");
 	}
 
-	@Override
-	public String execute() throws Exception {
-		return SUCCESS;
-	}
 }
