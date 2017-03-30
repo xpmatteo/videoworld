@@ -50,9 +50,12 @@ public class VideoWorldServlet extends HttpServlet {
 
 	private Router makeRouter(ServletWebResponse webResponse, ServletWebRequest webRequest) {
 		Router router = new Router(webRequest, webResponse);
-		router.addUnprotectedRoute("/login", new LoginAction(customerRepository));
-		router.addRoute("/", new ViewHomeAction(movieRepository));
-        router.addRoute("/logout", new LogoutAction());
-		return router;
+
+		router.addUnprotectedRoute("/login", 	new LoginAction(customerRepository));
+
+		router.addRoute("/", 		new ViewHomeAction(movieRepository));
+        router.addRoute("/logout", 	new LogoutAction());
+
+        return router;
 	}
 }
