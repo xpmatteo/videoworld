@@ -38,17 +38,21 @@ public class VideoWorldServlet extends HttpServlet {
 
 	@Override
 	protected void service(HttpServletRequest servletRequest, HttpServletResponse servletResponse) throws ServletException, IOException {
-		System.out.println(servletRequest.getRequestURI());
+		System.out.print(servletRequest.getRequestURI() + " - ");
+
 		ServletWebResponse webResponse = new ServletWebResponse(servletRequest, servletResponse);
 		ServletWebRequest webRequest = new ServletWebRequest(servletRequest);
-		makeRouter(webResponse, webRequest).service();
+		Router router = makeRouter(webResponse, webRequest);
+		router.service();
+
+		System.out.println(servletResponse.getStatus());
 	}
 
 	private Router makeRouter(ServletWebResponse webResponse, ServletWebRequest webRequest) {
-		Router app = new Router(webRequest, webResponse);
-		app.addUnprotectedRoute("/login", new LoginAction(customerRepository));
-		app.addRoute("/", new ViewHomeAction(movieRepository));
-        app.addRoute("/logout", new LogoutAction());
-		return app;
+		Router router = new Router(webRequest, webResponse);
+		router.addUnprotectedRoute("/login", new LoginAction(customerRepository));
+		router.addRoute("/", new ViewHomeAction(movieRepository));
+        router.addRoute("/logout", new LogoutAction());
+		return router;
 	}
 }
