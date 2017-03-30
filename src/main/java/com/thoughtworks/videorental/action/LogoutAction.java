@@ -1,24 +1,15 @@
 package com.thoughtworks.videorental.action;
 
-import java.util.Map;
+import com.thoughtworks.videorental.main.WebAction;
+import com.thoughtworks.videorental.toolkit.WebRequest;
+import com.thoughtworks.videorental.toolkit.WebResponse;
 
-import org.apache.struts2.dispatcher.SessionMap;
-import org.apache.struts2.interceptor.SessionAware;
-
-import com.opensymphony.xwork2.ActionSupport;
-
-public class LogoutAction extends ActionSupport implements SessionAware {
-
-	private SessionMap<String, Object> session;
+public class LogoutAction implements WebAction {
 
 	@Override
-	public void setSession(Map<String, Object> session) {
-		this.session = (SessionMap<String, Object>) session;
+	public void accept(WebRequest request, WebResponse response) {
+        response.setCustomer(null);
+        response.redirectTo("/login");
 	}
 
-	@Override
-	public String execute() throws Exception {
-		session.invalidate();
-		return SUCCESS;
-	}
 }

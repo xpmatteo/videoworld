@@ -1,27 +1,35 @@
 package com.thoughtworks.videorental.action;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
-import org.apache.struts2.dispatcher.SessionMap;
-import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
-public class LogoutActionTest {
-	
-	private SessionMap<String, Object> session;
-	private LogoutAction logoutAction;
-	
-	@SuppressWarnings("unchecked")
-	@Before
-	public void setUp() {
-		session = mock(SessionMap.class);
-		logoutAction = new LogoutAction();
-		logoutAction.setSession(session);
-	}
+import com.thoughtworks.videorental.main.BaseTestForVideoWorldApp;
 
-	@Test
-	public void shouldInvalidateSession() throws Exception {
-		logoutAction.execute();
-		verify(session).invalidate();
-	}
+public class LogoutActionTest extends BaseTestForVideoWorldApp {
+
+	LogoutAction logoutAction = new LogoutAction();
+
+    @Test
+    public void logout() throws Exception {
+        when(request.getCustomer()).thenReturn(anyCustomer());
+
+        get(logoutAction, "/logout");
+
+        verify(response).setCustomer(null);
+        verify(response).redirectTo("/login");
+    }
+
+    @Test@Ignore
+    public void logoutIsProtected() throws Exception {
+        when(request.getCustomer()).thenReturn(null);
+
+        get("/logout");
+
+        verify(response).redirectTo("/login");
+    }
+
+
 }

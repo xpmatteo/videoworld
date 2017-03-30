@@ -31,16 +31,28 @@ public class BaseTestForVideoWorldApp {
 		verifyNoMoreInteractions(response);
 	}
 
+	protected void get(String path) {
+		when(request.getPath()).thenReturn(path);
+		when(request.isPost()).thenReturn(false);
+		app.service();
+	}
+
+	protected void get(WebAction action, String path) {
+		when(request.getPath()).thenReturn(path);
+		when(request.isPost()).thenReturn(false);
+		action.accept(request, response);
+	}
+
 	protected void post(String path) {
 		when(request.getPath()).thenReturn(path);
 		when(request.isPost()).thenReturn(true);
 		app.service();
 	}
 
-	protected void get(String path) {
+	protected void post(WebAction action, String path) {
 		when(request.getPath()).thenReturn(path);
-		when(request.isPost()).thenReturn(false);
-		app.service();
+		when(request.isPost()).thenReturn(true);
+		action.accept(request, response);
 	}
 
 	protected Customer anyCustomer() {
@@ -51,4 +63,5 @@ public class BaseTestForVideoWorldApp {
 	protected <T> Set<T> asSet(T ... args) {
 		return new LinkedHashSet<T>(asList(args));
 	}
+
 }
