@@ -18,7 +18,7 @@ How to run in the IDE:
 
 How to run from the command line
 
-    ./gradlew run
+    ???
 
 How to run unit tests
 
@@ -45,8 +45,6 @@ How to run end-to-end tests
 
 ### Todo
 
- - Fix first user story
-
  - rewrite rentMoviesAction + test
  - rewrite currentRentals action and test
  - rewrite transactionHistory action and test
@@ -56,8 +54,10 @@ How to run end-to-end tests
  - copy in the project the LocalDate classes and friends
  - remove dependency from tw-commons jars
 
- - BEFORE TRAINING
- - test the sequence of user stories (and didactic intent)
+BEFORE TRAINING
+
+ - Fix first user story
+ - review the sequence of user stories (and didactic intent)
  - Set up a VM with Gitlab with a clone of this repo
  - Set up GO CI on same VM
 
