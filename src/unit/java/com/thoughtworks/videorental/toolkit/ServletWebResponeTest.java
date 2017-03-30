@@ -18,7 +18,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.thoughtworks.videorental.domain.Customer;
-import com.thoughtworks.videorental.main.ServletWebResponse;
+import com.thoughtworks.videorental.toolkit.ServletWebResponse;
 
 public class ServletWebResponeTest {
 

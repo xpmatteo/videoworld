@@ -37,7 +37,8 @@ public class VideoWorldServlet extends HttpServlet {
 	protected void service(HttpServletRequest servletRequest, HttpServletResponse servletResponse) throws ServletException, IOException {
 		System.out.println(servletRequest.getRequestURI());
 		ServletWebResponse webResponse = new ServletWebResponse(servletRequest, servletResponse);
-		VideoWorldApp app = new VideoWorldApp(new ServletWebRequest(servletRequest), webResponse, customerRepository, movieRepository);
+		ServletWebRequest webRequest = new ServletWebRequest(servletRequest);
+		VideoWorldApp app = new VideoWorldApp(webRequest, webResponse, customerRepository, movieRepository);
 		app.service();
 	}
 }
