@@ -1,4 +1,4 @@
-package com.thoughtworks.videorental.main;
+package com.thoughtworks.videorental.action;
 
 import static java.util.Arrays.asList;
 import static org.mockito.Mockito.mock;
@@ -13,6 +13,7 @@ import org.junit.After;
 import com.thoughtworks.videorental.domain.Customer;
 import com.thoughtworks.videorental.domain.repository.CustomerRepository;
 import com.thoughtworks.videorental.domain.repository.MovieRepository;
+import com.thoughtworks.videorental.main.WebAction;
 import com.thoughtworks.videorental.repository.SetBasedCustomerRepository;
 import com.thoughtworks.videorental.repository.SetBasedMovieRepository;
 import com.thoughtworks.videorental.toolkit.WebRequest;

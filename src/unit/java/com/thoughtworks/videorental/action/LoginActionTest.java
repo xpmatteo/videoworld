@@ -1,13 +1,12 @@
 package com.thoughtworks.videorental.action;
 
-import com.thoughtworks.videorental.domain.Customer;
-import com.thoughtworks.videorental.main.BaseTestForVideoWorldApp;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import com.thoughtworks.videorental.domain.Customer;
 
 public class LoginActionTest extends BaseTestForVideoWorldApp {
 	private final static Customer CUSTOMER_GINO = new Customer("gino");

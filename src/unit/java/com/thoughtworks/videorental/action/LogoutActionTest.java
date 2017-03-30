@@ -6,8 +6,6 @@ import static org.mockito.Mockito.when;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import com.thoughtworks.videorental.main.BaseTestForVideoWorldApp;
-
 public class LogoutActionTest extends BaseTestForVideoWorldApp {
 
 	LogoutAction logoutAction = new LogoutAction();

@@ -9,7 +9,6 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import com.thoughtworks.videorental.domain.Movie;
-import com.thoughtworks.videorental.main.BaseTestForVideoWorldApp;
 
 public class ViewHomeActionTest extends BaseTestForVideoWorldApp {
 
