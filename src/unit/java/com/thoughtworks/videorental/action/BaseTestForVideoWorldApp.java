@@ -36,7 +36,7 @@ public class BaseTestForVideoWorldApp {
 		action.accept(request, response);
 	}
 
-	protected Customer anyCustomer() {
+	protected static Customer anyCustomer() {
 		return new Customer("pippo");
 	}
 
