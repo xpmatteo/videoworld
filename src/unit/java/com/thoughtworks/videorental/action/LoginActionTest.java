@@ -1,18 +1,24 @@
 package com.thoughtworks.videorental.action;
 
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
+import java.util.Optional;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import com.thoughtworks.videorental.domain.Customer;
+import com.thoughtworks.videorental.domain.repository.CustomerRepository;
+import com.thoughtworks.videorental.repository.SetBasedCustomerRepository;
 
 public class LoginActionTest extends BaseTestForVideoWorldApp {
 	private final static Customer CUSTOMER_GINO = new Customer("gino");
 	private static final Customer CUSTOMER_PINO = new Customer("pino");
 	private static final Customer CUSTOMER_LINO = new Customer("lino");
 
+	private CustomerRepository customerRepository = new SetBasedCustomerRepository();
 	private LoginAction loginAction = new LoginAction(customerRepository);
 
 	@Before

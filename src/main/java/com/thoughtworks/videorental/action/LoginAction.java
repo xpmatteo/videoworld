@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import com.thoughtworks.videorental.domain.Customer;
 import com.thoughtworks.videorental.domain.repository.CustomerRepository;
-import com.thoughtworks.videorental.main.WebAction;
+import com.thoughtworks.videorental.toolkit.WebAction;
 import com.thoughtworks.videorental.toolkit.WebRequest;
 import com.thoughtworks.videorental.toolkit.WebResponse;
 

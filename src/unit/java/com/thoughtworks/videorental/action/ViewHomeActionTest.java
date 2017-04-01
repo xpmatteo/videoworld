@@ -9,12 +9,15 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import com.thoughtworks.videorental.domain.Movie;
+import com.thoughtworks.videorental.domain.repository.MovieRepository;
+import com.thoughtworks.videorental.repository.SetBasedMovieRepository;
 
 public class ViewHomeActionTest extends BaseTestForVideoWorldApp {
 
 	private static final Movie A_MOVIE = new Movie("A movie", Movie.NEW_RELEASE);
 	private static final Movie ANOTHER_MOVIE = new Movie("Another movie", Movie.NEW_RELEASE);
 
+	private MovieRepository movieRepository = new SetBasedMovieRepository();
 	private ViewHomeAction viewHomeAction = new ViewHomeAction(movieRepository);
 
 	@Before

@@ -3,8 +3,6 @@ package com.thoughtworks.videorental.toolkit;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.thoughtworks.videorental.main.WebAction;
-
 public class Router {
 	private static final String LOGIN_REDIRECT = "/login";
 	private WebRequest request;

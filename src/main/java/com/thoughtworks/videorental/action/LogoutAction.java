@@ -1,6 +1,6 @@
 package com.thoughtworks.videorental.action;
 
-import com.thoughtworks.videorental.main.WebAction;
+import com.thoughtworks.videorental.toolkit.WebAction;
 import com.thoughtworks.videorental.toolkit.WebRequest;
 import com.thoughtworks.videorental.toolkit.WebResponse;
 
