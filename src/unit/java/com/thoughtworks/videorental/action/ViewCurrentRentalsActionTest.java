@@ -22,17 +22,18 @@ public class ViewCurrentRentalsActionTest extends BaseTestForVideoWorldApp {
 	private static final Rental EXPIRED_RENTAL = aRentalExpiring(yesterday());
 
 	private TransactionRepository transactionRepository = new SetBasedTransactionRepository();
-	private ViewCurrentRentalsAction action = new ViewCurrentRentalsAction(transactionRepository );
+	private ViewCurrentRentalsAction action = new ViewCurrentRentalsAction(transactionRepository);
 
 	@Test
-	public void testName() throws Exception {
+	public void passesOnlyCurrentRentalsToTheViewTemplate() throws Exception {
 		Transaction t1 = new Transaction(anyTime(), CUSTOMER, asSet(EXPIRED_RENTAL, CURRENT_RENTAL_1));
 		Transaction t2 = new Transaction(anyTime(), CUSTOMER, asSet(CURRENT_RENTAL_2));
 		transactionRepository.add(asSet(t1, t2));
 
-		get(action, "/rentals");
+		action.accept(request, response);
 
 		verify(response).putTemplateData("rentals", asSet(CURRENT_RENTAL_1, CURRENT_RENTAL_2));
+		verify(response).renderTemplate("rentals", "main_layout");
 	}
 
 	private LocalDateTime anyTime() {

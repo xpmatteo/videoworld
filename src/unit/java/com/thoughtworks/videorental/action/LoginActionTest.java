@@ -27,7 +27,9 @@ public class LoginActionTest extends BaseTestForVideoWorldApp {
 
 	@Test
 	public void showsLoginPage() throws Exception {
-		get(loginAction, "/login");
+		when(request.isPost()).thenReturn(false);
+
+		loginAction.accept(request, response);
 
 		verify(response).putTemplateData("customers", asSet(CUSTOMER_GINO, CUSTOMER_PINO, CUSTOMER_LINO));
 		verify(response).renderTemplate("login", "login_layout");
@@ -36,8 +38,9 @@ public class LoginActionTest extends BaseTestForVideoWorldApp {
 	@Test
 	public void authenticationSucceeded() throws Exception {
 		when(request.getParameter("customerName")).thenReturn("gino");
+		when(request.isPost()).thenReturn(true);
 
-		post(loginAction, "/login");
+		loginAction.accept(request, response);
 
 		verify(response).setCustomer(CUSTOMER_GINO);
 		verify(response).redirectTo("/");
@@ -46,8 +49,9 @@ public class LoginActionTest extends BaseTestForVideoWorldApp {
 	@Test
 	public void authenticationFailed() throws Exception {
 		when(request.getParameter("customerName")).thenReturn("some strange name");
+		when(request.isPost()).thenReturn(true);
 
-		post(loginAction, "/login");
+		loginAction.accept(request, response);
 
 		verify(response).putTemplateData("customers", asSet(CUSTOMER_GINO, CUSTOMER_PINO, CUSTOMER_LINO));
 		verify(response).renderTemplate("login", "login_layout");

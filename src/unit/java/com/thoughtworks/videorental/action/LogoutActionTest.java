@@ -14,7 +14,7 @@ public class LogoutActionTest extends BaseTestForVideoWorldApp {
     public void logout() throws Exception {
         when(request.getCustomer()).thenReturn(anyCustomer());
 
-        get(logoutAction, "/logout");
+        logoutAction.accept(request, response);
 
         verify(response).setCustomer(null);
         verify(response).redirectTo("/login");
@@ -24,7 +24,7 @@ public class LogoutActionTest extends BaseTestForVideoWorldApp {
     public void logoutIsProtected() throws Exception {
         when(request.getCustomer()).thenReturn(null);
 
-        get(logoutAction, "/logout");
+        logoutAction.accept(request, response);
 
         verify(response).redirectTo("/login");
     }

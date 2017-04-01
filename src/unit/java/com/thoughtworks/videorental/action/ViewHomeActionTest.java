@@ -29,7 +29,7 @@ public class ViewHomeActionTest extends BaseTestForVideoWorldApp {
 	public void viewHome() throws Exception {
 		movieRepository.add(asList(A_MOVIE, ANOTHER_MOVIE));
 
-		get(viewHomeAction, "/");
+		viewHomeAction.accept(request, response);
 
 		verify(response).putTemplateData("movies", asSet(A_MOVIE, ANOTHER_MOVIE));
 		verify(response).renderTemplate("home", "main_layout");
@@ -39,7 +39,7 @@ public class ViewHomeActionTest extends BaseTestForVideoWorldApp {
 	public void homeIsProtected() throws Exception {
 		when(request.getCustomer()).thenReturn(null);
 
-		get(viewHomeAction, "/");
+		viewHomeAction.accept(request, response);
 
 		verify(response).redirectTo("/login");
 	}

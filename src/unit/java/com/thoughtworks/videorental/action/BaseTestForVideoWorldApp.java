@@ -24,18 +24,6 @@ public class BaseTestForVideoWorldApp {
 		verifyNoMoreInteractions(response);
 	}
 
-	protected void get(WebAction action, String path) {
-		when(request.getPath()).thenReturn(path);
-		when(request.isPost()).thenReturn(false);
-		action.accept(request, response);
-	}
-
-	protected void post(WebAction action, String path) {
-		when(request.getPath()).thenReturn(path);
-		when(request.isPost()).thenReturn(true);
-		action.accept(request, response);
-	}
-
 	protected static Customer anyCustomer() {
 		return new Customer("pippo");
 	}
