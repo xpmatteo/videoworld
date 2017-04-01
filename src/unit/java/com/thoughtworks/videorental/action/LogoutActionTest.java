@@ -3,11 +3,9 @@ package com.thoughtworks.videorental.action;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class LogoutActionTest extends BaseTestForVideoWorldApp {
-
 	LogoutAction logoutAction = new LogoutAction();
 
     @Test
@@ -19,15 +17,4 @@ public class LogoutActionTest extends BaseTestForVideoWorldApp {
         verify(response).setCustomer(null);
         verify(response).redirectTo("/login");
     }
-
-    @Test@Ignore
-    public void logoutIsProtected() throws Exception {
-        when(request.getCustomer()).thenReturn(null);
-
-        logoutAction.accept(request, response);
-
-        verify(response).redirectTo("/login");
-    }
-
-
 }
