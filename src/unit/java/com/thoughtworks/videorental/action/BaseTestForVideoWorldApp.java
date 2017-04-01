@@ -3,7 +3,6 @@ package com.thoughtworks.videorental.action;
 import static java.util.Arrays.asList;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -11,7 +10,6 @@ import java.util.Set;
 import org.junit.After;
 
 import com.thoughtworks.videorental.domain.Customer;
-import com.thoughtworks.videorental.toolkit.WebAction;
 import com.thoughtworks.videorental.toolkit.WebRequest;
 import com.thoughtworks.videorental.toolkit.WebResponse;
 
@@ -29,8 +27,7 @@ public class BaseTestForVideoWorldApp {
 	}
 
 	@SuppressWarnings("unchecked")
-	protected <T> Set<T> asSet(T ... args) {
+	protected static <T> Set<T> asSet(T ... args) {
 		return new LinkedHashSet<T>(asList(args));
 	}
-
 }
