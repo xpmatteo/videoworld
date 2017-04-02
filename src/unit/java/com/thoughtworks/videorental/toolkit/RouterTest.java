@@ -17,7 +17,7 @@ public class RouterTest {
 	private static final Customer OUR_CUSTOMER = new Customer("Pippo");
 	private WebResponse response = mock(WebResponse.class);
 	private WebRequest request = mock(WebRequest.class);
-	private Router router = new Router(request, response);
+	private Router router = new Router();
 
 	@Before
 	public void setUp() throws Exception {
@@ -81,7 +81,7 @@ public class RouterTest {
 
 	private void get(String path) {
 		when(request.getPath()).thenReturn(path);
-		router.service();
+		router.service(request, response);
 	}
 
 

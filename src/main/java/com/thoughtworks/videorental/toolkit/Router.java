@@ -5,16 +5,9 @@ import java.util.List;
 
 public class Router {
 	private static final String LOGIN_REDIRECT = "/login";
-	private WebRequest request;
-	private WebResponse response;
 	private List<Route> routes = new ArrayList<>();
 
-	public Router(WebRequest request, WebResponse response) {
-		this.request = request;
-		this.response = response;
-	}
-
-	public void service() {
+	public void service(WebRequest request, WebResponse response) {
 		for (Route route : routes) {
 			if (request.getPath().equals(route.path)) {
 				if (null == request.getCustomer() && route.isProtected) {

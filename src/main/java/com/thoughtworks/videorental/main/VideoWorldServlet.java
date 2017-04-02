@@ -21,8 +21,8 @@ import com.thoughtworks.videorental.toolkit.ServletWebRequest;
 import com.thoughtworks.videorental.toolkit.ServletWebResponse;
 
 public class VideoWorldServlet extends HttpServlet {
-	private CustomerRepository customerRepository = new SetBasedCustomerRepository();
-	private MovieRepository movieRepository = new SetBasedMovieRepository();
+	CustomerRepository customerRepository = new SetBasedCustomerRepository();
+	MovieRepository movieRepository = new SetBasedMovieRepository();
 
 	@Override
 	public void init() throws ServletException {
@@ -42,14 +42,14 @@ public class VideoWorldServlet extends HttpServlet {
 
 		ServletWebResponse webResponse = new ServletWebResponse(servletRequest, servletResponse);
 		ServletWebRequest webRequest = new ServletWebRequest(servletRequest);
-		Router router = makeRouter(webResponse, webRequest);
-		router.service();
+		Router router = makeRouter();
+		router.service(webRequest, webResponse);
 
 		System.out.println(servletResponse.getStatus());
 	}
 
-	private Router makeRouter(ServletWebResponse webResponse, ServletWebRequest webRequest) {
-		Router router = new Router(webRequest, webResponse);
+	private Router makeRouter() {
+		Router router = new Router();
 
 		router.addUnprotectedRoute("/login", 	new LoginAction(customerRepository));
 
