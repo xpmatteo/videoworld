@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import org.junit.Test;
 
 import com.thoughtworks.videorental.domain.Customer;
+import com.thoughtworks.videorental.toolkit.web.ServletWebRequest;
 
 public class ServletWebRequestTest {
 

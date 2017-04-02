@@ -1,4 +1,4 @@
-package com.thoughtworks.videorental.toolkit;
+package com.thoughtworks.videorental.toolkit.web;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.thoughtworks.videorental.domain.Customer;
-import com.thoughtworks.videorental.toolkit.WebResponse;
+import com.thoughtworks.videorental.toolkit.web.WebResponse;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;

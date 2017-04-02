@@ -1,4 +1,4 @@
-package com.thoughtworks.videorental.toolkit;
+package com.thoughtworks.videorental.toolkit.web;
 
 import javax.servlet.http.HttpServletRequest;
 

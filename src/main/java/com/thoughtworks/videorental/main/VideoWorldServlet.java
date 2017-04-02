@@ -7,18 +7,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.thoughtworks.videorental.action.LoginAction;
-import com.thoughtworks.videorental.action.LogoutAction;
-import com.thoughtworks.videorental.action.ViewHomeAction;
 import com.thoughtworks.videorental.domain.Customer;
 import com.thoughtworks.videorental.domain.Movie;
 import com.thoughtworks.videorental.domain.repository.CustomerRepository;
 import com.thoughtworks.videorental.domain.repository.MovieRepository;
 import com.thoughtworks.videorental.repository.SetBasedCustomerRepository;
 import com.thoughtworks.videorental.repository.SetBasedMovieRepository;
-import com.thoughtworks.videorental.toolkit.Router;
-import com.thoughtworks.videorental.toolkit.ServletWebRequest;
-import com.thoughtworks.videorental.toolkit.ServletWebResponse;
+import com.thoughtworks.videorental.toolkit.web.ServletWebRequest;
+import com.thoughtworks.videorental.toolkit.web.ServletWebResponse;
 
 public class VideoWorldServlet extends HttpServlet {
 	CustomerRepository customerRepository = new SetBasedCustomerRepository();
@@ -42,20 +38,9 @@ public class VideoWorldServlet extends HttpServlet {
 
 		ServletWebResponse webResponse = new ServletWebResponse(servletRequest, servletResponse);
 		ServletWebRequest webRequest = new ServletWebRequest(servletRequest);
-		Router router = makeRouter();
+		VideoWorldRouter router = new VideoWorldRouter(customerRepository, movieRepository, null);
 		router.service(webRequest, webResponse);
 
 		System.out.println(servletResponse.getStatus());
-	}
-
-	private Router makeRouter() {
-		Router router = new Router();
-
-		router.addUnprotectedRoute("/login", 	new LoginAction(customerRepository));
-
-		router.addRoute("/", 		new ViewHomeAction(movieRepository));
-        router.addRoute("/logout", 	new LogoutAction());
-
-        return router;
 	}
 }

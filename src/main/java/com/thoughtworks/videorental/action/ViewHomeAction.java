@@ -1,9 +1,9 @@
 package com.thoughtworks.videorental.action;
 
 import com.thoughtworks.videorental.domain.repository.MovieRepository;
-import com.thoughtworks.videorental.toolkit.WebAction;
-import com.thoughtworks.videorental.toolkit.WebRequest;
-import com.thoughtworks.videorental.toolkit.WebResponse;
+import com.thoughtworks.videorental.toolkit.web.WebAction;
+import com.thoughtworks.videorental.toolkit.web.WebRequest;
+import com.thoughtworks.videorental.toolkit.web.WebResponse;
 
 public class ViewHomeAction implements WebAction {
 

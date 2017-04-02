@@ -1,4 +1,4 @@
-package com.thoughtworks.videorental.toolkit;
+package com.thoughtworks.videorental.toolkit.web;
 
 import java.util.ArrayList;
 import java.util.List;

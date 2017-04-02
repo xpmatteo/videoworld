@@ -10,8 +10,8 @@ import java.util.Set;
 import org.junit.After;
 
 import com.thoughtworks.videorental.domain.Customer;
-import com.thoughtworks.videorental.toolkit.WebRequest;
-import com.thoughtworks.videorental.toolkit.WebResponse;
+import com.thoughtworks.videorental.toolkit.web.WebRequest;
+import com.thoughtworks.videorental.toolkit.web.WebResponse;
 
 public class BaseTestForVideoWorldApp {
 	protected WebRequest request = mock(WebRequest.class);

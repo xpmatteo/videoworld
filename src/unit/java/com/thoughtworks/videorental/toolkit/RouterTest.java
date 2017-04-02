@@ -11,7 +11,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.thoughtworks.videorental.domain.Customer;
-import com.thoughtworks.videorental.toolkit.Router;
+import com.thoughtworks.videorental.toolkit.web.Router;
+import com.thoughtworks.videorental.toolkit.web.WebRequest;
+import com.thoughtworks.videorental.toolkit.web.WebResponse;
 
 public class RouterTest {
 	private static final Customer OUR_CUSTOMER = new Customer("Pippo");
