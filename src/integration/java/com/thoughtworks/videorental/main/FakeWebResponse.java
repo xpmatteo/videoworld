@@ -11,13 +11,19 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+
 import com.thoughtworks.videorental.toolkit.web.ServletWebResponse;
 import com.thoughtworks.videorental.toolkit.web.WebResponse;
 
 public class FakeWebResponse extends ServletWebResponse implements WebResponse {
 
+	private Writer writer;
+
 	public FakeWebResponse(Writer writer) {
 		super(makeServletRequest(), makeServletResponse(new PrintWriter(writer)));
+		this.writer = writer;
 	}
 
 	private String redirectLocation;
@@ -27,9 +33,12 @@ public class FakeWebResponse extends ServletWebResponse implements WebResponse {
 		this.redirectLocation = location;
 	}
 
-
 	public String getRedirectLocation() {
 		return redirectLocation;
+	}
+
+	public Document getOutputDocument() {
+		return Jsoup.parse(writer.toString());
 	}
 
 	private static HttpServletRequest makeServletRequest() {
