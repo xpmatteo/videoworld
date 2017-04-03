@@ -34,12 +34,12 @@ public class ViewHomeTest {
 
 	@Before
 	public void setUp() throws Exception {
+		when(request.getPath()).thenReturn("/");
 		when(request.getCustomer()).thenReturn(aCustomer());
 	}
 
 	@Test
 	public void homeIsProtected() throws Exception {
-		when(request.getPath()).thenReturn("/");
 		when(request.getCustomer()).thenReturn(null);
 
 		router.service(request, response);
@@ -49,11 +49,10 @@ public class ViewHomeTest {
 
 	@Test
 	public void homeShowsListOfAllMovies() throws Exception {
-		Movie movie0 = new Movie("movie 0", Movie.NEW_RELEASE);
-		Movie movie1 = new Movie("movie 1", Movie.NEW_RELEASE);
-		Movie movie2 = new Movie("movie 2", Movie.REGULAR);
-		movieRepository.add(asList(movie0, movie1, movie2));
-		when(request.getPath()).thenReturn("/");
+		movieRepository.add(asList(
+				new Movie("movie 0", Movie.NEW_RELEASE),
+				new Movie("movie 1", Movie.NEW_RELEASE),
+				new Movie("movie 2", Movie.REGULAR)));
 
 		router.service(request, response);
 
