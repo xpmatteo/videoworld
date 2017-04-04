@@ -8,7 +8,6 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import com.thoughtworks.datetime.LocalDate;
-import com.thoughtworks.datetime.LocalDate;
 import com.thoughtworks.datetime.LocalDateTime;
 import com.thoughtworks.datetime.Period;
 import com.thoughtworks.videorental.domain.Customer;

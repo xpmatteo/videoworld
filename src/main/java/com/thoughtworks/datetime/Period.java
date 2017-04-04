@@ -11,7 +11,6 @@ public class Period {
 	private final LocalDate endDate;
 
 	protected Period(final LocalDate startDate, final Duration duration, final LocalDate endDate) {
-		assert !duration.isInfinite();
 		assert startDate.plusDays(duration.getDays() - 1).equals(endDate);
 		this.startDate = startDate;
 		this.duration = duration;
@@ -29,8 +28,7 @@ public class Period {
 		assert startDate != null;
 		assert endDate != null;
 		final Duration exclusiveDuration = startDate.durationUntil(endDate);
-		final Duration inclusiveDuration = exclusiveDuration.isInfinite() ? exclusiveDuration : Duration
-				.ofDays(exclusiveDuration.getDays() + 1);
+		final Duration inclusiveDuration = Duration.ofDays(exclusiveDuration.getDays() + 1);
 		return new Period(startDate, inclusiveDuration, endDate);
 	}
 
