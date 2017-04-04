@@ -1,5 +1,22 @@
 package com.thoughtworks.videorental.main;
 
+import static java.util.Arrays.asList;
+import static java.util.stream.Collectors.toList;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+import java.io.StringWriter;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
+
+import org.jsoup.nodes.Element;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
 import com.thoughtworks.datetime.LocalDate;
 import com.thoughtworks.datetime.LocalDateTime;
 import com.thoughtworks.datetime.Period;
@@ -8,32 +25,16 @@ import com.thoughtworks.videorental.domain.Movie;
 import com.thoughtworks.videorental.domain.Rental;
 import com.thoughtworks.videorental.domain.Transaction;
 import com.thoughtworks.videorental.domain.repository.CustomerRepository;
+import com.thoughtworks.videorental.domain.repository.TransactionRepository;
 import com.thoughtworks.videorental.repository.SetBasedCustomerRepository;
 import com.thoughtworks.videorental.repository.SetBasedTransactionRepository;
 import com.thoughtworks.videorental.toolkit.web.WebRequest;
-import org.jsoup.nodes.Element;
-import org.junit.Before;
-import org.junit.Test;
-
-import java.io.StringWriter;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
-
-import static java.util.Arrays.asList;
-import static java.util.stream.Collectors.toList;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 public class ViewCurrentRentalsTest {
-
     private static final Customer CUSTOMER = new Customer("John");
 
     private CustomerRepository customerRepository = new SetBasedCustomerRepository();
-    private SetBasedTransactionRepository transactionRepository = new SetBasedTransactionRepository();
+    private TransactionRepository transactionRepository = new SetBasedTransactionRepository();
 
     private VideoWorldRouter router = new VideoWorldRouter(customerRepository, null, transactionRepository);
 
@@ -47,6 +48,11 @@ public class ViewCurrentRentalsTest {
         when(request.getCustomer()).thenReturn(CUSTOMER);
     }
 
+    @After
+	public void tearDown() throws Exception {
+    	LocalDateTime.resetSystemDateTime();
+	}
+
     @Test
     public void rentalsIsProtected() throws Exception {
         when(request.getCustomer()).thenReturn(null);
@@ -58,12 +64,9 @@ public class ViewCurrentRentalsTest {
 
     @Test
     public void rentalsShowsListOfCurrentRentals() throws Exception {
-        LocalDate expiration = tomorrow();
-
-        transactionRepository.add(asList(
-                new Transaction(anyTime(), CUSTOMER, asSet(aRentalForMovieExpiring("movie 0", expiration))),
-                new Transaction(anyTime(), CUSTOMER, asSet(aRentalForMovieExpiring("movie 1", expiration)))
-        ));
+    	LocalDateTime.setSystemDateTime(LocalDateTime.at(2017, 1, 1, 0, 0, 0));
+    	transactionRepository.add(aTransactionWithRentalExpiring("movie 0", LocalDate.on(2017, 1, 2)));
+		transactionRepository.add(aTransactionWithRentalExpiring("movie 1", LocalDate.on(2017, 1, 3)));
 
         router.service(request, response);
 
@@ -71,29 +74,27 @@ public class ViewCurrentRentalsTest {
                 .map(Element::text)
                 .collect(toList());
 
-        assertThat(rentalsInPage, containsInAnyOrder(
-                "movie 0 (ends " + expiration.toString() + ")",
-                "movie 1 (ends " + expiration.toString() + ")"
-        ));
+        assertThat(rentalsInPage, is(asList(
+                "movie 0 (ends Mon Jan 02 2017)",
+                "movie 1 (ends Tue Jan 03 2017)"
+                )));
     }
 
-    private LocalDateTime anyTime() {
-        return LocalDateTime.now();
-    }
+	private Transaction aTransactionWithRentalExpiring(String movieName, LocalDate expiration) {
+		LocalDate startRental = LocalDate.on(2017, 1, 1);
+		Rental rental = new Rental(
+		        CUSTOMER,
+		        new Movie(movieName, Movie.REGULAR),
+		        Period.of(startRental, expiration)
+		);
+		return new Transaction(
+				LocalDateTime.onDateAt(startRental, 0, 0, 0),
+				CUSTOMER,
+				asSet(rental));
+	}
 
-    private Rental aRentalForMovieExpiring(String movieName, LocalDate expiration) {
-        return new Rental(
-                CUSTOMER,
-                new Movie(movieName, Movie.REGULAR),
-                Period.of(LocalDate.today().minusDays(100), expiration)
-        );
-    }
-
-    private LocalDate tomorrow() {
-        return LocalDate.today().plusDays(1);
-    }
-
-    private <T> Set<T> asSet(T ... args) {
+    @SuppressWarnings("unchecked")
+	private <T> Set<T> asSet(T ... args) {
         return new LinkedHashSet<>(asList(args));
     }
 }

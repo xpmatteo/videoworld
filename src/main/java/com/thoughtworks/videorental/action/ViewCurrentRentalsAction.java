@@ -1,18 +1,19 @@
 package com.thoughtworks.videorental.action;
 
+import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toSet;
+
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
+
 import com.thoughtworks.datetime.LocalDate;
 import com.thoughtworks.videorental.domain.Rental;
 import com.thoughtworks.videorental.domain.Transaction;
 import com.thoughtworks.videorental.domain.repository.TransactionRepository;
-import com.thoughtworks.videorental.domain.specification.TransactionsForCustomerSpecification;
-import com.thoughtworks.videorental.domain.specification.TransactionsOrderedByDateTimeComparator;
 import com.thoughtworks.videorental.toolkit.web.WebAction;
 import com.thoughtworks.videorental.toolkit.web.WebRequest;
 import com.thoughtworks.videorental.toolkit.web.WebResponse;
-
-import java.util.Set;
-
-import static java.util.stream.Collectors.toSet;
 
 public class ViewCurrentRentalsAction implements WebAction {
 
@@ -24,15 +25,12 @@ public class ViewCurrentRentalsAction implements WebAction {
 
 	@Override
 	public void accept(WebRequest request, WebResponse response) {
-        Set<Transaction> transactions = transactionRepository.selectSatisfying(
-                new TransactionsForCustomerSpecification(request.getCustomer()),
-                new TransactionsOrderedByDateTimeComparator()
-        );
+        Collection<Transaction> transactions = transactionRepository.transactionsBy(request.getCustomer());
 
-        Set<Rental> currentRentals = transactions.stream()
+        List<Rental> currentRentals = transactions.stream()
                 .flatMap(transaction -> transaction.getRentals().stream())
                 .filter(this::isCurrentRental)
-                .collect(toSet());
+                .collect(toList());
 
         response.putTemplateData("rentals", currentRentals);
         response.renderTemplate("rentals", "main_layout");
