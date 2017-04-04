@@ -2,7 +2,6 @@ package com.thoughtworks.datetime;
 
 import java.util.Calendar;
 
-import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeUtils;
 import org.joda.time.MutableDateTime;
@@ -205,22 +204,6 @@ public class LocalDateTime implements Comparable<LocalDateTime> {
 
 	public int daysUntil(final LocalDate date) {
 		return new Period(getDate().getTime(), date.getDate().getTime(), PeriodType.days()).getDays();
-	}
-
-	public static LocalDateTime parseDateTime(final String dateTimeString, final String pattern) {
-		if (StringUtils.isEmpty(dateTimeString)) {
-			return null;
-		}
-
-		final MutableDateTime mutableDateTime = new MutableDateTime();
-
-		if (DateTimeFormat.forPattern(pattern).parseInto(mutableDateTime, dateTimeString, 0) < 0) {
-			return null;
-		}
-
-		return LocalDateTime.at(mutableDateTime.getYear(), mutableDateTime.getMonthOfYear(), mutableDateTime
-				.getDayOfMonth(), mutableDateTime.getHourOfDay(), mutableDateTime.getMinuteOfHour(), mutableDateTime
-				.getSecondOfMinute());
 	}
 
 	public String format(final String pattern) {

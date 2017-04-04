@@ -38,10 +38,6 @@ public class LocalDate implements Comparable<LocalDate> {
 		return jodaLocalDate.toDateMidnight().toCalendar(null);
 	}
 
-	public boolean isInfinite() {
-		return false;
-	}
-
 	public int getDayOfWeek() {
 		return jodaLocalDate.getDayOfWeek();
 	}
@@ -110,16 +106,10 @@ public class LocalDate implements Comparable<LocalDate> {
 	}
 
 	public boolean isAfter(final LocalDate date) {
-		if (date.isInfinite()) {
-			return false;
-		}
 		return jodaLocalDate.isAfter(new org.joda.time.LocalDate(date.getDate()));
 	}
 
 	public boolean isBefore(final LocalDate date) {
-		if (date.isInfinite()) {
-			return true;
-		}
 		return jodaLocalDate.isBefore(new org.joda.time.LocalDate(date.getDate()));
 	}
 
@@ -140,13 +130,11 @@ public class LocalDate implements Comparable<LocalDate> {
 	}
 
 	public int compareTo(final LocalDate date) {
-		return date.isInfinite() ? -1 : jodaLocalDate.compareTo(new org.joda.time.LocalDate(date.getDate()));
+		return jodaLocalDate.compareTo(new org.joda.time.LocalDate(date.getDate()));
 	}
 
 	public Duration durationUntil(final LocalDate date) {
-		if (date.isInfinite()) {
-			return Duration.infinite();
-		} else if (isAfter(date)) {
+		if (isAfter(date)) {
 			throw new IllegalArgumentException("cannot get duration to earlier date");
 		}
 		return Duration.ofDays(daysUntil(date));
@@ -226,5 +214,4 @@ public class LocalDate implements Comparable<LocalDate> {
 	public static LocalDate monthsAfterToday(final int months) {
 		return LocalDate.today().plusMonths(months);
 	}
-
 }
