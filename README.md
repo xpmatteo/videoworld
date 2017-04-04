@@ -51,7 +51,6 @@ How to run end-to-end tests
  - clean up repositories both interface and implementation
  - throw away specification package and all its contents
  - throw away old struts classes
- - copy in the project the LocalDate classes and friends
  - remove dependency from tw-commons jars
 
 BEFORE TRAINING
