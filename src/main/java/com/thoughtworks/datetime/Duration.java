@@ -4,13 +4,13 @@ public final class Duration implements Comparable<Duration> {
 	private Integer days;
 
 	private Duration(final Integer days) {
+		if (days < 0) {
+			throw new IllegalArgumentException("days must not be negative");
+		}
 		this.days = days;
 	}
 
 	public static Duration ofDays(final int days) {
-		if (days < 0) {
-			throw new IllegalArgumentException("days must not be negative");
-		}
 		return new Duration(days);
 	}
 
@@ -39,5 +39,4 @@ public final class Duration implements Comparable<Duration> {
 	public String toString() {
 		return Integer.toString(days);
 	}
-
 }
