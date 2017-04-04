@@ -18,7 +18,7 @@ How to run in the IDE:
 
 How to run from the command line
 
-    ???
+    ./gradlew appStart
 
 How to run unit tests
 
