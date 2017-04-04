@@ -1,12 +1,5 @@
 package com.thoughtworks.videorental.action;
 
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
-
 import com.thoughtworks.datetime.LocalDate;
 import com.thoughtworks.datetime.LocalDateTime;
 import com.thoughtworks.datetime.Period;
@@ -16,6 +9,11 @@ import com.thoughtworks.videorental.domain.Rental;
 import com.thoughtworks.videorental.domain.Transaction;
 import com.thoughtworks.videorental.domain.repository.TransactionRepository;
 import com.thoughtworks.videorental.repository.SetBasedTransactionRepository;
+import org.junit.Before;
+import org.junit.Test;
+
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class ViewCurrentRentalsActionTest extends BaseTestForVideoWorldApp {
 
@@ -34,7 +32,7 @@ public class ViewCurrentRentalsActionTest extends BaseTestForVideoWorldApp {
 		when(request.getCustomer()).thenReturn(CUSTOMER);
 	}
 
-	@Test@Ignore("Will solve with Luan")
+	@Test
 	public void noCurrentRentalsByOurCustomer() throws Exception {
 		Transaction t1 = new Transaction(anyTime(), CUSTOMER, asSet(EXPIRED_RENTAL_1));
 		Transaction t2 = new Transaction(anyTime(), CUSTOMER, asSet(EXPIRED_RENTAL_2));
@@ -46,7 +44,7 @@ public class ViewCurrentRentalsActionTest extends BaseTestForVideoWorldApp {
 		verify(response).renderTemplate("rentals", "main_layout");
 	}
 
-	@Test@Ignore("Will solve with Luan")
+	@Test
 	public void someRentalsCurrentSomeExpired() throws Exception {
 		Transaction t1 = new Transaction(anyTime(), CUSTOMER, asSet(EXPIRED_RENTAL_1, CURRENT_RENTAL_1));
 		Transaction t2 = new Transaction(anyTime(), CUSTOMER, asSet(CURRENT_RENTAL_2));
@@ -58,7 +56,7 @@ public class ViewCurrentRentalsActionTest extends BaseTestForVideoWorldApp {
 		verify(response).renderTemplate("rentals", "main_layout");
 	}
 
-	@Test@Ignore("Will solve with Luan")
+	@Test
 	public void ignoreRentalsByOtherCustomers() throws Exception {
 		Transaction transactionByOurCustomer = new Transaction(anyTime(), CUSTOMER, asSet(CURRENT_RENTAL_1));
 		Transaction transactionByAnotherCustomer =

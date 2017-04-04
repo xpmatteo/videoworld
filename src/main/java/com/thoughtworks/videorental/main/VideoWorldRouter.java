@@ -2,6 +2,7 @@ package com.thoughtworks.videorental.main;
 
 import com.thoughtworks.videorental.action.LoginAction;
 import com.thoughtworks.videorental.action.LogoutAction;
+import com.thoughtworks.videorental.action.ViewCurrentRentalsAction;
 import com.thoughtworks.videorental.action.ViewHomeAction;
 import com.thoughtworks.videorental.domain.repository.CustomerRepository;
 import com.thoughtworks.videorental.domain.repository.MovieRepository;
@@ -16,6 +17,7 @@ public class VideoWorldRouter {
 	public VideoWorldRouter(CustomerRepository customerRepository, MovieRepository movieRepository, TransactionRepository transactionRepository) {
 		router.addUnprotectedRoute("/login", 	new LoginAction(customerRepository));
 		router.addRoute("/", 		new ViewHomeAction(movieRepository));
+		router.addRoute("/rentals",	new ViewCurrentRentalsAction(transactionRepository));
         router.addRoute("/logout", 	new LogoutAction());
 	}
 

@@ -1,24 +1,26 @@
 package com.thoughtworks.videorental.main;
 
-import java.io.IOException;
+import com.thoughtworks.videorental.domain.Customer;
+import com.thoughtworks.videorental.domain.Movie;
+import com.thoughtworks.videorental.domain.repository.CustomerRepository;
+import com.thoughtworks.videorental.domain.repository.MovieRepository;
+import com.thoughtworks.videorental.domain.repository.TransactionRepository;
+import com.thoughtworks.videorental.repository.SetBasedCustomerRepository;
+import com.thoughtworks.videorental.repository.SetBasedMovieRepository;
+import com.thoughtworks.videorental.repository.SetBasedTransactionRepository;
+import com.thoughtworks.videorental.toolkit.web.ServletWebRequest;
+import com.thoughtworks.videorental.toolkit.web.ServletWebResponse;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.thoughtworks.videorental.domain.Customer;
-import com.thoughtworks.videorental.domain.Movie;
-import com.thoughtworks.videorental.domain.repository.CustomerRepository;
-import com.thoughtworks.videorental.domain.repository.MovieRepository;
-import com.thoughtworks.videorental.repository.SetBasedCustomerRepository;
-import com.thoughtworks.videorental.repository.SetBasedMovieRepository;
-import com.thoughtworks.videorental.toolkit.web.ServletWebRequest;
-import com.thoughtworks.videorental.toolkit.web.ServletWebResponse;
+import java.io.IOException;
 
 public class VideoWorldServlet extends HttpServlet {
 	CustomerRepository customerRepository = new SetBasedCustomerRepository();
 	MovieRepository movieRepository = new SetBasedMovieRepository();
+	TransactionRepository transactionRepository = new SetBasedTransactionRepository();
 
 	@Override
 	public void init() throws ServletException {
@@ -38,7 +40,7 @@ public class VideoWorldServlet extends HttpServlet {
 
 		ServletWebResponse webResponse = new ServletWebResponse(servletRequest, servletResponse);
 		ServletWebRequest webRequest = new ServletWebRequest(servletRequest);
-		VideoWorldRouter router = new VideoWorldRouter(customerRepository, movieRepository, null);
+		VideoWorldRouter router = new VideoWorldRouter(customerRepository, movieRepository, transactionRepository);
 		router.service(webRequest, webResponse);
 
 		System.out.println(servletResponse.getStatus());
