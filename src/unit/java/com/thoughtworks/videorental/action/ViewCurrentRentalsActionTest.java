@@ -74,7 +74,7 @@ public class ViewCurrentRentalsActionTest extends BaseTestForVideoWorldApp {
 
 
 	private static Rental aRentalExpiring(LocalDate expiration) {
-		return new Rental(CUSTOMER, anyMovie(), Period.of(LocalDate.daysBeforeToday(100), expiration));
+		return new Rental(CUSTOMER, anyMovie(), Period.of(LocalDate.today().minusDays(100), expiration));
 	}
 
 	private static Movie anyMovie() {
@@ -86,11 +86,11 @@ public class ViewCurrentRentalsActionTest extends BaseTestForVideoWorldApp {
 	}
 
 	private static LocalDate yesterday() {
-		return LocalDate.daysBeforeToday(1);
+		return LocalDate.today().minusDays(1);
 	}
 
 	private static LocalDate tomorrow() {
-		return LocalDate.daysAfterToday(1);
+		return LocalDate.today().plusDays(1);
 	}
 
 }

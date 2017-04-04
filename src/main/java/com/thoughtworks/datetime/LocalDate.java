@@ -1,12 +1,5 @@
 package com.thoughtworks.datetime;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.joda.time.PeriodType;
 import org.joda.time.format.DateTimeFormat;
 
@@ -30,74 +23,12 @@ public class LocalDate implements Comparable<LocalDate> {
 		return jodaLocalDate.toDateMidnight().toDate();
 	}
 
-	public LocalDate toFutureDate() {
-		return isAfterNow() ? this : LocalDate.daysAfterToday(1);
-	}
-
-	public Calendar toCalendar() {
-		return jodaLocalDate.toDateMidnight().toCalendar(null);
-	}
-
-	public int getDayOfWeek() {
-		return jodaLocalDate.getDayOfWeek();
-	}
-
-	public int getDayOfMonth() {
-		return jodaLocalDate.getDayOfMonth();
-	}
-
-	public int getMonthOfYear() {
-		return jodaLocalDate.getMonthOfYear();
-	}
-
-	public int getWeekOfYear() {
-		return jodaLocalDate.getWeekOfWeekyear();
-	}
-
-	public Day day() {
-		final int dayOfWeek = jodaLocalDate.getDayOfWeek();
-		return Day.values()[dayOfWeek - 1];
-	}
-
-	public Month month() {
-		final int monthOfYear = jodaLocalDate.getMonthOfYear();
-		return Month.values()[monthOfYear - 1];
-	}
-
-	public int getYear() {
-		return jodaLocalDate.getYear();
-	}
-
 	public LocalDate minusDays(final int days) {
 		return new LocalDate(jodaLocalDate.minusDays(days));
 	}
 
-	public LocalDate plusMonths(final int months) {
-		return new LocalDate(jodaLocalDate.plusMonths(months));
-	}
-
-	public LocalDate minusMonths(final int months) {
-		return new LocalDate(jodaLocalDate.minusMonths(months));
-	}
-
 	public LocalDate plusDays(final int days) {
 		return new LocalDate(jodaLocalDate.plusDays(days));
-	}
-
-	public boolean isLastDayOfMonth() {
-		LocalDate date = plusDays(1);
-		return date.isFirstDayOfMonth();
-	}
-
-	public boolean isFirstDayOfMonth() {
-		return getDayOfMonth() == 1;
-	}
-
-	public boolean isWeekend() {
-		if (day() == Day.SUNDAY || day() == Day.SATURDAY) {
-			return true;
-		}
-		return false;
 	}
 
 	public LocalDate plusDuration(final Duration duration) {
@@ -144,34 +75,17 @@ public class LocalDate implements Comparable<LocalDate> {
 		return new org.joda.time.Period(getDate().getTime(), date.getDate().getTime(), PeriodType.days()).getDays();
 	}
 
-	public static LocalDate parseDate(final String dateString, final String dateFormat) {
-		if (StringUtils.isEmpty(dateString)) {
-			return null;
-		}
-		final SimpleDateFormat format = new SimpleDateFormat(dateFormat);
-		format.setLenient(false);
-		try {
-			return LocalDate.onDate(format.parse(dateString));
-		} catch (final ParseException e) {
-			return null;
-		}
-	}
-
 	@Override
-	public boolean equals(final Object obj) {
-		if (obj == this) {
-			return true;
-		}
-		if (!(obj instanceof LocalDate)) {
+	public boolean equals(final Object object) {
+		if (!(object instanceof LocalDate))
 			return false;
-		}
-		final LocalDate other = (LocalDate) obj;
-		return new EqualsBuilder().append(jodaLocalDate, other.jodaLocalDate).isEquals();
+		final LocalDate other = (LocalDate) object;
+		return this.jodaLocalDate.equals(other.jodaLocalDate);
 	}
 
 	@Override
 	public int hashCode() {
-		return new HashCodeBuilder().append(jodaLocalDate).toHashCode();
+		return jodaLocalDate.hashCode();
 	}
 
 	public String format(final String pattern) {
@@ -203,15 +117,4 @@ public class LocalDate implements Comparable<LocalDate> {
 		return new LocalDate(new org.joda.time.LocalDate(time));
 	}
 
-	public static LocalDate daysAfterToday(final int days) {
-		return LocalDate.today().plusDays(days);
-	}
-
-	public static LocalDate daysBeforeToday(final int days) {
-		return LocalDate.today().minusDays(days);
-	}
-
-	public static LocalDate monthsAfterToday(final int months) {
-		return LocalDate.today().plusMonths(months);
-	}
 }
