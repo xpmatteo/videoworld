@@ -51,7 +51,6 @@ dependencies {
     compile group: 'org.hibernate', name: 'hibernate-core', version: '3.6.7.Final'
     compile group: 'org.apache.struts', name: 'struts2-core', version: '2.1.8.1'
 
-    compile files('lib/runtime/tw-commons-datetime-1.0.jar')
     compile files('lib/runtime/tw-commons-ddd-1.0.jar')
     compile group: 'joda-time', name: 'joda-time', version: '1.6'
     compile group: 'commons-lang', name: 'commons-lang', version: '2.6'

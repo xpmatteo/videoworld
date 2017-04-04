@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import com.thoughtworks.datetime.FiniteLocalDate;
+import com.thoughtworks.datetime.LocalDate;
 import com.thoughtworks.datetime.LocalDate;
 import com.thoughtworks.datetime.LocalDateTime;
 import com.thoughtworks.datetime.Period;
@@ -86,11 +86,11 @@ public class ViewCurrentRentalsActionTest extends BaseTestForVideoWorldApp {
 		return LocalDateTime.now();
 	}
 
-	private static FiniteLocalDate yesterday() {
+	private static LocalDate yesterday() {
 		return LocalDate.daysBeforeToday(1);
 	}
 
-	private static FiniteLocalDate tomorrow() {
+	private static LocalDate tomorrow() {
 		return LocalDate.daysAfterToday(1);
 	}
 
