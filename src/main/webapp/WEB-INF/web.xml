@@ -2,6 +2,31 @@
 <web-app xmlns="http://java.sun.com/xml/ns/j2ee"	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee web-app_2_4.xsd" version="2.4">
 	
 	<display-name>Video Rental</display-name>
+  
+  <servlet>
+      <servlet-name>static-content</servlet-name>
+      <servlet-class>org.eclipse.jetty.servlet.DefaultServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+      <servlet-name>static-content</servlet-name>
+      <url-pattern>/js/*</url-pattern>
+  </servlet-mapping>  
+
+  <servlet-mapping>
+      <servlet-name>static-content</servlet-name>
+      <url-pattern>/styles/*</url-pattern>
+  </servlet-mapping>  
+
+  <servlet-mapping>
+      <servlet-name>static-content</servlet-name>
+      <url-pattern>/images/*</url-pattern>
+  </servlet-mapping>  
+
+  <servlet-mapping>
+      <servlet-name>static-content</servlet-name>
+      <url-pattern>/favicon.ico</url-pattern>
+  </servlet-mapping>  
 
 	<servlet>
 	    <servlet-name>videoworld</servlet-name>
@@ -11,5 +36,5 @@
 	<servlet-mapping>
 	    <servlet-name>videoworld</servlet-name>
 	    <url-pattern>/*</url-pattern>
-	</servlet-mapping>
+	</servlet-mapping>	
 </web-app>
