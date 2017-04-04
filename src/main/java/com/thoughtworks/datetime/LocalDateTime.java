@@ -10,7 +10,7 @@ import org.joda.time.Period;
 import org.joda.time.PeriodType;
 import org.joda.time.format.DateTimeFormat;
 
-public class LocalDateTime implements Time, Comparable<LocalDateTime> {
+public class LocalDateTime implements Comparable<LocalDateTime> {
 	private static boolean isSystemDateTimeFixed = false;
 
 	private DateTime jodaDateTime;
