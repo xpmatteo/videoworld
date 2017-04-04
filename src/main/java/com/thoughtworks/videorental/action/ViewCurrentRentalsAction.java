@@ -1,11 +1,9 @@
 package com.thoughtworks.videorental.action;
 
 import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toSet;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 import com.thoughtworks.datetime.LocalDate;
 import com.thoughtworks.videorental.domain.Rental;
@@ -30,6 +28,7 @@ public class ViewCurrentRentalsAction implements WebAction {
         List<Rental> currentRentals = transactions.stream()
                 .flatMap(transaction -> transaction.getRentals().stream())
                 .filter(this::isCurrentRental)
+                .sorted(Rental.SORT_BY_EXPIRATION_ASCENDING)
                 .collect(toList());
 
         response.putTemplateData("rentals", currentRentals);
