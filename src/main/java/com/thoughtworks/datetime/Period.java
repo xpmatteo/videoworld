@@ -33,7 +33,7 @@ public class Period {
 	}
 
 	public LocalDate getEndDate() {
-		return startDate.plusDays(duration.getDays());
+		return startDate.plusDays(duration.getDays() - 1);
 	}
 
 	public boolean isOverlapping(final Period period) {
