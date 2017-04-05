@@ -28,7 +28,7 @@ public class ViewCurrentRentalsAction implements WebAction {
         List<Rental> currentRentals = transactions.stream()
                 .flatMap(transaction -> transaction.getRentals().stream())
                 .filter(this::isCurrentRental)
-                .sorted(Rental.SORT_BY_EXPIRATION_ASCENDING)
+                .sorted(Rental.SORT_BY_END_DATE_ASCENDING)
                 .collect(toList());
 
         response.putTemplateData("rentals", currentRentals);

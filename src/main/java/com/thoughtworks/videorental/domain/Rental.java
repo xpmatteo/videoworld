@@ -5,7 +5,7 @@ import java.util.Comparator;
 import com.thoughtworks.datetime.Period;
 
 public class Rental {
-	public static final Comparator<Rental> SORT_BY_EXPIRATION_ASCENDING = new Comparator<Rental>() {
+	public static final Comparator<Rental> SORT_BY_END_DATE_ASCENDING = new Comparator<Rental>() {
 		@Override
 		public int compare(Rental o1, Rental o2) {
 			return o1.getPeriod().getEndDate().compareTo(o2.getPeriod().getEndDate());
