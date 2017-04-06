@@ -1,27 +1,5 @@
 package com.thoughtworks.videorental.action;
 
-import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasItem;
-import static org.hamcrest.Matchers.hasProperty;
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.sameInstance;
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.anyObject;
-import static org.mockito.Matchers.argThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
-import org.hamcrest.Matcher;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
 import com.thoughtworks.datetime.Duration;
 import com.thoughtworks.datetime.LocalDate;
 import com.thoughtworks.datetime.LocalDateTime;
@@ -33,11 +11,34 @@ import com.thoughtworks.videorental.domain.Transaction;
 import com.thoughtworks.videorental.domain.repository.MovieRepository;
 import com.thoughtworks.videorental.domain.repository.TransactionRepository;
 import com.thoughtworks.videorental.repository.SetBasedMovieRepository;
+import org.hamcrest.Matcher;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
-public class RentMoviesActionTest {
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
+import static java.util.Arrays.asList;
+import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.hasProperty;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.sameInstance;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.anyObject;
+import static org.mockito.Matchers.anySetOf;
+import static org.mockito.Matchers.argThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+public class RentMoviesActionTest extends BaseTestForVideoWorldApp {
 	private static final Movie THE_GODFATHER = new Movie("The Godfather", Movie.REGULAR);
-	private static final Movie PULP_FICTION = new Movie("Pulp Fiction", Movie.REGULAR);;
-	private static final Movie FINDING_NEMO = new Movie("Finding Nemo", Movie.CHILDRENS);;
+	private static final Movie PULP_FICTION = new Movie("Pulp Fiction", Movie.REGULAR);
+	private static final Movie FINDING_NEMO = new Movie("Finding Nemo", Movie.CHILDRENS);
 
 	private MovieRepository movieRepository;
 	private TransactionRepository transactionRepository;
@@ -67,7 +68,33 @@ public class RentMoviesActionTest {
 		LocalDateTime.resetSystemDateTime();
 	}
 
-	@Test
+    //TODO: Improve test assertion
+    @Test
+    public void statementForRentedMovies() throws Exception {
+        MovieRepository movieRepository = mock(MovieRepository.class);
+        RentMoviesAction action = new RentMoviesAction(movieRepository, transactionRepository);
+
+        when(request.getCustomer()).thenReturn(customer);
+        when(request.getParameterValues("movieNames"))
+                .thenReturn(asList("some movie", "another movie"));
+
+        when(request.getParameter("rentalDuration")).thenReturn("3");
+        when(movieRepository.withTitles("some movie", "another movie")).thenReturn(
+                asSet(aMovieWithTitle("some movie"), aMovieWithTitle("another movie")));
+
+        when(customer.statement(anySetOf(Rental.class))).thenReturn("some statement");
+
+        action.accept(request, response);
+
+        verify(response).putTemplateData("statement", "some statement");
+        verify(response).renderTemplate("statement", "main_layout");
+    }
+
+    private Movie aMovieWithTitle(String title) {
+        return new Movie(title, Movie.REGULAR);
+    }
+
+    @Test
 	public void shouldCreateTransactionForAllRentals() throws Exception {
 		rentMoviesAction.setMovieNames(new String[] { THE_GODFATHER.getTitle(), FINDING_NEMO.getTitle() });
 		final int days = 6;

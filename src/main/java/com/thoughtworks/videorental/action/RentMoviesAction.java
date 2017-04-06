@@ -1,8 +1,5 @@
 package com.thoughtworks.videorental.action;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
-
 import com.opensymphony.xwork2.ActionSupport;
 import com.thoughtworks.datetime.Duration;
 import com.thoughtworks.datetime.LocalDate;
@@ -15,8 +12,18 @@ import com.thoughtworks.videorental.domain.Transaction;
 import com.thoughtworks.videorental.domain.repository.MovieRepository;
 import com.thoughtworks.videorental.domain.repository.TransactionRepository;
 import com.thoughtworks.videorental.interceptor.CustomerAware;
+import com.thoughtworks.videorental.toolkit.web.WebAction;
+import com.thoughtworks.videorental.toolkit.web.WebRequest;
+import com.thoughtworks.videorental.toolkit.web.WebResponse;
 
-public class RentMoviesAction extends ActionSupport implements CustomerAware {
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
+
+import static java.lang.Integer.parseInt;
+import static java.util.stream.Collectors.toSet;
+
+public class RentMoviesAction extends ActionSupport implements CustomerAware, WebAction {
 
 	private final MovieRepository movieRepository;
 	private final TransactionRepository transactionRepository;
@@ -66,4 +73,22 @@ public class RentMoviesAction extends ActionSupport implements CustomerAware {
 		return SUCCESS;
 	}
 
+	@Override
+	public void accept(WebRequest request, WebResponse response) {
+        Customer customer = request.getCustomer();
+        List<String> movieNames = request.getParameterValues("movieNames");
+        int rentalDuration = parseInt(request.getParameter("rentalDuration"));
+
+        Set<Movie> movies = movieRepository.withTitles(
+                movieNames.toArray(new String[movieNames.size()]));
+
+        Period rentalPeriod = Period.of(LocalDate.today(), Duration.ofDays(rentalDuration));
+
+        Set<Rental> rentals = movies.stream()
+                .map(movie -> new Rental(customer, movie, rentalPeriod))
+                .collect(toSet());
+
+        response.putTemplateData("statement", customer.statement(rentals));
+        response.renderTemplate("statement", "main_layout");
+	}
 }
