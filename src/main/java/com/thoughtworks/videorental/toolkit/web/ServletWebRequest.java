@@ -37,8 +37,8 @@ public class ServletWebRequest implements WebRequest {
 	}
 
 	@Override
-	public List<String> getParameterValues(String name) {
-        String[] values = servletRequest.getParameterValues(name);
+	public List<String> getParameterValues(String parameter) {
+        String[] values = servletRequest.getParameterValues(parameter);
         return Arrays.stream(values).collect(toList());
     }
 

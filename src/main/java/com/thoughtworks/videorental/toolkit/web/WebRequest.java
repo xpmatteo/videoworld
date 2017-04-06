@@ -13,5 +13,5 @@ public interface WebRequest {
 
 	String getParameter(String string);
 
-	List<String> getParameterValues(String movieNames);
+	List<String> getParameterValues(String parameter);
 }
