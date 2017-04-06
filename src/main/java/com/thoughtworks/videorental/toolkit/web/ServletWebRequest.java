@@ -1,8 +1,12 @@
 package com.thoughtworks.videorental.toolkit.web;
 
-import javax.servlet.http.HttpServletRequest;
-
 import com.thoughtworks.videorental.domain.Customer;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
+import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 public class ServletWebRequest implements WebRequest {
 
@@ -31,5 +35,11 @@ public class ServletWebRequest implements WebRequest {
 	public String getParameter(String name) {
 		return servletRequest.getParameter(name);
 	}
+
+	@Override
+	public List<String> getParameterValues(String name) {
+        String[] values = servletRequest.getParameterValues(name);
+        return Arrays.stream(values).collect(toList());
+    }
 
 }

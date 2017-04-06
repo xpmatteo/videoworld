@@ -1,17 +1,17 @@
 package com.thoughtworks.videorental.toolkit;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import com.thoughtworks.videorental.domain.Customer;
+import com.thoughtworks.videorental.toolkit.web.ServletWebRequest;
+import org.junit.Test;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.junit.Test;
-
-import com.thoughtworks.videorental.domain.Customer;
-import com.thoughtworks.videorental.toolkit.web.ServletWebRequest;
+import static java.util.Arrays.asList;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class ServletWebRequestTest {
 
@@ -50,4 +50,10 @@ public class ServletWebRequestTest {
 		when(servletRequest.getParameter("foo")).thenReturn("bar");
 		assertThat(webRequest.getParameter("foo"), is("bar"));
 	}
+
+    @Test
+    public void getParameterValues() throws Exception {
+        when(servletRequest.getParameterValues("foo")).thenReturn(new String[]{"bar", "baz"});
+        assertThat(webRequest.getParameterValues("foo"), is(asList("bar", "baz")));
+    }
 }
