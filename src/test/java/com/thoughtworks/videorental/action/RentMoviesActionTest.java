@@ -1,9 +1,5 @@
 package com.thoughtworks.videorental.action;
 
-import com.thoughtworks.datetime.Duration;
-import com.thoughtworks.datetime.LocalDate;
-import com.thoughtworks.datetime.LocalDateTime;
-import com.thoughtworks.datetime.Period;
 import com.thoughtworks.videorental.domain.Customer;
 import com.thoughtworks.videorental.domain.Movie;
 import com.thoughtworks.videorental.domain.Rental;
@@ -12,6 +8,10 @@ import com.thoughtworks.videorental.domain.repository.MovieRepository;
 import com.thoughtworks.videorental.domain.repository.TransactionRepository;
 import com.thoughtworks.videorental.repository.SetBasedMovieRepository;
 import com.thoughtworks.videorental.toolkit.BaseTestForVideoWorldApp;
+import com.thoughtworks.videorental.toolkit.datetime.Duration;
+import com.thoughtworks.videorental.toolkit.datetime.LocalDate;
+import com.thoughtworks.videorental.toolkit.datetime.LocalDateTime;
+import com.thoughtworks.videorental.toolkit.datetime.Period;
 
 import org.hamcrest.Matcher;
 import org.junit.After;

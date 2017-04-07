@@ -1,4 +1,4 @@
-package com.thoughtworks.datetime;
+package com.thoughtworks.videorental.toolkit.datetime;
 
 import org.joda.time.PeriodType;
 import org.joda.time.format.DateTimeFormat;

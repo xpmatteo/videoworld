@@ -1,10 +1,6 @@
 package com.thoughtworks.videorental.action;
 
 import com.opensymphony.xwork2.ActionSupport;
-import com.thoughtworks.datetime.Duration;
-import com.thoughtworks.datetime.LocalDate;
-import com.thoughtworks.datetime.LocalDateTime;
-import com.thoughtworks.datetime.Period;
 import com.thoughtworks.videorental.domain.Customer;
 import com.thoughtworks.videorental.domain.Movie;
 import com.thoughtworks.videorental.domain.Rental;
@@ -12,6 +8,10 @@ import com.thoughtworks.videorental.domain.Transaction;
 import com.thoughtworks.videorental.domain.repository.MovieRepository;
 import com.thoughtworks.videorental.domain.repository.TransactionRepository;
 import com.thoughtworks.videorental.interceptor.CustomerAware;
+import com.thoughtworks.videorental.toolkit.datetime.Duration;
+import com.thoughtworks.videorental.toolkit.datetime.LocalDate;
+import com.thoughtworks.videorental.toolkit.datetime.LocalDateTime;
+import com.thoughtworks.videorental.toolkit.datetime.Period;
 import com.thoughtworks.videorental.toolkit.web.WebAction;
 import com.thoughtworks.videorental.toolkit.web.WebRequest;
 import com.thoughtworks.videorental.toolkit.web.WebResponse;

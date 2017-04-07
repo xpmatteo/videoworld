@@ -1,4 +1,4 @@
-package com.thoughtworks.datetime;
+package com.thoughtworks.videorental.toolkit.datetime;
 
 public final class Duration implements Comparable<Duration> {
 	private Integer days;

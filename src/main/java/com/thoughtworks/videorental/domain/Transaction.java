@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.thoughtworks.datetime.LocalDateTime;
+import com.thoughtworks.videorental.toolkit.datetime.LocalDateTime;
 
 public class Transaction {
 	private final LocalDateTime dateTime;

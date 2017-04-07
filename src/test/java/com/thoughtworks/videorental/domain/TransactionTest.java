@@ -8,10 +8,10 @@ import java.util.Set;
 
 import org.junit.Test;
 
-import com.thoughtworks.datetime.Duration;
-import com.thoughtworks.datetime.LocalDate;
-import com.thoughtworks.datetime.LocalDateTime;
-import com.thoughtworks.datetime.Period;
+import com.thoughtworks.videorental.toolkit.datetime.Duration;
+import com.thoughtworks.videorental.toolkit.datetime.LocalDate;
+import com.thoughtworks.videorental.toolkit.datetime.LocalDateTime;
+import com.thoughtworks.videorental.toolkit.datetime.Period;
 
 public class TransactionTest {
 	private static final Movie FINDING_NEMO = new Movie("Finding Nemo", Movie.CHILDRENS);

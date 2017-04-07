@@ -1,4 +1,4 @@
-package com.thoughtworks.datetime;
+package com.thoughtworks.videorental.toolkit.datetime;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;

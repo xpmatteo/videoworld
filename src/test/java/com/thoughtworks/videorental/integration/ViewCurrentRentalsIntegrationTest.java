@@ -16,9 +16,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.thoughtworks.datetime.LocalDate;
-import com.thoughtworks.datetime.LocalDateTime;
-import com.thoughtworks.datetime.Period;
 import com.thoughtworks.videorental.domain.Customer;
 import com.thoughtworks.videorental.domain.Movie;
 import com.thoughtworks.videorental.domain.Rental;
@@ -29,6 +26,9 @@ import com.thoughtworks.videorental.main.VideoWorldRouter;
 import com.thoughtworks.videorental.repository.SetBasedCustomerRepository;
 import com.thoughtworks.videorental.repository.SetBasedTransactionRepository;
 import com.thoughtworks.videorental.toolkit.FakeWebResponse;
+import com.thoughtworks.videorental.toolkit.datetime.LocalDate;
+import com.thoughtworks.videorental.toolkit.datetime.LocalDateTime;
+import com.thoughtworks.videorental.toolkit.datetime.Period;
 import com.thoughtworks.videorental.toolkit.web.WebRequest;
 
 public class ViewCurrentRentalsIntegrationTest {

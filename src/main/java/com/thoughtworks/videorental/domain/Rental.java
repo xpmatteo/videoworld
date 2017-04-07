@@ -2,7 +2,7 @@ package com.thoughtworks.videorental.domain;
 
 import java.util.Comparator;
 
-import com.thoughtworks.datetime.Period;
+import com.thoughtworks.videorental.toolkit.datetime.Period;
 
 public class Rental {
 	public static final Comparator<Rental> SORT_BY_END_DATE_ASCENDING = new Comparator<Rental>() {

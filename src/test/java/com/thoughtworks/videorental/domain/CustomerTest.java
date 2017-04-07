@@ -9,9 +9,9 @@ import java.util.Set;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.thoughtworks.datetime.Duration;
-import com.thoughtworks.datetime.LocalDate;
-import com.thoughtworks.datetime.Period;
+import com.thoughtworks.videorental.toolkit.datetime.Duration;
+import com.thoughtworks.videorental.toolkit.datetime.LocalDate;
+import com.thoughtworks.videorental.toolkit.datetime.Period;
 
 public class CustomerTest {
 

@@ -1,6 +1,6 @@
 package com.thoughtworks.videorental.action;
 
-import static com.thoughtworks.datetime.LocalDate.today;
+import static com.thoughtworks.videorental.toolkit.datetime.LocalDate.today;
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
 import static org.mockito.Mockito.verify;
@@ -9,9 +9,6 @@ import static org.mockito.Mockito.when;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.thoughtworks.datetime.LocalDate;
-import com.thoughtworks.datetime.LocalDateTime;
-import com.thoughtworks.datetime.Period;
 import com.thoughtworks.videorental.domain.Customer;
 import com.thoughtworks.videorental.domain.Movie;
 import com.thoughtworks.videorental.domain.Rental;
@@ -19,6 +16,9 @@ import com.thoughtworks.videorental.domain.Transaction;
 import com.thoughtworks.videorental.domain.repository.TransactionRepository;
 import com.thoughtworks.videorental.repository.SetBasedTransactionRepository;
 import com.thoughtworks.videorental.toolkit.BaseTestForVideoWorldApp;
+import com.thoughtworks.videorental.toolkit.datetime.LocalDate;
+import com.thoughtworks.videorental.toolkit.datetime.LocalDateTime;
+import com.thoughtworks.videorental.toolkit.datetime.Period;
 
 public class ViewCurrentRentalsActionTest extends BaseTestForVideoWorldApp {
 
