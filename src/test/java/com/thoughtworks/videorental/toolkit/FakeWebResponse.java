@@ -1,7 +1,8 @@
-package com.thoughtworks.videorental.integration;
+package com.thoughtworks.videorental.toolkit;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Collection;
 import java.util.Locale;
@@ -24,6 +25,10 @@ public class FakeWebResponse extends ServletWebResponse implements WebResponse {
 	public FakeWebResponse(Writer writer) {
 		super(makeServletRequest(), makeServletResponse(new PrintWriter(writer)));
 		this.writer = writer;
+	}
+
+	public FakeWebResponse() {
+		this(new StringWriter());
 	}
 
 	private String redirectLocation;

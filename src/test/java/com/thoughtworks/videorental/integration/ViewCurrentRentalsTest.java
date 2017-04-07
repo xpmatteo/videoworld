@@ -29,6 +29,7 @@ import com.thoughtworks.videorental.domain.repository.TransactionRepository;
 import com.thoughtworks.videorental.main.VideoWorldRouter;
 import com.thoughtworks.videorental.repository.SetBasedCustomerRepository;
 import com.thoughtworks.videorental.repository.SetBasedTransactionRepository;
+import com.thoughtworks.videorental.toolkit.FakeWebResponse;
 import com.thoughtworks.videorental.toolkit.web.WebRequest;
 
 public class ViewCurrentRentalsTest {
