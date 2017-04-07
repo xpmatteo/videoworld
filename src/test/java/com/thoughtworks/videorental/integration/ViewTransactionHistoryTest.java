@@ -1,6 +1,6 @@
-package com.thoughtworks.videorental.main;
+package com.thoughtworks.videorental.integration;
 
-import static com.thoughtworks.videorental.toolkit.TransactionBuilder.aTransaction;
+import static com.thoughtworks.videorental.integration.TransactionBuilder.aTransaction;
 import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.toList;
 import static org.hamcrest.CoreMatchers.is;
@@ -9,27 +9,20 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.io.StringWriter;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.jsoup.nodes.Element;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.thoughtworks.datetime.LocalDate;
 import com.thoughtworks.datetime.LocalDateTime;
-import com.thoughtworks.datetime.Period;
 import com.thoughtworks.videorental.domain.Customer;
 import com.thoughtworks.videorental.domain.Movie;
-import com.thoughtworks.videorental.domain.Rental;
-import com.thoughtworks.videorental.domain.Transaction;
 import com.thoughtworks.videorental.domain.repository.CustomerRepository;
 import com.thoughtworks.videorental.domain.repository.TransactionRepository;
+import com.thoughtworks.videorental.main.VideoWorldRouter;
 import com.thoughtworks.videorental.repository.SetBasedCustomerRepository;
 import com.thoughtworks.videorental.repository.SetBasedTransactionRepository;
-import com.thoughtworks.videorental.toolkit.TransactionBuilder;
 import com.thoughtworks.videorental.toolkit.web.WebRequest;
 
 public class ViewTransactionHistoryTest {

@@ -1,4 +1,4 @@
-package com.thoughtworks.videorental.toolkit;
+package com.thoughtworks.videorental.integration;
 
 import java.util.HashSet;
 import java.util.Set;

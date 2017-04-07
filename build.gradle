@@ -29,14 +29,6 @@ gretty {
 }
 
 sourceSets {
-    test {
-        java {
-            srcDirs = ['src/unit/java', 'src/integration/java']
-        }
-        resources {
-            srcDirs = ['src/unit/resources']
-        }
-    }
     cucumber {
         java {
             srcDir 'src/cucumber/src/test/java'
