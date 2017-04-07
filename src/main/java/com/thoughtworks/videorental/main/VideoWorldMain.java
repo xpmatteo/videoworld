@@ -1,20 +1,23 @@
 package com.thoughtworks.videorental.main;
 
-import org.mortbay.jetty.Request;
-import org.mortbay.jetty.Server;
-import org.mortbay.jetty.handler.ResourceHandler;
-import org.mortbay.jetty.webapp.WebAppContext;
+
+import java.io.IOException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+
+import org.eclipse.jetty.server.Request;
+import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.handler.ResourceHandler;
+import org.eclipse.jetty.webapp.WebAppContext;
 
 public final class VideoWorldMain {
+	// see https://wiki.eclipse.org/Jetty/Tutorial/Embedding_Jetty
     public static void main(final String[] args) throws Exception {
         Server server = new Server(8080);
-        server.addHandler(new StaticFilesHandler("src/main/webapp"));
-        server.addHandler(new WebAppContext("src/main/webapp", "/"));
+        server.setHandler(new StaticFilesHandler("src/main/webapp"));
+        server.setHandler(new WebAppContext("src/main/webapp", "/"));
         server.start();
         server.join();
     }
@@ -25,13 +28,13 @@ public final class VideoWorldMain {
             setWelcomeFiles(new String[]{"index.html"});
         }
 
-        @Override
-        public void handle(String target, HttpServletRequest request, HttpServletResponse response, int dispatch) throws IOException, ServletException {
-            if (isForRoot(request) && !welcomeExists()) {
-                ((Request) request).setHandled(false);
-            } else {
-                super.handle(target, request, response, dispatch);
-            }
+		@Override
+		public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+			if (isForRoot(request) && !welcomeExists()) {
+				((Request) request).setHandled(false);
+			} else {
+				super.handle(target, baseRequest, request, response);
+			}
         }
 
         private boolean isForRoot(HttpServletRequest request) {

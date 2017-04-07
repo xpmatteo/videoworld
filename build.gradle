@@ -54,7 +54,8 @@ dependencies {
     compile files('lib/runtime/tw-commons-ddd-1.0.jar')
     compile group: 'joda-time', name: 'joda-time', version: '1.6'
     compile group: 'commons-lang', name: 'commons-lang', version: '2.6'
-    compile group: 'org.mortbay.jetty', name: 'jetty', version: '6.1.22'
+    compile group: 'org.eclipse.jetty', name: 'jetty-server', version: '9.4.3.v20170317'
+    compile group: 'org.eclipse.jetty', name: 'jetty-webapp', version: '9.4.3.v20170317'
     compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.6.1'
     compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
 
