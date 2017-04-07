@@ -1,5 +1,6 @@
 package com.thoughtworks.videorental.main;
 
+import static com.thoughtworks.videorental.toolkit.TransactionBuilder.aTransaction;
 import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.toList;
 import static org.hamcrest.CoreMatchers.is;
@@ -15,7 +16,6 @@ import java.util.Set;
 import org.jsoup.nodes.Element;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import com.thoughtworks.datetime.LocalDate;
@@ -29,6 +29,7 @@ import com.thoughtworks.videorental.domain.repository.CustomerRepository;
 import com.thoughtworks.videorental.domain.repository.TransactionRepository;
 import com.thoughtworks.videorental.repository.SetBasedCustomerRepository;
 import com.thoughtworks.videorental.repository.SetBasedTransactionRepository;
+import com.thoughtworks.videorental.toolkit.TransactionBuilder;
 import com.thoughtworks.videorental.toolkit.web.WebRequest;
 
 public class ViewTransactionHistoryTest {
@@ -49,10 +50,6 @@ public class ViewTransactionHistoryTest {
         when(request.getCustomer()).thenReturn(CUSTOMER);
     }
 
-    @After
-	public void tearDown() throws Exception {
-    	LocalDateTime.resetSystemDateTime();
-	}
 
     @Test
     public void historyIsProtected() throws Exception {
@@ -61,11 +58,18 @@ public class ViewTransactionHistoryTest {
         assertThat(response.getRedirectLocation(), is("/login"));
     }
 
-    @Test@Ignore
+    @Test
     public void showListOfTransactions() throws Exception {
-    	LocalDateTime.setSystemDateTime(LocalDateTime.at(2017, 1, 1, 0, 0, 0));
-    	transactionRepository.add(aTransactionWithRentalExpiring("movie 0", LocalDate.on(2017, 1, 2)));
-		transactionRepository.add(aTransactionWithRentalExpiring("movie 1", LocalDate.on(2017, 1, 3)));
+    	transactionRepository.add(
+    			aTransaction()
+    			.at(LocalDateTime.at(2017, 1, 2, 3, 4, 5))
+    			.byCustomer(CUSTOMER)
+    			.withMovie(new Movie("A movie", Movie.REGULAR)).build());
+    	transactionRepository.add(
+    			aTransaction()
+    			.at(LocalDateTime.at(2017, 2, 3, 4, 5, 6))
+    			.byCustomer(CUSTOMER)
+    			.withMovie(new Movie("Another movie", Movie.REGULAR)).build());
 
         router.service(request, response);
 
@@ -74,26 +78,9 @@ public class ViewTransactionHistoryTest {
                 .collect(toList());
 
         assertThat(rentalsInPage, is(asList(
-                "Transaction on ",
-                "Transaction on "
+                "Transaction on Mon Jan 02 2017 03:04:05 Movies Rented: A movie",
+                "Transaction on Fri Feb 03 2017 04:05:06 Movies Rented: Another movie"
                 )));
     }
 
-	private Transaction aTransactionWithRentalExpiring(String movieName, LocalDate expiration) {
-		LocalDate startRental = LocalDate.on(2017, 1, 1);
-		Rental rental = new Rental(
-		        CUSTOMER,
-		        new Movie(movieName, Movie.REGULAR),
-		        Period.of(startRental, expiration)
-		);
-		return new Transaction(
-				LocalDateTime.onDateAt(startRental, 0, 0, 0),
-				CUSTOMER,
-				asSet(rental));
-	}
-
-    @SuppressWarnings("unchecked")
-	private <T> Set<T> asSet(T ... args) {
-        return new LinkedHashSet<>(asList(args));
-    }
 }
