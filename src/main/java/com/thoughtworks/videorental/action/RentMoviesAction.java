@@ -7,7 +7,6 @@ import com.thoughtworks.videorental.domain.Rental;
 import com.thoughtworks.videorental.domain.Transaction;
 import com.thoughtworks.videorental.domain.repository.MovieRepository;
 import com.thoughtworks.videorental.domain.repository.TransactionRepository;
-import com.thoughtworks.videorental.interceptor.CustomerAware;
 import com.thoughtworks.videorental.toolkit.datetime.Duration;
 import com.thoughtworks.videorental.toolkit.datetime.LocalDate;
 import com.thoughtworks.videorental.toolkit.datetime.LocalDateTime;
@@ -23,7 +22,7 @@ import java.util.Set;
 import static java.lang.Integer.parseInt;
 import static java.util.stream.Collectors.toSet;
 
-public class RentMoviesAction extends ActionSupport implements CustomerAware, WebAction {
+public class RentMoviesAction extends ActionSupport implements WebAction {
 
 	private final MovieRepository movieRepository;
 	private final TransactionRepository transactionRepository;
@@ -38,7 +37,6 @@ public class RentMoviesAction extends ActionSupport implements CustomerAware, We
 		this.transactionRepository = transactionRepository;
 	}
 
-	@Override
 	public void setCustomer(final Customer customer) {
 		this.customer = customer;
 	}
@@ -60,7 +58,7 @@ public class RentMoviesAction extends ActionSupport implements CustomerAware, We
 		final Set<Movie> movies = movieRepository.withTitles(movieNames);
 		final Period rentalPeriod = Period.of(LocalDate.today(), Duration.ofDays(rentalDuration));
 
-		final Set<Rental> rentals = new LinkedHashSet<Rental>();
+		final Set<Rental> rentals = new LinkedHashSet<>();
 		for (final Movie movie : movies) {
 			final Rental rental = new Rental(customer, movie, rentalPeriod);
 			rentals.add(rental);
