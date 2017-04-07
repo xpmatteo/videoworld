@@ -3,9 +3,8 @@
 	<classpathentry path="bin" kind="output"/>
 	<classpathentry path="src/main/java" kind="src"/>
 	<classpathentry path="src/main/resources" kind="src"/>
-	<classpathentry path="src/unit/java" kind="src"/>
-	<classpathentry path="src/integration/java" kind="src"/>
-	<classpathentry path="src/unit/resources" kind="src"/>
+	<classpathentry path="src/test/java" kind="src"/>
+	<classpathentry path="src/test/resources" kind="src"/>
 	<classpathentry path="src/cucumber/src/test/java" kind="src"/>
 	<classpathentry path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8/" kind="con"/>
 	<classpathentry path="/Users/mvaccari/.gradle/caches/modules-2/files-2.1/org.hibernate/hibernate-core/3.6.7.Final/152a97fc12d8d288763e19ae5b672c0b4943ba26/hibernate-core-3.6.7.Final.jar" kind="lib" sourcepath="/Users/mvaccari/.gradle/caches/modules-2/files-2.1/org.hibernate/hibernate-core/3.6.7.Final/5effa941e2581669e52249e87cc3fedc043779b6/hibernate-core-3.6.7.Final-sources.jar"/>

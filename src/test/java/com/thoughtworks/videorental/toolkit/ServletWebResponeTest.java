@@ -30,7 +30,7 @@ public class ServletWebResponeTest {
 	@Before
 	public void setUp() throws Exception {
 		when(servletResponse.getWriter()).thenReturn(new PrintWriter(ourStringWriter));
-		webResponse.setTemplatesDirectory("src/unit/resources/templates/");
+		webResponse.setTemplatesDirectory("src/test/resources/templates/");
 	}
 
 	@Test
@@ -58,7 +58,6 @@ public class ServletWebResponeTest {
 
 	@Test
 	public void render() throws Exception {
-		webResponse.setTemplatesDirectory("src/unit/resources/templates/");
 		webResponse.renderTemplate("test-template", null);
 
 		assertThat(ourStringWriter.toString(), is("hello from a template\n"));

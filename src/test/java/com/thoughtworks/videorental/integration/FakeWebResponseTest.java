@@ -14,7 +14,7 @@ public class FakeWebResponseTest {
 
 	@Before
 	public void setUp() throws Exception {
-		response.setTemplatesDirectory("src/unit/resources/templates");
+		response.setTemplatesDirectory("src/test/resources/templates");
 	}
 
 	@Test
