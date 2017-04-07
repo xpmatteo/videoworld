@@ -4,7 +4,7 @@
 </head>
 <body>
     <h1>Transaction History</h1>
-    <ul>
+    <ul class='history'>
     <#list transactions as transaction>
     	<li>Transaction on ${transaction.dateTime}<br />
     	Movies Rented:
