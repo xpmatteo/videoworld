@@ -8,10 +8,10 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import java.io.StringWriter;
 import java.util.List;
 
 import org.jsoup.nodes.Element;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -34,9 +34,8 @@ public class ViewTransactionHistoryIntegrationTest {
 
     private VideoWorldRouter router = new VideoWorldRouter(customerRepository, null, transactionRepository);
 
-    private StringWriter writer = new StringWriter();
     private WebRequest request = mock(WebRequest.class);
-    private FakeWebResponse response = new FakeWebResponse(writer);
+    private FakeWebResponse response = new FakeWebResponse();
 
     @Before
     public void setUp() throws Exception {
@@ -44,6 +43,10 @@ public class ViewTransactionHistoryIntegrationTest {
         when(request.getCustomer()).thenReturn(CUSTOMER);
     }
 
+    @After
+	public void tearDown() throws Exception {
+		LocalDateTime.resetSystemDateTime();
+	}
 
     @Test
     public void historyIsProtected() throws Exception {

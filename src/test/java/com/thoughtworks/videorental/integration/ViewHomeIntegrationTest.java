@@ -6,8 +6,6 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import java.io.StringWriter;
-
 import org.jsoup.select.Elements;
 import org.junit.Before;
 import org.junit.Test;
@@ -30,9 +28,8 @@ public class ViewHomeIntegrationTest {
 
 	private VideoWorldRouter router = new VideoWorldRouter(customerRepository, movieRepository, transactionRepository);
 
-	private StringWriter writer = new StringWriter();
 	private WebRequest request = mock(WebRequest.class);
-	private FakeWebResponse response = new FakeWebResponse(writer);
+	private FakeWebResponse response = new FakeWebResponse();
 
 	@Before
 	public void setUp() throws Exception {

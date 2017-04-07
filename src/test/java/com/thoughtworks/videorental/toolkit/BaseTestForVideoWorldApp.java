@@ -18,7 +18,7 @@ public class BaseTestForVideoWorldApp {
 	protected WebResponse response = mock(WebResponse.class);
 
 	@After
-	public void tearDown() throws Exception {
+	public void ensureResponseIsAStrictMock() throws Exception {
 		verifyNoMoreInteractions(response);
 	}
 
