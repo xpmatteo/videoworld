@@ -1,4 +1,4 @@
-package com.thoughtworks.videorental.action;
+package com.thoughtworks.videorental.toolkit;
 
 import static java.util.Arrays.asList;
 import static org.mockito.Mockito.mock;

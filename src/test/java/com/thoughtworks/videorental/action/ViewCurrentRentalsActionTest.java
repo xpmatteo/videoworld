@@ -18,6 +18,7 @@ import com.thoughtworks.videorental.domain.Rental;
 import com.thoughtworks.videorental.domain.Transaction;
 import com.thoughtworks.videorental.domain.repository.TransactionRepository;
 import com.thoughtworks.videorental.repository.SetBasedTransactionRepository;
+import com.thoughtworks.videorental.toolkit.BaseTestForVideoWorldApp;
 
 public class ViewCurrentRentalsActionTest extends BaseTestForVideoWorldApp {
 

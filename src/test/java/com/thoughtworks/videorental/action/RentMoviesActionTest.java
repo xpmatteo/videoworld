@@ -11,6 +11,8 @@ import com.thoughtworks.videorental.domain.Transaction;
 import com.thoughtworks.videorental.domain.repository.MovieRepository;
 import com.thoughtworks.videorental.domain.repository.TransactionRepository;
 import com.thoughtworks.videorental.repository.SetBasedMovieRepository;
+import com.thoughtworks.videorental.toolkit.BaseTestForVideoWorldApp;
+
 import org.hamcrest.Matcher;
 import org.junit.After;
 import org.junit.Before;

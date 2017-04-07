@@ -9,6 +9,7 @@ import org.junit.Test;
 import com.thoughtworks.videorental.domain.Customer;
 import com.thoughtworks.videorental.domain.repository.CustomerRepository;
 import com.thoughtworks.videorental.repository.SetBasedCustomerRepository;
+import com.thoughtworks.videorental.toolkit.BaseTestForVideoWorldApp;
 
 public class LoginActionTest extends BaseTestForVideoWorldApp {
 	private final static Customer CUSTOMER_GINO = new Customer("gino");

@@ -10,6 +10,7 @@ import org.junit.Test;
 import com.thoughtworks.videorental.domain.Customer;
 import com.thoughtworks.videorental.domain.Transaction;
 import com.thoughtworks.videorental.domain.repository.TransactionRepository;
+import com.thoughtworks.videorental.toolkit.BaseTestForVideoWorldApp;
 
 public class ViewHistoryActionTest extends BaseTestForVideoWorldApp {
 

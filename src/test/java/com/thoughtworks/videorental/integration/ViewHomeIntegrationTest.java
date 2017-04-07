@@ -23,7 +23,7 @@ import com.thoughtworks.videorental.repository.SetBasedMovieRepository;
 import com.thoughtworks.videorental.toolkit.FakeWebResponse;
 import com.thoughtworks.videorental.toolkit.web.WebRequest;
 
-public class ViewHomeTest {
+public class ViewHomeIntegrationTest {
 	private CustomerRepository customerRepository = new SetBasedCustomerRepository();
 	private MovieRepository movieRepository = new SetBasedMovieRepository();
 	private TransactionRepository transactionRepository = null;
