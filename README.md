@@ -46,8 +46,6 @@ How to run end-to-end tests
 ### Todo
 
  - rewrite rentMoviesAction + test
- - rewrite currentRentals action and test
- - rewrite transactionHistory action and test
  - clean up repositories both interface and implementation
  - throw away specification package and all its contents
  - throw away old struts classes
