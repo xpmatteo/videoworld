@@ -1,5 +1,7 @@
 package com.thoughtworks.videorental.action;
 
+import static com.thoughtworks.videorental.toolkit.RentalBuilder.aRental;
+import static com.thoughtworks.videorental.toolkit.TransactionBuilder.aTransaction;
 import static com.thoughtworks.videorental.toolkit.datetime.LocalDate.today;
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
@@ -17,7 +19,6 @@ import com.thoughtworks.videorental.domain.repository.TransactionRepository;
 import com.thoughtworks.videorental.repository.SetBasedTransactionRepository;
 import com.thoughtworks.videorental.toolkit.BaseTestForVideoWorldApp;
 import com.thoughtworks.videorental.toolkit.datetime.LocalDate;
-import com.thoughtworks.videorental.toolkit.datetime.LocalDateTime;
 import com.thoughtworks.videorental.toolkit.datetime.Period;
 
 public class ViewCurrentRentalsActionTest extends BaseTestForVideoWorldApp {
@@ -39,8 +40,8 @@ public class ViewCurrentRentalsActionTest extends BaseTestForVideoWorldApp {
 
 	@Test
 	public void noCurrentRentalsByOurCustomer() throws Exception {
-		transactionRepository.add(new Transaction(anyTime(), CUSTOMER, asSet(EXPIRED_RENTAL_1)));
-		transactionRepository.add(new Transaction(anyTime(), CUSTOMER, asSet(EXPIRED_RENTAL_2)));
+		transactionRepository.add(aTransaction().byCustomer(CUSTOMER).with(EXPIRED_RENTAL_1).build());
+		transactionRepository.add(aTransaction().byCustomer(CUSTOMER).with(EXPIRED_RENTAL_2).build());
 
 		action.accept(request, response);
 
@@ -50,8 +51,8 @@ public class ViewCurrentRentalsActionTest extends BaseTestForVideoWorldApp {
 
 	@Test
 	public void someRentalsCurrentSomeExpired() throws Exception {
-		Transaction t1 = new Transaction(anyTime(), CUSTOMER, asSet(EXPIRED_RENTAL_1, CURRENT_RENTAL_1));
-		Transaction t2 = new Transaction(anyTime(), CUSTOMER, asSet(CURRENT_RENTAL_2));
+		Transaction t1 = aTransaction().byCustomer(CUSTOMER).with(EXPIRED_RENTAL_1).with(CURRENT_RENTAL_1).build();
+		Transaction t2 = aTransaction().byCustomer(CUSTOMER).with(CURRENT_RENTAL_2).build();
 		transactionRepository.add(asSet(t1, t2));
 
 		action.accept(request, response);
@@ -62,10 +63,9 @@ public class ViewCurrentRentalsActionTest extends BaseTestForVideoWorldApp {
 
 	@Test
 	public void ignoreRentalsByOtherCustomers() throws Exception {
-		Transaction transactionByOurCustomer = new Transaction(anyTime(), CUSTOMER, asSet(CURRENT_RENTAL_1));
-		Transaction transactionByAnotherCustomer =
-				new Transaction(anyTime(), ANOTHER_CUSTOMER,
-						asSet(new Rental(ANOTHER_CUSTOMER, anyMovie(), Period.of(today(), today().plusDays(1)))));
+		Transaction transactionByOurCustomer = aTransaction().byCustomer(CUSTOMER).with(CURRENT_RENTAL_1).build();
+		Transaction transactionByAnotherCustomer = aTransaction()
+				.byCustomer(ANOTHER_CUSTOMER).with(aRental().expiring(today().plusDays(1))).build();
 		transactionRepository.add(asSet(transactionByOurCustomer, transactionByAnotherCustomer));
 
 		action.accept(request, response);
@@ -81,9 +81,5 @@ public class ViewCurrentRentalsActionTest extends BaseTestForVideoWorldApp {
 
 	private static Movie anyMovie() {
 		return new Movie("some movie", Movie.REGULAR);
-	}
-
-	private LocalDateTime anyTime() {
-		return LocalDateTime.now();
 	}
 }

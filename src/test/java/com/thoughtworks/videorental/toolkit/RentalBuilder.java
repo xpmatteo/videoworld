@@ -16,6 +16,10 @@ public class RentalBuilder {
 		return new RentalBuilder();
 	}
 
+	public Rental build() {
+		return new Rental(customer, movie, period);
+	}
+
 	public RentalBuilder forMovie(String title) {
 		this.movie = new Movie(title, Movie.REGULAR);
 		return this;
@@ -27,12 +31,13 @@ public class RentalBuilder {
 		return this;
 	}
 
-	public RentalBuilder byCustomer(Customer customer) {
-		this.customer = customer;
+	public RentalBuilder expiring(LocalDate date) {
+		period = Period.of(date, date);
 		return this;
 	}
 
-	public Rental build() {
-		return new Rental(customer, movie, period);
+	public RentalBuilder byCustomer(Customer customer) {
+		this.customer = customer;
+		return this;
 	}
 }

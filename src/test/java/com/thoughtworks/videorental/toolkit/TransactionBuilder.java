@@ -44,4 +44,9 @@ public class TransactionBuilder {
 		rentals.add(rentalBuilder.byCustomer(customer).build());
 		return this;
 	}
+
+	public TransactionBuilder with(Rental rental) {
+		rentals.add(rental);
+		return this;
+	}
 }
