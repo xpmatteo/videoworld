@@ -22,12 +22,6 @@ public class SetBasedCustomerRepository extends SetBasedRepository<Customer> imp
 		super(entities);
 	}
 
-	@Override
-	public Set<Customer> selectAll(OrderComparator<Customer> comparator) {
-		return selectAll((Comparator<Customer>) comparator);
-	}
-
-	@Override
 	public Set<Customer> selectSatisfying(Specification<Customer> specification, OrderComparator<Customer> comparator) {
 		return selectSatisfying(specification, (Comparator<Customer>) comparator);
 	}
