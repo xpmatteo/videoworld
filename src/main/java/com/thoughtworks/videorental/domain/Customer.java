@@ -1,8 +1,16 @@
 package com.thoughtworks.videorental.domain;
 
+import java.util.Comparator;
 import java.util.Set;
 
 public class Customer {
+	public static final Comparator<? super Customer> ORDER_BY_NAME_ASCENDING = new Comparator<Customer>() {
+		@Override
+		public int compare(Customer c0, Customer c1) {
+			return c0.getName().compareTo(c1.getName());
+		}
+	};
+
 	private String name;
 	private int frequentRenterPoints = 0;
 

@@ -1,6 +1,6 @@
 package com.thoughtworks.videorental.action;
 
-import java.util.Set;
+import java.util.Collection;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.thoughtworks.videorental.domain.Customer;
@@ -14,7 +14,7 @@ public class ViewAdminAction extends ActionSupport {
 		this.customerRepository = customerRepository;
 	}
 
-	public Set<Customer> getUsers() {
+	public Collection<Customer> getUsers() {
 		return customerRepository.selectAll();
 	}
 

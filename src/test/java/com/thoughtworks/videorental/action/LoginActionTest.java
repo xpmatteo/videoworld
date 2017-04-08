@@ -1,5 +1,6 @@
 package com.thoughtworks.videorental.action;
 
+import static java.util.Arrays.asList;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -8,7 +9,7 @@ import org.junit.Test;
 
 import com.thoughtworks.videorental.domain.Customer;
 import com.thoughtworks.videorental.domain.repository.CustomerRepository;
-import com.thoughtworks.videorental.repository.SetBasedCustomerRepository;
+import com.thoughtworks.videorental.repository.InMemoryCustomerRepository;
 import com.thoughtworks.videorental.toolkit.BaseTestForVideoWorldApp;
 
 public class LoginActionTest extends BaseTestForVideoWorldApp {
@@ -16,7 +17,7 @@ public class LoginActionTest extends BaseTestForVideoWorldApp {
 	private static final Customer CUSTOMER_PINO = new Customer("pino");
 	private static final Customer CUSTOMER_LINO = new Customer("lino");
 
-	private CustomerRepository customerRepository = new SetBasedCustomerRepository();
+	private CustomerRepository customerRepository = new InMemoryCustomerRepository();
 	private LoginAction loginAction = new LoginAction(customerRepository);
 
 	@Before
@@ -32,7 +33,7 @@ public class LoginActionTest extends BaseTestForVideoWorldApp {
 
 		loginAction.accept(request, response);
 
-		verify(response).putTemplateData("customers", asSet(CUSTOMER_GINO, CUSTOMER_PINO, CUSTOMER_LINO));
+		verify(response).putTemplateData("customers", asList(CUSTOMER_GINO, CUSTOMER_LINO, CUSTOMER_PINO));
 		verify(response).renderTemplate("login", "login_layout");
 	}
 
@@ -54,7 +55,7 @@ public class LoginActionTest extends BaseTestForVideoWorldApp {
 
 		loginAction.accept(request, response);
 
-		verify(response).putTemplateData("customers", asSet(CUSTOMER_GINO, CUSTOMER_PINO, CUSTOMER_LINO));
+		verify(response).putTemplateData("customers", asList(CUSTOMER_GINO, CUSTOMER_LINO, CUSTOMER_PINO));
 		verify(response).renderTemplate("login", "login_layout");
 	}
 }

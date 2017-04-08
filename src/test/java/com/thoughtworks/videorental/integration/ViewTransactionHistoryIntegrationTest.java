@@ -20,7 +20,7 @@ import com.thoughtworks.videorental.domain.Movie;
 import com.thoughtworks.videorental.domain.repository.CustomerRepository;
 import com.thoughtworks.videorental.domain.repository.TransactionRepository;
 import com.thoughtworks.videorental.main.VideoWorldRouter;
-import com.thoughtworks.videorental.repository.SetBasedCustomerRepository;
+import com.thoughtworks.videorental.repository.InMemoryCustomerRepository;
 import com.thoughtworks.videorental.repository.SetBasedTransactionRepository;
 import com.thoughtworks.videorental.toolkit.FakeWebResponse;
 import com.thoughtworks.videorental.toolkit.datetime.LocalDateTime;
@@ -29,7 +29,7 @@ import com.thoughtworks.videorental.toolkit.web.WebRequest;
 public class ViewTransactionHistoryIntegrationTest {
     private static final Customer CUSTOMER = new Customer("John");
 
-    private CustomerRepository customerRepository = new SetBasedCustomerRepository();
+    private CustomerRepository customerRepository = new InMemoryCustomerRepository();
     private TransactionRepository transactionRepository = new SetBasedTransactionRepository();
 
     private VideoWorldRouter router = new VideoWorldRouter(customerRepository, null, transactionRepository);

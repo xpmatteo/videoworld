@@ -16,13 +16,13 @@ import com.thoughtworks.videorental.domain.repository.CustomerRepository;
 import com.thoughtworks.videorental.domain.repository.MovieRepository;
 import com.thoughtworks.videorental.domain.repository.TransactionRepository;
 import com.thoughtworks.videorental.main.VideoWorldRouter;
-import com.thoughtworks.videorental.repository.SetBasedCustomerRepository;
+import com.thoughtworks.videorental.repository.InMemoryCustomerRepository;
 import com.thoughtworks.videorental.repository.SetBasedMovieRepository;
 import com.thoughtworks.videorental.toolkit.FakeWebResponse;
 import com.thoughtworks.videorental.toolkit.web.WebRequest;
 
 public class ViewHomeIntegrationTest {
-	private CustomerRepository customerRepository = new SetBasedCustomerRepository();
+	private CustomerRepository customerRepository = new InMemoryCustomerRepository();
 	private MovieRepository movieRepository = new SetBasedMovieRepository();
 	private TransactionRepository transactionRepository = null;
 

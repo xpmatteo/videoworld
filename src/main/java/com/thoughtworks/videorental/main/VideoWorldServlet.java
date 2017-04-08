@@ -5,7 +5,7 @@ import com.thoughtworks.videorental.domain.Movie;
 import com.thoughtworks.videorental.domain.repository.CustomerRepository;
 import com.thoughtworks.videorental.domain.repository.MovieRepository;
 import com.thoughtworks.videorental.domain.repository.TransactionRepository;
-import com.thoughtworks.videorental.repository.SetBasedCustomerRepository;
+import com.thoughtworks.videorental.repository.InMemoryCustomerRepository;
 import com.thoughtworks.videorental.repository.SetBasedMovieRepository;
 import com.thoughtworks.videorental.repository.SetBasedTransactionRepository;
 import com.thoughtworks.videorental.toolkit.web.ServletWebRequest;
@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class VideoWorldServlet extends HttpServlet {
-	CustomerRepository customerRepository = new SetBasedCustomerRepository();
+	CustomerRepository customerRepository = new InMemoryCustomerRepository();
 	MovieRepository movieRepository = new SetBasedMovieRepository();
 	TransactionRepository transactionRepository = new SetBasedTransactionRepository();
 
