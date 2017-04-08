@@ -1,7 +1,7 @@
-package com.thoughtworks.videorental.toolkit;
+package com.thoughtworks.videorental.toolkit.web;
 
 import com.thoughtworks.videorental.domain.Customer;
-import com.thoughtworks.videorental.toolkit.web.ServletWebRequest;
+
 import org.junit.Test;
 
 import javax.servlet.http.HttpServletRequest;

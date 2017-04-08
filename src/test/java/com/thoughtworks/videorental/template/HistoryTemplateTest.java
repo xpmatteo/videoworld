@@ -9,7 +9,7 @@ import java.util.Collections;
 
 import org.junit.Test;
 
-import com.thoughtworks.videorental.toolkit.FakeWebResponse;
+import com.thoughtworks.videorental.toolkit.web.FakeWebResponse;
 
 public class HistoryTemplateTest {
 	@Test

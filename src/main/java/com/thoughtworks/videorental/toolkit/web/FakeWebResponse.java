@@ -1,4 +1,4 @@
-package com.thoughtworks.videorental.toolkit;
+package com.thoughtworks.videorental.toolkit.web;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,9 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-
-import com.thoughtworks.videorental.toolkit.web.ServletWebResponse;
-import com.thoughtworks.videorental.toolkit.web.WebResponse;
 
 public class FakeWebResponse extends ServletWebResponse implements WebResponse {
 
