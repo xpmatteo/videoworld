@@ -20,9 +20,9 @@ public class LoginAction implements WebAction {
 	public void accept(WebRequest request, WebResponse response) {
 		if (request.isPost()) {
 			String customerName = request.getParameter("customerName");
-			Optional<Customer> customer = customerRepository.findCustomer(customerName);
-			if (customer.isPresent()) {
-				response.setCustomer(customer.get());
+			Optional<Customer> optionalCustomer = customerRepository.findCustomer(customerName);
+			if (optionalCustomer.isPresent()) {
+				response.setCustomer(optionalCustomer.get());
 				response.redirectTo("/");
 				return;
 			}
