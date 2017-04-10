@@ -1,10 +1,10 @@
 package com.thoughtworks.videorental.domain;
 
+import com.thoughtworks.videorental.toolkit.datetime.LocalDateTime;
+
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
-
-import com.thoughtworks.videorental.toolkit.datetime.LocalDateTime;
 
 public class Transaction {
 	private final LocalDateTime dateTime;
@@ -33,4 +33,25 @@ public class Transaction {
 	public Set<Rental> getRentals() {
 		return rentals;
 	}
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Transaction that = (Transaction) o;
+
+        if (!dateTime.equals(that.dateTime)) return false;
+        if (!customer.equals(that.customer)) return false;
+        return rentals.equals(that.rentals);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = dateTime.hashCode();
+        result = 31 * result + customer.hashCode();
+        result = 31 * result + rentals.hashCode();
+        return result;
+    }
 }

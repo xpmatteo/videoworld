@@ -4,6 +4,6 @@
 </head>
 <body>
     <h1>Rental Statement</h1>
-    <pre>${statement}</pre>
+    <pre id="statement">${statement}</pre>
 </body>
 </html>

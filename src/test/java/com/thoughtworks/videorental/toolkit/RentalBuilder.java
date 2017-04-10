@@ -10,9 +10,9 @@ import com.thoughtworks.videorental.toolkit.datetime.Period;
 public class RentalBuilder {
 	private Movie movie = new Movie("A generic movie", Movie.REGULAR);
 	private Customer customer = new Customer("A generic customer");
-	private Period period = Period.of(LocalDate.today(), Duration.ofDays(3));
+    private Period period = Period.of(LocalDate.today(), Duration.ofDays(3));
 
-	public static RentalBuilder aRental() {
+    public static RentalBuilder aRental() {
 		return new RentalBuilder();
 	}
 
@@ -22,6 +22,11 @@ public class RentalBuilder {
 
 	public RentalBuilder forMovie(String title) {
 		this.movie = new Movie(title, Movie.REGULAR);
+		return this;
+	}
+
+	public RentalBuilder forMovie(Movie movie) {
+		this.movie = movie;
 		return this;
 	}
 
@@ -40,4 +45,9 @@ public class RentalBuilder {
 		this.customer = customer;
 		return this;
 	}
+
+    public RentalBuilder withDuration(Duration duration) {
+        this.period = Period.of(LocalDate.today(), duration);
+        return this;
+    }
 }
