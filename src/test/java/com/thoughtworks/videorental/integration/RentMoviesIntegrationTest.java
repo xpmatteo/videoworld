@@ -2,6 +2,7 @@ package com.thoughtworks.videorental.integration;
 
 import com.thoughtworks.videorental.domain.Customer;
 import com.thoughtworks.videorental.domain.Movie;
+import com.thoughtworks.videorental.domain.Transaction;
 import com.thoughtworks.videorental.domain.repository.CustomerRepository;
 import com.thoughtworks.videorental.domain.repository.MovieRepository;
 import com.thoughtworks.videorental.domain.repository.TransactionRepository;
@@ -9,12 +10,18 @@ import com.thoughtworks.videorental.main.VideoWorldRouter;
 import com.thoughtworks.videorental.repository.InMemoryCustomerRepository;
 import com.thoughtworks.videorental.repository.SetBasedMovieRepository;
 import com.thoughtworks.videorental.repository.SetBasedTransactionRepository;
+import com.thoughtworks.videorental.toolkit.RentalBuilder;
+import com.thoughtworks.videorental.toolkit.TransactionBuilder;
+import com.thoughtworks.videorental.toolkit.datetime.Duration;
 import com.thoughtworks.videorental.toolkit.web.FakeWebResponse;
 import com.thoughtworks.videorental.toolkit.web.WebRequest;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Collection;
+
 import static java.util.Arrays.asList;
+import static java.util.Collections.emptySet;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
@@ -52,7 +59,7 @@ public class RentMoviesIntegrationTest {
     }
 
     @Test
-    public void rentMoviesStoreTransactionAndShowsCustomerStatement() throws Exception {
+    public void rentMoviesShowsCustomerStatement() throws Exception {
         movieRepository.add(SOME_MOVIE);
         movieRepository.add(ANOTHER_MOVIE);
 
@@ -66,5 +73,33 @@ public class RentMoviesIntegrationTest {
         assertTrue(statement.contains(LOGGED_IN_CUSTOMER.getName()));
         assertTrue(statement.contains(SOME_MOVIE.getTitle()));
         assertTrue(statement.contains(ANOTHER_MOVIE.getTitle()));
+    }
+
+    @Test
+    public void rentMoviesStoresTransactionForRentals() throws Exception {
+        movieRepository.add(SOME_MOVIE);
+        movieRepository.add(ANOTHER_MOVIE);
+
+        Duration duration = Duration.ofDays(3);
+        when(request.getParameter("rentalDuration")).thenReturn(duration.toString());
+        when(request.getParameterValues("movieNames")).thenReturn(
+                asList(SOME_MOVIE.getTitle(), ANOTHER_MOVIE.getTitle()));
+
+        assertThat(transactionRepository.selectAll(), is(emptySet()));
+
+        router.service(request, response);
+
+        Collection<Transaction> transactions = transactionRepository.transactionsBy(LOGGED_IN_CUSTOMER);
+
+        RentalBuilder builder = RentalBuilder.aRental()
+                .byCustomer(LOGGED_IN_CUSTOMER)
+                .withDuration(duration);
+
+        Transaction expectedTransaction = TransactionBuilder.aTransaction()
+                .byCustomer(LOGGED_IN_CUSTOMER)
+                .with(builder.forMovie(SOME_MOVIE).build())
+                .with(builder.forMovie(ANOTHER_MOVIE).build()).build();
+
+        assertTrue(transactions.contains(expectedTransaction));
     }
 }
