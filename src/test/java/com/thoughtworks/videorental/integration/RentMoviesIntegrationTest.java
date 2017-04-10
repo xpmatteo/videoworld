@@ -53,12 +53,12 @@ public class RentMoviesIntegrationTest {
 
     @Test
     public void rentMoviesStoreTransactionAndShowsCustomerStatement() throws Exception {
+        movieRepository.add(SOME_MOVIE);
+        movieRepository.add(ANOTHER_MOVIE);
+
         when(request.getParameter("rentalDuration")).thenReturn("3");
         when(request.getParameterValues("movieNames")).thenReturn(
                 asList(SOME_MOVIE.getTitle(), ANOTHER_MOVIE.getTitle()));
-
-        movieRepository.add(SOME_MOVIE);
-        movieRepository.add(ANOTHER_MOVIE);
 
         router.service(request, response);
 
