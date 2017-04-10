@@ -20,7 +20,7 @@ public class LoginSteps {
 
     @Before
     public static void setUp() {
-        System.setProperty("webdriver.chrome.driver", "chromedriver");
+        System.setProperty("webdriver.chrome.driver", "chromedriver_linux");
         driver = new ChromeDriver();
         driver.get("http://localhost:8081/");
         driver.manage().window().maximize();
