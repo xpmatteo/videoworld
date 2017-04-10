@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/xpmatteo/videoworld.svg?branch=master)](https://travis-ci.org/xpmatteo/videoworld)
 
 Source code for the Agile Development Practices course by ThoughtWorks
 
