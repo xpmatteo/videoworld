@@ -1,8 +1,8 @@
 package com.thoughtworks.videorental.domain;
 
-import java.util.Comparator;
-
 import com.thoughtworks.videorental.toolkit.datetime.Period;
+
+import java.util.Comparator;
 
 public class Rental {
 	public static final Comparator<Rental> SORT_BY_END_DATE_ASCENDING = new Comparator<Rental>() {
@@ -38,4 +38,25 @@ public class Rental {
 	public String toString() {
 		return String.format("Rental of %s until %s", movie.getTitle(), period.getEndDate());
 	}
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Rental rental = (Rental) o;
+
+        if (!movie.equals(rental.movie)) return false;
+        if (!customer.equals(rental.customer)) return false;
+        return period.equals(rental.period);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = movie.hashCode();
+        result = 31 * result + customer.hashCode();
+        result = 31 * result + period.hashCode();
+        return result;
+    }
 }
