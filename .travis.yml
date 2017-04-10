@@ -3,7 +3,7 @@ jdk:
   - oraclejdk8
 before_script:
   - chmod +x gradlew
-  
+
 before_install:
   - export CHROME_BIN=chromium-browser
   - export DISPLAY=:99.0
