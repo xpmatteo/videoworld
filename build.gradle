@@ -24,6 +24,7 @@ repositories {
 }
 
 gretty {
+    port=8081
     contextPath = '/'
     integrationTestTask = 'cucumber'
 }
