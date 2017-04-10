@@ -6,7 +6,6 @@ import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import pages.LoginPage;
 import pages.RentMoviePage;
 
@@ -21,9 +20,7 @@ public class LoginSteps {
 
     @Before
     public static void setUp() {
-        System.setProperty("webdriver.chrome.driver", "/src/cucumber/chromedriver");
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--no-sandbox");
+        System.setProperty("webdriver.chrome.driver", "chromedriver");
         driver = new ChromeDriver();
         driver.get("http://localhost:8081/");
         driver.manage().window().maximize();
