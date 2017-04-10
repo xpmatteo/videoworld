@@ -4,6 +4,8 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import java.util.List;
+
 public class RentMoviePage extends BasePage {
     public RentMoviePage() {
         super(driver);
@@ -14,9 +16,12 @@ public class RentMoviePage extends BasePage {
         rentMovieForm.isDisplayed();
     }
 
-    public void chooseMovie(String movieName){
-        WebElement movie = driver.findElement(By.cssSelector("#wizard-1 input[value="+movieName+"]"));
-        movie.click();
+    public void chooseMovie(List<String> movieList){
+        for (String movieName:movieList) {
+            WebElement movie = driver.findElement(By.cssSelector("#wizard-1 input[value='"+movieName+"']"));
+            movie.click();
+        }
+
     }
 
     public void chooseDays(String noOfDays) {
@@ -32,5 +37,10 @@ public class RentMoviePage extends BasePage {
     public void clickDone() {
         WebElement doneButton = driver.findElement(By.cssSelector("input.done.btn"));
         doneButton.click();
+    }
+
+    public void logout() {
+        WebElement logout = driver.findElement(By.cssSelector("a.tab:nth-of-type(1)"));
+        logout.click();
     }
 }

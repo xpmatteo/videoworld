@@ -23,4 +23,8 @@ public class LoginPage extends BasePage {
         loginButton.click();
     }
 
+    public void isInitialized() {
+        WebElement loginForm = driver.findElement(By.id("login"));
+        loginForm.isDisplayed();
+    }
 }

@@ -4,6 +4,7 @@ package cucumberjava;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
 import org.openqa.selenium.chrome.ChromeDriver;
 import pages.LoginPage;
 import pages.RentMoviePage;
@@ -38,5 +39,9 @@ public class LoginSteps {
         rentMoviePage.isInitialized();
     }
 
+    @Then("^I am logged out$")
+    public void iAmLoggedOut() throws Throwable {
+        loginPage.isInitialized();
+    }
 }
 
