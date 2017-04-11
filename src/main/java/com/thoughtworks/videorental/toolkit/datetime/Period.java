@@ -1,8 +1,5 @@
 package com.thoughtworks.videorental.toolkit.datetime;
 
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
-
 public class Period {
 	private final LocalDate startDate;
 	private final Duration duration;
@@ -24,11 +21,7 @@ public class Period {
 		return new Period(startDate, inclusiveDuration);
 	}
 
-	public LocalDate getStartDate() {
-		return startDate;
-	}
-
-	public Duration getDuration() {
+    public Duration getDuration() {
 		return duration;
 	}
 
@@ -36,24 +29,22 @@ public class Period {
 		return startDate.plusDays(duration.getDays() - 1);
 	}
 
-	public boolean isOverlapping(final Period period) {
-		return startDate.isOnOrBefore(period.getEndDate()) && getEndDate().isOnOrAfter(period.getStartDate());
-	}
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
-	@Override
-	public boolean equals(final Object obj) {
-		if (obj == this) {
-			return true;
-		}
-		if (obj == null || obj.getClass() != getClass()) {
-			return false;
-		}
-		final Period other = (Period) obj;
-		return new EqualsBuilder().append(startDate, other.startDate).append(duration, other.duration).isEquals();
-	}
+        Period period = (Period) o;
 
-	@Override
-	public int hashCode() {
-		return new HashCodeBuilder().append(startDate).append(duration).toHashCode();
-	}
+        if (!startDate.equals(period.startDate)) return false;
+        return duration.equals(period.duration);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = startDate.hashCode();
+        result = 31 * result + duration.hashCode();
+        return result;
+    }
 }
