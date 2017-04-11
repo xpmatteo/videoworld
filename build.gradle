@@ -39,20 +39,40 @@ ext {
         'info.cukes:cucumber-junit:1.2.5',
         'org.seleniumhq.selenium:selenium-java:2.53.0'
     ]
+
+    app = [
+        'org.hibernate:hibernate-core:3.6.7.Final',
+        'org.freemarker:freemarker:2.3.26-incubating',
+        'joda-time:joda-time:1.6',
+        'org.eclipse.jetty:jetty-server:9.4.3.v20170317',
+        'org.eclipse.jetty:jetty-webapp:9.4.3.v20170317'
+    ]
+
+    logs = [
+        'org.slf4j:slf4j-simple:1.7.25',
+        'org.slf4j:slf4j-api:1.7.25'
+    ]
+
+    local_files = [
+        'lib/runtime/tw-commons-ddd-1.0.jar'
+    ]
+
+    server = [
+        'javax.servlet:servlet-api:2.5'
+    ]
 }
 
 dependencies {
-    compile group: 'org.hibernate', name: 'hibernate-core', version: '3.6.7.Final'
-    compile 'org.freemarker:freemarker:2.3.26-incubating'
+    compile app
+    compile logs
 
-    compile files('lib/runtime/tw-commons-ddd-1.0.jar')
-    compile group: 'joda-time', name: 'joda-time', version: '1.6'
-    compile group: 'org.eclipse.jetty', name: 'jetty-server', version: '9.4.3.v20170317'
-    compile group: 'org.eclipse.jetty', name: 'jetty-webapp', version: '9.4.3.v20170317'
-    compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.25'
-    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
+    compile files(local_files)
 
-    testCompile unit_tests, integration_tests, acceptance_tests
+    providedCompile server
+
+    testCompile unit_tests
+    testCompile integration_tests
+    testCompile acceptance_tests
 }
 
 gretty {
