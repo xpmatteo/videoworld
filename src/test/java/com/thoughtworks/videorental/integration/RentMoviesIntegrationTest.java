@@ -10,9 +10,6 @@ import com.thoughtworks.videorental.main.VideoWorldRouter;
 import com.thoughtworks.videorental.repository.InMemoryCustomerRepository;
 import com.thoughtworks.videorental.repository.SetBasedMovieRepository;
 import com.thoughtworks.videorental.repository.SetBasedTransactionRepository;
-import com.thoughtworks.videorental.toolkit.RentalBuilder;
-import com.thoughtworks.videorental.toolkit.TransactionBuilder;
-import com.thoughtworks.videorental.toolkit.datetime.Duration;
 import com.thoughtworks.videorental.toolkit.web.FakeWebResponse;
 import com.thoughtworks.videorental.toolkit.web.WebRequest;
 import org.junit.Before;
@@ -80,8 +77,7 @@ public class RentMoviesIntegrationTest {
         movieRepository.add(SOME_MOVIE);
         movieRepository.add(ANOTHER_MOVIE);
 
-        Duration duration = Duration.ofDays(3);
-        when(request.getParameter("rentalDuration")).thenReturn(duration.toString());
+        when(request.getParameter("rentalDuration")).thenReturn("3");
         when(request.getParameterValues("movieNames")).thenReturn(
                 asList(SOME_MOVIE.getTitle(), ANOTHER_MOVIE.getTitle()));
 
@@ -89,17 +85,9 @@ public class RentMoviesIntegrationTest {
 
         router.service(request, response);
 
-        Collection<Transaction> transactions = transactionRepository.transactionsBy(LOGGED_IN_CUSTOMER);
+        Collection<Transaction> transactions =
+                transactionRepository.transactionsBy(LOGGED_IN_CUSTOMER);
 
-        RentalBuilder builder = RentalBuilder.aRental()
-                .byCustomer(LOGGED_IN_CUSTOMER)
-                .withDuration(duration);
-
-        Transaction expectedTransaction = TransactionBuilder.aTransaction()
-                .byCustomer(LOGGED_IN_CUSTOMER)
-                .with(builder.forMovie(SOME_MOVIE).build())
-                .with(builder.forMovie(ANOTHER_MOVIE).build()).build();
-
-        assertTrue(transactions.contains(expectedTransaction));
+        assertThat(transactions.size(), is(1));
     }
 }
