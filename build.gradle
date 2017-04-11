@@ -53,12 +53,6 @@ dependencies {
     compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.6.1'
     compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
 
-    compile group: 'org.springframework', name: 'spring-core', version: '2.5.6'
-    compile group: 'org.springframework', name: 'spring-beans', version: '2.5.6'
-    compile group: 'org.springframework.javaconfig', name: 'spring-javaconfig', version: '1.0.0.m3'
-
-    providedCompile 'javax.servlet:servlet-api:2.5'
-
     testCompile unit_tests, integration_tests, acceptance_tests
 }
 
