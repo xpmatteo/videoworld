@@ -12,7 +12,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 public class Hooks {
     public static WebDriver driver;
 
-    @Before()
+    @Before
     public static void setUp() {
         String mode = System.getProperty("mode", "local");
         DesiredCapabilities caps = new DesiredCapabilities();

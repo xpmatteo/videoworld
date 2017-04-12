@@ -1,7 +1,6 @@
 Feature: Renting Movie
 
   Scenario: Renting multiple movies
-
     Given I am logged in as "Wamika"
     When I choose movie:
       | Logan       |

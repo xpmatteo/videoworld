@@ -25,20 +25,18 @@ How to run unit tests
 
     ./gradlew test
 
-How to run end-to-end tests
-    -headless mode
-    install phantomjs - brew install phantomjs 
+How to run end-to-end tests headless mode
+
+    ./gradlew cucumber -Dmode=headless
+
+How to run end-to-end tests browser mode
 
     ./gradlew cucumber
-        
-    -head mode
+
+How to run a specific scenario
+
+    ./gradlew cucumber -Dcucumber.options=src/cucumber/src/test/resources/**.feature
     
-
-
-
-
-
-
 ### Questions
 
  - why do stories talk about "orders" while the class is named "transaction?"
