@@ -2,6 +2,7 @@ package com.thoughtworks.videorental.repository;
 
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Set;
 
 import com.thoughtworks.ddd.repository.SetBasedRepository;
@@ -32,7 +33,7 @@ public class SetBasedMovieRepository extends SetBasedRepository<Movie> implement
 	}
 
 	@Override
-	public Set<Movie> withTitles(final String... titles) {
+	public Set<Movie> withTitles(List<String> titles) {
 		return selectSatisfying(new MovieWithTitleSpecification(titles));
 	}
 }

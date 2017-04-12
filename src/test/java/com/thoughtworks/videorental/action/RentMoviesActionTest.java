@@ -55,7 +55,7 @@ public class RentMoviesActionTest extends BaseTestForVideoWorldApp {
         Duration duration = Duration.ofDays(3);
         when(request.getParameter("rentalDuration")).thenReturn(duration.toString());
 
-        when(movieRepository.withTitles(SOME_MOVIE.getTitle(), ANOTHER_MOVIE.getTitle()))
+        when(movieRepository.withTitles(asList(SOME_MOVIE.getTitle(), ANOTHER_MOVIE.getTitle())))
                 .thenReturn(asSet(SOME_MOVIE, ANOTHER_MOVIE));
 
         RentalBuilder builder = RentalBuilder.aRental()

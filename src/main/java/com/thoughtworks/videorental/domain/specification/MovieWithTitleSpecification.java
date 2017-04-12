@@ -1,8 +1,8 @@
 package com.thoughtworks.videorental.domain.specification;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 
 import org.hibernate.Criteria;
 
@@ -13,8 +13,8 @@ public class MovieWithTitleSpecification implements Specification<Movie> {
 
 	private Collection<String> movieTitles;
 
-	public MovieWithTitleSpecification(final String... movieTitles) {
-		this.movieTitles = new HashSet<String>(Arrays.asList(movieTitles));
+	public MovieWithTitleSpecification(List<String> movieTitles) {
+		this.movieTitles = new HashSet<>(movieTitles);
 	}
 
 	@Override

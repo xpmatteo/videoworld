@@ -36,8 +36,7 @@ public class RentMoviesAction implements WebAction {
         List<String> movieNames = request.getParameterValues("movieNames");
         int rentalDuration = parseInt(request.getParameter("rentalDuration"));
 
-        Set<Movie> movies = movieRepository.withTitles(
-                movieNames.toArray(new String[movieNames.size()]));
+        Set<Movie> movies = movieRepository.withTitles(movieNames);
 
         Period rentalPeriod = Period.of(LocalDate.today(), Duration.ofDays(rentalDuration));
 

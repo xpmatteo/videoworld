@@ -1,6 +1,7 @@
 package com.thoughtworks.videorental.domain.repository;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 import com.thoughtworks.ddd.repository.NonUniqueObjectSelectedException;
@@ -24,5 +25,5 @@ public interface MovieRepository {
 
 	Movie selectUnique(Specification<Movie> specification) throws NonUniqueObjectSelectedException;
 
-	Set<Movie> withTitles(String... titles);
+	Set<Movie> withTitles(List<String> titles);
 }
