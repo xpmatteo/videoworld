@@ -6,10 +6,6 @@ import org.openqa.selenium.support.ui.Select;
 
 public class LoginPage extends BasePage {
 
-    public LoginPage() {
-        super(driver);
-    }
-
     private void selectUser(String username){
         WebElement selectUser= driver.findElement(By.name("customerName"));
         selectUser.isDisplayed();

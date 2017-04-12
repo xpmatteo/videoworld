@@ -1,15 +1,12 @@
 package pages;
 
-import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 
 import java.util.List;
 
 public class RentMoviePage extends BasePage {
-    public RentMoviePage() {
-        super(driver);
-    }
 
     public void isInitialized() throws Throwable{
         WebElement rentMovieForm = driver.findElement(By.id("wizard"));

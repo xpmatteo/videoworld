@@ -26,8 +26,14 @@ How to run unit tests
     ./gradlew test
 
 How to run end-to-end tests
+    -headless mode
+    install phantomjs - brew install phantomjs 
 
     ./gradlew cucumber
+        
+    -head mode
+    
+
 
 
 
