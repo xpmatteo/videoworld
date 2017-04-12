@@ -54,7 +54,7 @@ ext {
     ]
 
     local_files = [
-        'lib/runtime/tw-commons-ddd-1.0.jar'
+        'lib/tw-commons-ddd-1.0.jar'
     ]
 
     server = [
