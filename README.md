@@ -21,6 +21,8 @@ How to run from the command line
 
     ./gradlew appStart
 
+and then open the browser at http://localhost:8081
+
 How to run unit tests
 
     ./gradlew test

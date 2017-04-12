@@ -4,6 +4,7 @@ import com.thoughtworks.videorental.domain.Customer;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
+import freemarker.template.Version;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -39,7 +40,7 @@ public class ServletWebResponse implements WebResponse {
 
 	@Override
 	public void renderTemplate(String templateName, String layoutName) {
-		Configuration configuration = new Configuration();
+		Configuration configuration = new Configuration(new Version("2.3.26"));
 
 		try {
 			configuration.setDirectoryForTemplateLoading(new File(templateDirectory));
