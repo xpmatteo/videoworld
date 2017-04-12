@@ -5,7 +5,9 @@ import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.phantomjs.PhantomJSDriver;
+import org.openqa.selenium.phantomjs.PhantomJSDriverService;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import pages.LoginPage;
 import pages.RentMoviePage;
 
@@ -20,8 +22,12 @@ public class LoginSteps {
 
     @Before
     public static void setUp() {
-        System.setProperty("webdriver.chrome.driver", "chromedriver");
-        driver = new ChromeDriver();
+//        System.setProperty("webdriver.chrome.driver", "chromedriver");
+//        driver = new ChromeDriver();
+        DesiredCapabilities caps = new DesiredCapabilities();
+        caps.setCapability(PhantomJSDriverService.PHANTOMJS_EXECUTABLE_PATH_PROPERTY, "phantomjs");
+
+        driver = new PhantomJSDriver();
         driver.get("http://localhost:8081/");
         driver.manage().window().maximize();
     }

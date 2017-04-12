@@ -37,7 +37,8 @@ ext {
     acceptance_tests = [
         'info.cukes:cucumber-java:1.2.5',
         'info.cukes:cucumber-junit:1.2.5',
-        'org.seleniumhq.selenium:selenium-java:2.53.0'
+        'org.seleniumhq.selenium:selenium-java:2.53.0',
+
     ]
 
     app = [
@@ -73,6 +74,8 @@ dependencies {
     testCompile unit_tests
     testCompile integration_tests
     testCompile acceptance_tests
+    testCompile group: 'com.codeborne', name: 'phantomjsdriver', version: '1.2.1'
+
 }
 
 gretty {
