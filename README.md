@@ -36,7 +36,7 @@ How to run end-to-end tests browser mode
 How to run a specific scenario
 
     ./gradlew cucumber -Dcucumber.options=src/cucumber/src/test/resources/**.feature
-    
+
 ### Questions
 
  - why do stories talk about "orders" while the class is named "transaction?"
@@ -50,11 +50,9 @@ How to run a specific scenario
 
 ### Todo
 
- - rewrite rentMoviesAction + test
  - clean up repositories both interface and implementation
  - throw away specification package and all its contents
- - throw away old struts classes
- - remove dependency from tw-commons jars
+ - remove dependency from tw-commons-ddd jar
 
 BEFORE TRAINING
 
