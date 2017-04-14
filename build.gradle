@@ -39,11 +39,9 @@ ext {
             'info.cukes:cucumber-junit:1.2.5',
             'org.seleniumhq.selenium:selenium-java:2.53.0',
             'com.codeborne:phantomjsdriver:1.2.1'
-
     ]
 
     app = [
-            'org.hibernate:hibernate-core:3.6.7.Final',
             'org.freemarker:freemarker:2.3.26-incubating',
             'joda-time:joda-time:1.6',
             'org.eclipse.jetty:jetty-server:9.4.3.v20170317',
@@ -55,26 +53,15 @@ ext {
             'org.slf4j:slf4j-api:1.7.25'
     ]
 
-    local_files = [
-            'lib/tw-commons-ddd-1.0.jar'
-    ]
-
     server = [
             'javax.servlet:servlet-api:2.5'
     ]
 }
 
 dependencies {
-    compile app
-    compile logs
-
-    compile files(local_files)
-
+    compile app, logs
     providedCompile server
-
-    testCompile unit_tests
-    testCompile integration_tests
-    testCompile acceptance_tests
+    testCompile unit_tests, integration_tests, acceptance_tests
 }
 
 gretty {
