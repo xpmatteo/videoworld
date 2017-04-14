@@ -5,12 +5,8 @@ import com.thoughtworks.videorental.toolkit.datetime.Period;
 import java.util.Comparator;
 
 public class Rental {
-	public static final Comparator<Rental> SORT_BY_END_DATE_ASCENDING = new Comparator<Rental>() {
-		@Override
-		public int compare(Rental o1, Rental o2) {
-			return o1.getPeriod().getEndDate().compareTo(o2.getPeriod().getEndDate());
-		}
-	};
+	public static final Comparator<Rental> SORT_BY_END_DATE_ASCENDING =
+			(r1, r2) -> r1.getPeriod().getEndDate().compareTo(r2.getPeriod().getEndDate());
 
 	private final Movie movie;
 	private final Customer customer;
