@@ -1,5 +1,16 @@
 package com.thoughtworks.videorental.action;
 
+import com.thoughtworks.videorental.domain.Customer;
+import com.thoughtworks.videorental.domain.Movie;
+import com.thoughtworks.videorental.domain.Rental;
+import com.thoughtworks.videorental.domain.repository.TransactionRepository;
+import com.thoughtworks.videorental.repository.InMemoryTransactionRepository;
+import com.thoughtworks.videorental.toolkit.BaseTestForVideoWorldApp;
+import com.thoughtworks.videorental.toolkit.datetime.LocalDate;
+import com.thoughtworks.videorental.toolkit.datetime.Period;
+import org.junit.Before;
+import org.junit.Test;
+
 import static com.thoughtworks.videorental.toolkit.RentalBuilder.aRental;
 import static com.thoughtworks.videorental.toolkit.TransactionBuilder.aTransaction;
 import static com.thoughtworks.videorental.toolkit.datetime.LocalDate.today;
@@ -7,19 +18,6 @@ import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
-import org.junit.Before;
-import org.junit.Test;
-
-import com.thoughtworks.videorental.domain.Customer;
-import com.thoughtworks.videorental.domain.Movie;
-import com.thoughtworks.videorental.domain.Rental;
-import com.thoughtworks.videorental.domain.Transaction;
-import com.thoughtworks.videorental.domain.repository.TransactionRepository;
-import com.thoughtworks.videorental.repository.SetBasedTransactionRepository;
-import com.thoughtworks.videorental.toolkit.BaseTestForVideoWorldApp;
-import com.thoughtworks.videorental.toolkit.datetime.LocalDate;
-import com.thoughtworks.videorental.toolkit.datetime.Period;
 
 public class ViewCurrentRentalsActionTest extends BaseTestForVideoWorldApp {
 
@@ -30,7 +28,7 @@ public class ViewCurrentRentalsActionTest extends BaseTestForVideoWorldApp {
 	private static final Rental EXPIRED_RENTAL_1 = aRentalExpiring(today().minusDays(1));
 	private static final Rental EXPIRED_RENTAL_2 = aRentalExpiring(today().minusDays(1));
 
-	private TransactionRepository transactionRepository = new SetBasedTransactionRepository();
+	private TransactionRepository transactionRepository = new InMemoryTransactionRepository();
 	private ViewCurrentRentalsAction action = new ViewCurrentRentalsAction(transactionRepository);
 
 	@Before
@@ -51,9 +49,11 @@ public class ViewCurrentRentalsActionTest extends BaseTestForVideoWorldApp {
 
 	@Test
 	public void someRentalsCurrentSomeExpired() throws Exception {
-		Transaction t1 = aTransaction().byCustomer(CUSTOMER).with(EXPIRED_RENTAL_1).with(CURRENT_RENTAL_1).build();
-		Transaction t2 = aTransaction().byCustomer(CUSTOMER).with(CURRENT_RENTAL_2).build();
-		transactionRepository.add(asSet(t1, t2));
+		transactionRepository.add(aTransaction()
+                .byCustomer(CUSTOMER).with(EXPIRED_RENTAL_1).with(CURRENT_RENTAL_1).build());
+
+		transactionRepository.add(aTransaction()
+                .byCustomer(CUSTOMER).with(CURRENT_RENTAL_2).build());
 
 		action.accept(request, response);
 
@@ -63,10 +63,11 @@ public class ViewCurrentRentalsActionTest extends BaseTestForVideoWorldApp {
 
 	@Test
 	public void ignoreRentalsByOtherCustomers() throws Exception {
-		Transaction transactionByOurCustomer = aTransaction().byCustomer(CUSTOMER).with(CURRENT_RENTAL_1).build();
-		Transaction transactionByAnotherCustomer = aTransaction()
-				.byCustomer(ANOTHER_CUSTOMER).with(aRental().expiring(today().plusDays(1))).build();
-		transactionRepository.add(asSet(transactionByOurCustomer, transactionByAnotherCustomer));
+        transactionRepository.add(aTransaction()
+                .byCustomer(CUSTOMER).with(CURRENT_RENTAL_1).build());
+
+		transactionRepository.add(aTransaction()
+                .byCustomer(ANOTHER_CUSTOMER).with(aRental().expiring(today().plusDays(1))).build());
 
 		action.accept(request, response);
 

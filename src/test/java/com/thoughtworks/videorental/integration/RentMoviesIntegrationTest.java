@@ -9,7 +9,7 @@ import com.thoughtworks.videorental.domain.repository.TransactionRepository;
 import com.thoughtworks.videorental.main.VideoWorldRouter;
 import com.thoughtworks.videorental.repository.InMemoryCustomerRepository;
 import com.thoughtworks.videorental.repository.InMemoryMovieRepository;
-import com.thoughtworks.videorental.repository.SetBasedTransactionRepository;
+import com.thoughtworks.videorental.repository.InMemoryTransactionRepository;
 import com.thoughtworks.videorental.toolkit.web.FakeWebResponse;
 import com.thoughtworks.videorental.toolkit.web.WebRequest;
 import org.junit.Before;
@@ -18,8 +18,8 @@ import org.junit.Test;
 import java.util.Collection;
 
 import static java.util.Arrays.asList;
-import static java.util.Collections.emptySet;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.collection.IsEmptyCollection.empty;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
@@ -33,7 +33,7 @@ public class RentMoviesIntegrationTest {
 
     private CustomerRepository customerRepository = new InMemoryCustomerRepository();
     private MovieRepository movieRepository = new InMemoryMovieRepository();
-    private TransactionRepository transactionRepository = new SetBasedTransactionRepository();
+    private TransactionRepository transactionRepository = new InMemoryTransactionRepository();
     private VideoWorldRouter router = new VideoWorldRouter(customerRepository, movieRepository,
             transactionRepository);
 
@@ -81,7 +81,7 @@ public class RentMoviesIntegrationTest {
         when(request.getParameterValues("movieNames")).thenReturn(
                 asList(SOME_MOVIE.getTitle(), ANOTHER_MOVIE.getTitle()));
 
-        assertThat(transactionRepository.selectAll(), is(emptySet()));
+        assertThat(transactionRepository.selectAll(), is(empty()));
 
         router.service(request, response);
 
