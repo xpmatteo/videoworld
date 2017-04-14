@@ -4,12 +4,8 @@ import java.util.Comparator;
 import java.util.Set;
 
 public class Customer {
-	public static final Comparator<? super Customer> ORDER_BY_NAME_ASCENDING = new Comparator<Customer>() {
-		@Override
-		public int compare(Customer c0, Customer c1) {
-			return c0.getName().compareTo(c1.getName());
-		}
-	};
+    public static final Comparator<Customer> ORDER_BY_NAME_ASCENDING =
+            (Customer c1, Customer c2) -> c1.getName().compareTo(c2.getName());
 
 	private String name;
 	private int frequentRenterPoints = 0;
