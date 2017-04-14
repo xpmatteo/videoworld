@@ -7,8 +7,8 @@ import static org.mockito.Mockito.when;
 
 import org.junit.Test;
 
-import com.thoughtworks.videorental.domain.Customer;
-import com.thoughtworks.videorental.domain.Transaction;
+import com.thoughtworks.videorental.domain.entity.Customer;
+import com.thoughtworks.videorental.domain.entity.Transaction;
 import com.thoughtworks.videorental.domain.repository.TransactionRepository;
 import com.thoughtworks.videorental.toolkit.BaseTestForVideoWorldApp;
 

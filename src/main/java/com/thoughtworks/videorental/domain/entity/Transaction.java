@@ -1,4 +1,4 @@
-package com.thoughtworks.videorental.domain;
+package com.thoughtworks.videorental.domain.entity;
 
 import com.thoughtworks.videorental.toolkit.datetime.LocalDateTime;
 

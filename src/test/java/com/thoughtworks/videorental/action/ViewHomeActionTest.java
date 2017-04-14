@@ -1,6 +1,6 @@
 package com.thoughtworks.videorental.action;
 
-import com.thoughtworks.videorental.domain.Movie;
+import com.thoughtworks.videorental.domain.entity.Movie;
 import com.thoughtworks.videorental.domain.repository.MovieRepository;
 import com.thoughtworks.videorental.repository.InMemoryMovieRepository;
 import com.thoughtworks.videorental.toolkit.BaseTestForVideoWorldApp;

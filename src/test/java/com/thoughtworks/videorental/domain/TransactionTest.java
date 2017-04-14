@@ -6,6 +6,10 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.thoughtworks.videorental.domain.entity.Customer;
+import com.thoughtworks.videorental.domain.entity.Movie;
+import com.thoughtworks.videorental.domain.entity.Rental;
+import com.thoughtworks.videorental.domain.entity.Transaction;
 import org.junit.Test;
 
 import com.thoughtworks.videorental.toolkit.datetime.Duration;

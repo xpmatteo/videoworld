@@ -2,7 +2,7 @@ package com.thoughtworks.videorental.action;
 
 import java.util.Optional;
 
-import com.thoughtworks.videorental.domain.Customer;
+import com.thoughtworks.videorental.domain.entity.Customer;
 import com.thoughtworks.videorental.domain.repository.CustomerRepository;
 import com.thoughtworks.videorental.toolkit.web.WebAction;
 import com.thoughtworks.videorental.toolkit.web.WebRequest;

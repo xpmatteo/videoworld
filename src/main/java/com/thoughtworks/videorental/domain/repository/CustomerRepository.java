@@ -3,7 +3,7 @@ package com.thoughtworks.videorental.domain.repository;
 import java.util.Collection;
 import java.util.Optional;
 
-import com.thoughtworks.videorental.domain.Customer;
+import com.thoughtworks.videorental.domain.entity.Customer;
 
 public interface CustomerRepository {
 	void add(Customer entity);

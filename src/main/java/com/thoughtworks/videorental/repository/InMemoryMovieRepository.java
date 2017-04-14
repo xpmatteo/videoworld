@@ -1,6 +1,6 @@
 package com.thoughtworks.videorental.repository;
 
-import com.thoughtworks.videorental.domain.Movie;
+import com.thoughtworks.videorental.domain.entity.Movie;
 import com.thoughtworks.videorental.domain.repository.MovieRepository;
 
 import java.util.ArrayList;

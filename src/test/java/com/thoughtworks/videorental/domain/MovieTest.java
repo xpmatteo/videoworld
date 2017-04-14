@@ -2,6 +2,7 @@ package com.thoughtworks.videorental.domain;
 
 import static org.junit.Assert.assertEquals;
 
+import com.thoughtworks.videorental.domain.entity.Movie;
 import org.junit.Test;
 
 public class MovieTest {

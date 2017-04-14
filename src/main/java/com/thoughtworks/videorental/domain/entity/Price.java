@@ -1,4 +1,4 @@
-package com.thoughtworks.videorental.domain;
+package com.thoughtworks.videorental.domain.entity;
 
 public interface Price {
 	double getCharge(int daysRented);

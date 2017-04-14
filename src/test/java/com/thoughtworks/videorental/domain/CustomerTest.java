@@ -6,6 +6,9 @@ import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import com.thoughtworks.videorental.domain.entity.Customer;
+import com.thoughtworks.videorental.domain.entity.Movie;
+import com.thoughtworks.videorental.domain.entity.Rental;
 import org.junit.Before;
 import org.junit.Test;
 

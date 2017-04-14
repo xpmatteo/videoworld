@@ -1,4 +1,4 @@
-package com.thoughtworks.videorental.domain;
+package com.thoughtworks.videorental.domain.entity;
 
 public class RegularPrice implements Price {
 

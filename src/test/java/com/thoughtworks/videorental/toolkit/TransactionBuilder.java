@@ -3,10 +3,10 @@ package com.thoughtworks.videorental.toolkit;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.thoughtworks.videorental.domain.Customer;
-import com.thoughtworks.videorental.domain.Movie;
-import com.thoughtworks.videorental.domain.Rental;
-import com.thoughtworks.videorental.domain.Transaction;
+import com.thoughtworks.videorental.domain.entity.Customer;
+import com.thoughtworks.videorental.domain.entity.Movie;
+import com.thoughtworks.videorental.domain.entity.Rental;
+import com.thoughtworks.videorental.domain.entity.Transaction;
 import com.thoughtworks.videorental.toolkit.datetime.Duration;
 import com.thoughtworks.videorental.toolkit.datetime.LocalDate;
 import com.thoughtworks.videorental.toolkit.datetime.LocalDateTime;

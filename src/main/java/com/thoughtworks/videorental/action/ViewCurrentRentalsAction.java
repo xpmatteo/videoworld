@@ -5,8 +5,8 @@ import static java.util.stream.Collectors.toList;
 import java.util.Collection;
 import java.util.List;
 
-import com.thoughtworks.videorental.domain.Rental;
-import com.thoughtworks.videorental.domain.Transaction;
+import com.thoughtworks.videorental.domain.entity.Rental;
+import com.thoughtworks.videorental.domain.entity.Transaction;
 import com.thoughtworks.videorental.domain.repository.TransactionRepository;
 import com.thoughtworks.videorental.toolkit.datetime.LocalDate;
 import com.thoughtworks.videorental.toolkit.web.WebAction;

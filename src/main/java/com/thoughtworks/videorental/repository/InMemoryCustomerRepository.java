@@ -7,7 +7,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
-import com.thoughtworks.videorental.domain.Customer;
+import com.thoughtworks.videorental.domain.entity.Customer;
 import com.thoughtworks.videorental.domain.repository.CustomerRepository;
 
 public class InMemoryCustomerRepository implements CustomerRepository {

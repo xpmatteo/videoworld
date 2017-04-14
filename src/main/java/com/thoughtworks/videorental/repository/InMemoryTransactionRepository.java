@@ -1,7 +1,7 @@
 package com.thoughtworks.videorental.repository;
 
-import com.thoughtworks.videorental.domain.Customer;
-import com.thoughtworks.videorental.domain.Transaction;
+import com.thoughtworks.videorental.domain.entity.Customer;
+import com.thoughtworks.videorental.domain.entity.Transaction;
 import com.thoughtworks.videorental.domain.repository.TransactionRepository;
 
 import java.util.ArrayList;

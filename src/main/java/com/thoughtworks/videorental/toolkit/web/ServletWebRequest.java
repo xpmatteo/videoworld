@@ -1,6 +1,6 @@
 package com.thoughtworks.videorental.toolkit.web;
 
-import com.thoughtworks.videorental.domain.Customer;
+import com.thoughtworks.videorental.domain.entity.Customer;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;

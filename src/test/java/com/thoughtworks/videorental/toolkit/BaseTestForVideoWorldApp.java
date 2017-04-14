@@ -9,7 +9,7 @@ import java.util.Set;
 
 import org.junit.After;
 
-import com.thoughtworks.videorental.domain.Customer;
+import com.thoughtworks.videorental.domain.entity.Customer;
 import com.thoughtworks.videorental.toolkit.web.WebRequest;
 import com.thoughtworks.videorental.toolkit.web.WebResponse;
 

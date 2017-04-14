@@ -1,4 +1,4 @@
-package com.thoughtworks.videorental.domain;
+package com.thoughtworks.videorental.domain.entity;
 
 import java.util.Comparator;
 import java.util.Set;
