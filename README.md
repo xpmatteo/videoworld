@@ -47,15 +47,6 @@ How to run a specific scenario
 
  - what is story #8 "already checked in and it breaks the build"???
 
-
-
-
-### Todo
-
- - clean up repositories both interface and implementation
- - throw away specification package and all its contents
- - remove dependency from tw-commons-ddd jar
-
 BEFORE TRAINING
 
  - Fix first user story
