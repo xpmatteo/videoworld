@@ -1,15 +1,5 @@
 package com.thoughtworks.videorental.integration;
 
-import static java.util.Arrays.asList;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
-import org.jsoup.select.Elements;
-import org.junit.Before;
-import org.junit.Test;
-
 import com.thoughtworks.videorental.domain.Customer;
 import com.thoughtworks.videorental.domain.Movie;
 import com.thoughtworks.videorental.domain.repository.CustomerRepository;
@@ -17,13 +7,21 @@ import com.thoughtworks.videorental.domain.repository.MovieRepository;
 import com.thoughtworks.videorental.domain.repository.TransactionRepository;
 import com.thoughtworks.videorental.main.VideoWorldRouter;
 import com.thoughtworks.videorental.repository.InMemoryCustomerRepository;
-import com.thoughtworks.videorental.repository.SetBasedMovieRepository;
+import com.thoughtworks.videorental.repository.InMemoryMovieRepository;
 import com.thoughtworks.videorental.toolkit.web.FakeWebResponse;
 import com.thoughtworks.videorental.toolkit.web.WebRequest;
+import org.jsoup.select.Elements;
+import org.junit.Before;
+import org.junit.Test;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class ViewHomeIntegrationTest {
 	private CustomerRepository customerRepository = new InMemoryCustomerRepository();
-	private MovieRepository movieRepository = new SetBasedMovieRepository();
+	private MovieRepository movieRepository = new InMemoryMovieRepository();
 	private TransactionRepository transactionRepository = null;
 
 	private VideoWorldRouter router = new VideoWorldRouter(customerRepository, movieRepository, transactionRepository);
@@ -48,10 +46,9 @@ public class ViewHomeIntegrationTest {
 
 	@Test
 	public void homeShowsListOfAllMovies() throws Exception {
-		movieRepository.add(asList(
-				new Movie("movie 0", Movie.NEW_RELEASE),
-				new Movie("movie 1", Movie.NEW_RELEASE),
-				new Movie("movie 2", Movie.REGULAR)));
+		movieRepository.add(new Movie("movie 0", Movie.NEW_RELEASE));
+		movieRepository.add(new Movie("movie 1", Movie.NEW_RELEASE));
+		movieRepository.add(new Movie("movie 2", Movie.REGULAR));
 
 		router.service(request, response);
 

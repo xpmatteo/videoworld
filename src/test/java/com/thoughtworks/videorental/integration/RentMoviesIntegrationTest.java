@@ -8,7 +8,7 @@ import com.thoughtworks.videorental.domain.repository.MovieRepository;
 import com.thoughtworks.videorental.domain.repository.TransactionRepository;
 import com.thoughtworks.videorental.main.VideoWorldRouter;
 import com.thoughtworks.videorental.repository.InMemoryCustomerRepository;
-import com.thoughtworks.videorental.repository.SetBasedMovieRepository;
+import com.thoughtworks.videorental.repository.InMemoryMovieRepository;
 import com.thoughtworks.videorental.repository.SetBasedTransactionRepository;
 import com.thoughtworks.videorental.toolkit.web.FakeWebResponse;
 import com.thoughtworks.videorental.toolkit.web.WebRequest;
@@ -32,7 +32,7 @@ public class RentMoviesIntegrationTest {
     private static final Movie ANOTHER_MOVIE = new Movie("Another movie", Movie.REGULAR);
 
     private CustomerRepository customerRepository = new InMemoryCustomerRepository();
-    private MovieRepository movieRepository = new SetBasedMovieRepository();
+    private MovieRepository movieRepository = new InMemoryMovieRepository();
     private TransactionRepository transactionRepository = new SetBasedTransactionRepository();
     private VideoWorldRouter router = new VideoWorldRouter(customerRepository, movieRepository,
             transactionRepository);

@@ -14,6 +14,7 @@ import com.thoughtworks.videorental.toolkit.web.WebAction;
 import com.thoughtworks.videorental.toolkit.web.WebRequest;
 import com.thoughtworks.videorental.toolkit.web.WebResponse;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -36,7 +37,7 @@ public class RentMoviesAction implements WebAction {
         List<String> movieNames = request.getParameterValues("movieNames");
         int rentalDuration = parseInt(request.getParameter("rentalDuration"));
 
-        Set<Movie> movies = movieRepository.withTitles(movieNames);
+        Collection<Movie> movies = movieRepository.withTitles(movieNames);
 
         Period rentalPeriod = Period.of(LocalDate.today(), Duration.ofDays(rentalDuration));
 

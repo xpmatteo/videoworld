@@ -1,13 +1,12 @@
 package com.thoughtworks.videorental.action;
 
-import org.hibernate.Criteria;
-
-import com.thoughtworks.ddd.specification.OrderComparator;
 import com.thoughtworks.videorental.domain.Movie;
 import com.thoughtworks.videorental.domain.repository.MovieRepository;
 import com.thoughtworks.videorental.toolkit.web.WebAction;
 import com.thoughtworks.videorental.toolkit.web.WebRequest;
 import com.thoughtworks.videorental.toolkit.web.WebResponse;
+
+import java.util.Comparator;
 
 public class ViewHomeAction implements WebAction {
 
@@ -23,18 +22,8 @@ public class ViewHomeAction implements WebAction {
 		response.renderTemplate("home", "main_layout");
 	}
 
-	private OrderComparator<Movie> orderByTitle() {
-		return new OrderComparator<Movie>() {
-
-			@Override
-			public int compare(Movie o1, Movie o2) {
-				return o1.getTitle().compareTo(o2.getTitle());
-			}
-
-			@Override
-			public void populateCriteria(Criteria arg0) {
-			}
-		};
+	private Comparator<Movie> orderByTitle() {
+		return (o1, o2) -> o1.getTitle().compareTo(o2.getTitle());
 	}
 
 }
