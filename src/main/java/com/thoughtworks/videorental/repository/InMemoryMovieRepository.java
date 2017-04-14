@@ -5,7 +5,6 @@ import com.thoughtworks.videorental.domain.repository.MovieRepository;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
@@ -20,8 +19,8 @@ public class InMemoryMovieRepository implements MovieRepository {
     }
 
     @Override
-	public Collection<Movie> selectAll(Comparator<Movie> comparator) {
-        return movies.stream().sorted(comparator).collect(toList());
+	public Collection<Movie> selectAll() {
+        return movies.stream().sorted(Movie.ORDER_BY_TITLE_ASCENDING).collect(toList());
 	}
 
 	@Override

@@ -1,6 +1,11 @@
 package com.thoughtworks.videorental.domain;
 
+import java.util.Comparator;
+
 public class Movie {
+	public static final Comparator<Movie> ORDER_BY_TITLE_ASCENDING =
+            (m1, m2) -> m1.getTitle().compareTo(m2.getTitle());
+
 	public static final Price CHILDRENS = new ChildrensPrice();
 	public static final Price REGULAR = new RegularPrice();
 	public static final Price NEW_RELEASE = new NewReleasePrice();
