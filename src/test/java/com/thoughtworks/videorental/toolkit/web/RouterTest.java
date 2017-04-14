@@ -1,16 +1,11 @@
 package com.thoughtworks.videorental.toolkit.web;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
-
+import com.thoughtworks.videorental.domain.entity.Customer;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.thoughtworks.videorental.domain.entity.Customer;
+import static org.mockito.Mockito.*;
 
 public class RouterTest {
 	private static final Customer OUR_CUSTOMER = new Customer("Pippo");
@@ -20,8 +15,8 @@ public class RouterTest {
 
 	@Before
 	public void setUp() throws Exception {
-		router.addRoute("/something", (req, resp) -> { response.renderTemplate("pippo", "layout"); });
-		router.addUnprotectedRoute("/login", (req, resp) -> {resp.renderTemplate("login", "login_layout"); });
+		router.addRoute("/something", (req, resp) -> response.renderTemplate("pippo", "layout"));
+		router.addUnprotectedRoute("/login", (req, resp) -> resp.renderTemplate("login", "login_layout"));
 
 		when(request.getCustomer()).thenReturn(OUR_CUSTOMER);
 	}
@@ -51,8 +46,8 @@ public class RouterTest {
 
 	@Test
 	public void selectsResourceAccordingToPath() throws Exception {
-		router.addRoute("/foo", (r, resp) -> { resp.renderTemplate("foo", "layout"); });
-		router.addRoute("/bar", (r, resp) -> { resp.renderTemplate("bar", "layout"); });
+		router.addRoute("/foo", (r, resp) -> resp.renderTemplate("foo", "layout"));
+		router.addRoute("/bar", (r, resp) -> resp.renderTemplate("bar", "layout"));
 
 		get("/foo");
 
