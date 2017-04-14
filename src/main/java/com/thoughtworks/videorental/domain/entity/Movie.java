@@ -15,18 +15,14 @@ public class Movie {
 
 	public Movie(String title, Price price) {
 		this.title = title;
-		setPrice(price);
-	}
+        this.price = price;
+    }
 
 	public String getTitle() {
 		return title;
 	}
 
-	public void setPrice(Price price) {
-		this.price = price;
-	}
-
-	public Price getPrice() {
+    public Price getPrice() {
 		return price;
 	}
 
