@@ -5,7 +5,7 @@ import java.util.Set;
 
 public class Customer {
     public static final Comparator<Customer> ORDER_BY_NAME_ASCENDING =
-            (Customer c1, Customer c2) -> c1.getName().compareTo(c2.getName());
+            (c1, c2) -> c1.getName().compareTo(c2.getName());
 
 	private String name;
 	private int frequentRenterPoints = 0;
