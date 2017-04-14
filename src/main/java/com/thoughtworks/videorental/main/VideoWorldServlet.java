@@ -18,9 +18,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class VideoWorldServlet extends HttpServlet {
-	CustomerRepository customerRepository = new InMemoryCustomerRepository();
-	MovieRepository movieRepository = new InMemoryMovieRepository();
-	TransactionRepository transactionRepository = new InMemoryTransactionRepository();
+	private CustomerRepository customerRepository = new InMemoryCustomerRepository();
+	private MovieRepository movieRepository = new InMemoryMovieRepository();
+	private TransactionRepository transactionRepository = new InMemoryTransactionRepository();
 
 	@Override
 	public void init() throws ServletException {

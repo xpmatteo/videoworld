@@ -1,14 +1,13 @@
 package com.thoughtworks.videorental.action;
 
+import com.thoughtworks.videorental.toolkit.BaseTestForVideoWorldApp;
+import org.junit.Test;
+
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import org.junit.Test;
-
-import com.thoughtworks.videorental.toolkit.BaseTestForVideoWorldApp;
-
 public class LogoutActionTest extends BaseTestForVideoWorldApp {
-	LogoutAction logoutAction = new LogoutAction();
+	private LogoutAction logoutAction = new LogoutAction();
 
     @Test
     public void logout() throws Exception {

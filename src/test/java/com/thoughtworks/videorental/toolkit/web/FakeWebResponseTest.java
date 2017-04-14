@@ -1,16 +1,16 @@
 package com.thoughtworks.videorental.toolkit.web;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-
-import java.io.StringWriter;
-
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.StringWriter;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+
 public class FakeWebResponseTest {
 	private StringWriter writer = new StringWriter();
-	FakeWebResponse response = new FakeWebResponse(writer);
+	private FakeWebResponse response = new FakeWebResponse(writer);
 
 	@Before
 	public void setUp() throws Exception {

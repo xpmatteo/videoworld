@@ -15,8 +15,8 @@ import static org.mockito.Mockito.when;
 
 public class ServletWebRequestTest {
 
-	HttpServletRequest servletRequest = mock(HttpServletRequest.class);
-	ServletWebRequest webRequest = new ServletWebRequest(servletRequest);
+	private HttpServletRequest servletRequest = mock(HttpServletRequest.class);
+	private ServletWebRequest webRequest = new ServletWebRequest(servletRequest);
 
 	@Test
 	public void getPath() throws Exception {

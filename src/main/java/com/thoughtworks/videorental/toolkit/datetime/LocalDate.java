@@ -4,9 +4,9 @@ import org.joda.time.PeriodType;
 import org.joda.time.format.DateTimeFormat;
 
 public class LocalDate implements Comparable<LocalDate> {
-	protected org.joda.time.LocalDate jodaLocalDate;
+	private org.joda.time.LocalDate jodaLocalDate;
 
-	protected LocalDate(final org.joda.time.LocalDate date) {
+	private LocalDate(final org.joda.time.LocalDate date) {
 		assert date != null;
 		jodaLocalDate = date;
 	}

@@ -4,7 +4,7 @@ public class Period {
 	private final LocalDate startDate;
 	private final Duration duration;
 
-	protected Period(final LocalDate startDate, final Duration duration) {
+	private Period(final LocalDate startDate, final Duration duration) {
 		assert startDate != null;
 		assert duration != null;
 		this.startDate = startDate;
